@@ -122,35 +122,38 @@ html.light .glass-panel-interactive:hover {
   box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.15);
 }
 
-/* Light Theme Text & Component Enhancements */
-html.light .text-white:not(
-  button,
-  button *,
-  [class*="bg-cyan-500"], [class*="bg-cyan-500"] *,
-  [class*="bg-purple-600"], [class*="bg-purple-600"] *,
-  [class*="bg-emerald-500"], [class*="bg-emerald-500"] *,
-  [class*="bg-blue-600"], [class*="bg-blue-600"] *,
-  [class*="bg-amber-500"], [class*="bg-amber-500"] *,
-  [class*="bg-red-500"], [class*="bg-red-500"] *,
-  [class*="from-cyan-"], [class*="from-cyan-"] *,
-  [class*="from-purple-"], [class*="from-purple-"] *,
-  [class*="from-emerald-"], [class*="from-emerald-"] *,
-  [class*="from-blue-"], [class*="from-blue-"] *
-) {
+/* ==========================================================================
+   Light Theme High-Contrast Typography & Surface Adjustments
+   ========================================================================== */
+
+/* In light mode, default .text-white to deep charcoal slate */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+/* Headings and table headers */
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light h6,
+html.light th {
   color: #0f172a;
 }
 
+/* Form controls in light mode: inputs, selects, textareas */
 html.light input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
 html.light select,
 html.light textarea {
-  color: #0f172a;
-  background-color: #ffffff;
-  border-color: #cbd5e1;
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
 }
 
 html.light input::placeholder,
 html.light textarea::placeholder {
-  color: #94a3b8;
+  color: #94a3b8 !important;
 }
 
 /* Modal overlays in light mode maintain focus with dark translucent backdrop */
@@ -161,13 +164,48 @@ html.light .fixed.inset-0.bg-slate-950\/90 {
 }
 
 /* Top feature hero banners in light mode */
-html.light .bg-gradient-to-r.from-blue-900\/40,
-html.light .bg-gradient-to-r.from-emerald-900\/40,
-html.light .bg-gradient-to-r.from-purple-900\/40,
-html.light .bg-gradient-to-r.from-amber-900\/40 {
+html.light [class*="bg-gradient-to-r"][class*="from-"]:not(button):not(a) {
   background: linear-gradient(135deg, rgba(241, 245, 249, 0.95), rgba(255, 255, 255, 0.98)) !important;
   border-color: #e2e8f0 !important;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Big draw number gradient text: ensure high contrast */
+html.light .bg-clip-text {
+  background-image: linear-gradient(to right, #0284c7, #0d9488, #0369a1) !important;
+  color: transparent !important;
+}
+
+/* Preserve crisp white text on saturated / colored / gradient buttons and badges */
+html.light button.bg-cyan-500,
+html.light button.bg-cyan-500 *,
+html.light button.bg-purple-600,
+html.light button.bg-purple-600 *,
+html.light button.bg-purple-500,
+html.light button.bg-purple-500 *,
+html.light button.bg-emerald-500,
+html.light button.bg-emerald-500 *,
+html.light button.bg-blue-600,
+html.light button.bg-blue-600 *,
+html.light button.bg-amber-500,
+html.light button.bg-amber-500 *,
+html.light button.bg-red-500,
+html.light button.bg-red-500 *,
+html.light button[class*="from-"],
+html.light button[class*="from-"] *,
+html.light a[class*="from-"],
+html.light a[class*="from-"] *,
+html.light [class*="bg-cyan-500"][class*="text-white"],
+html.light [class*="bg-cyan-500"][class*="text-white"] *,
+html.light [class*="bg-purple-600"][class*="text-white"],
+html.light [class*="bg-purple-600"][class*="text-white"] *,
+html.light [class*="bg-emerald-500"][class*="text-white"],
+html.light [class*="bg-emerald-500"][class*="text-white"] *,
+html.light .badge-white,
+html.light .badge-white *,
+html.light .text-white-force,
+html.light .text-white-force * {
+  color: #ffffff !important;
 }
 
 /* Pulse animation for active vials */
