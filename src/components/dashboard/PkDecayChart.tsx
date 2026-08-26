@@ -142,7 +142,7 @@ export const PkDecayChart: React.FC<PkDecayChartProps> = ({
               </linearGradient>
             </defs>
 
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid, #1e293b)" vertical={false} />
             
             <XAxis
               dataKey="timeHours"

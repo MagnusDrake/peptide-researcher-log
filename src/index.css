@@ -9,6 +9,23 @@
     --color-violet: #8b5cf6;
     --color-rose: #f43f5e;
     --color-amber: #f59e0b;
+    --chart-grid: #1e293b;
+  }
+
+  html.light {
+    --chart-grid: #e2e8f0;
+
+    /* Slate palette override for clean, radiant medical-grade light theme */
+    --color-slate-950: #f8fafc;
+    --color-slate-900: #ffffff;
+    --color-slate-800: #e2e8f0;
+    --color-slate-700: #cbd5e1;
+    --color-slate-600: #94a3b8;
+    --color-slate-500: #64748b;
+    --color-slate-400: #475569;
+    --color-slate-300: #334155;
+    --color-slate-200: #1e293b;
+    --color-slate-100: #0f172a;
   }
 
   body {
@@ -18,6 +35,16 @@
       radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
       radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
     background-attachment: fixed;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  html.light body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.06) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.06) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.04) 0px, transparent 50%);
   }
 }
 
@@ -31,13 +58,25 @@
   background: rgba(15, 23, 42, 0.6);
 }
 
+html.light ::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.8);
+}
+
 ::-webkit-scrollbar-thumb {
   background: rgba(51, 65, 85, 0.8);
   border-radius: 9999px;
 }
 
+html.light ::-webkit-scrollbar-thumb {
+  background: rgba(203, 213, 225, 0.9);
+}
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 116, 139, 1);
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 1);
 }
 
 /* Glassmorphic utilities */
@@ -48,6 +87,12 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
 .glass-panel-interactive {
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(12px);
@@ -56,14 +101,73 @@
   transition: all 0.2s ease-in-out;
 }
 
+html.light .glass-panel-interactive {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
 .glass-panel-interactive:hover {
   border-color: rgba(56, 189, 248, 0.3);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(56, 189, 248, 0.1);
   transform: translateY(-1px);
 }
 
+html.light .glass-panel-interactive:hover {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.08), 0 0 15px rgba(6, 182, 212, 0.1);
+}
+
 .glass-card-glow {
   box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.15);
+}
+
+/* Light Theme Text & Component Enhancements */
+html.light .text-white:not(
+  button,
+  button *,
+  [class*="bg-cyan-500"], [class*="bg-cyan-500"] *,
+  [class*="bg-purple-600"], [class*="bg-purple-600"] *,
+  [class*="bg-emerald-500"], [class*="bg-emerald-500"] *,
+  [class*="bg-blue-600"], [class*="bg-blue-600"] *,
+  [class*="bg-amber-500"], [class*="bg-amber-500"] *,
+  [class*="bg-red-500"], [class*="bg-red-500"] *,
+  [class*="from-cyan-"], [class*="from-cyan-"] *,
+  [class*="from-purple-"], [class*="from-purple-"] *,
+  [class*="from-emerald-"], [class*="from-emerald-"] *,
+  [class*="from-blue-"], [class*="from-blue-"] *
+) {
+  color: #0f172a;
+}
+
+html.light input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
+html.light select,
+html.light textarea {
+  color: #0f172a;
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Modal overlays in light mode maintain focus with dark translucent backdrop */
+html.light .fixed.inset-0.bg-slate-950\/85,
+html.light .fixed.inset-0.bg-slate-950\/80,
+html.light .fixed.inset-0.bg-slate-950\/90 {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+}
+
+/* Top feature hero banners in light mode */
+html.light .bg-gradient-to-r.from-blue-900\/40,
+html.light .bg-gradient-to-r.from-emerald-900\/40,
+html.light .bg-gradient-to-r.from-purple-900\/40,
+html.light .bg-gradient-to-r.from-amber-900\/40 {
+  background: linear-gradient(135deg, rgba(241, 245, 249, 0.95), rgba(255, 255, 255, 0.98)) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
 }
 
 /* Pulse animation for active vials */

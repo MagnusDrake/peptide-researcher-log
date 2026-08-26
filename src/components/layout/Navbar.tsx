@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { 
   Calendar, 
   Calculator, 
@@ -8,8 +8,8 @@ import {
   Activity, 
   Users, 
   Download, 
-  Wifi, 
-  WifiOff 
+  Sun, 
+  Moon 
 } from 'lucide-react';
 
 export type NavTab = 'dashboard' | 'calculator' | 'library' | 'matcher' | 'protocols' | 'journal' | 'community';
@@ -20,6 +20,8 @@ interface NavbarProps {
   activeProtocolsCount: number;
   onInstallClick?: () => void;
   canInstall?: boolean;
+  theme: 'dark' | 'light';
+  onToggleTheme: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -28,21 +30,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeProtocolsCount,
   onInstallClick,
   canInstall = false,
+  theme,
+  onToggleTheme,
 }) => {
-  const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
-
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, []);
 
   const navItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: number }[] = [
     { id: 'dashboard', label: 'Today', icon: <Calendar className="w-4 h-4" /> },
@@ -105,25 +95,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Right Status Badges & PWA Install Button */}
-        <div className="flex items-center gap-3">
-          {/* Offline Ready Status */}
-          <div 
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300 select-none"
-            title={isOnline ? "Connected & 100% Offline-Capable" : "Working Offline (IndexedDB Active)"}
+        {/* Right Status Badges & Controls */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Light / Dark Mode Toggle */}
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            className="flex items-center justify-center w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition active:scale-95 shadow-sm"
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
-            {isOnline ? (
-              <>
-                <Wifi className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="hidden sm:inline text-slate-400">Offline Ready</span>
-              </>
+            {theme === 'dark' ? (
+              <Sun className="w-4 h-4 text-amber-400" />
             ) : (
-              <>
-                <WifiOff className="w-3.5 h-3.5 text-amber-400" />
-                <span className="text-amber-400">Offline Mode</span>
-              </>
+              <Moon className="w-4 h-4 text-cyan-600" />
             )}
-          </div>
+          </button>
 
           {/* Install PWA Button */}
           {canInstall && (
@@ -132,7 +119,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-md shadow-cyan-500/20 transition active:scale-95"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Install App</span>
+              <span className="hidden sm:inline">Install App</span>
+              <span className="sm:hidden">Install</span>
             </button>
           )}
         </div>
