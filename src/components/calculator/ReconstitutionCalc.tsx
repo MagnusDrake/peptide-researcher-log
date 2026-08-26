@@ -137,8 +137,8 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
       {/* Main Grid: Inputs vs Results */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* INPUTS COLUMN (7 Cols on desktop) */}
-        <div className="lg:col-span-7 flex flex-col gap-4">
-          <div className="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col gap-4">
+        <div className="lg:col-span-7 flex flex-col gap-4 min-w-0">
+          <div className="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col gap-4 overflow-hidden">
             <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
               <Sparkles className="w-4 h-4 text-cyan-400" />
               <span>Vial & Solution Parameters</span>
@@ -399,7 +399,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
         </div>
 
         {/* RESULTS & SUMMARY COLUMN (5 Cols on desktop) */}
-        <div className="lg:col-span-5 flex flex-col gap-4">
+        <div className="lg:col-span-5 flex flex-col gap-4 min-w-0">
           {/* Primary Result Hero Card */}
           <div className="glass-panel p-4 sm:p-6 rounded-2xl border-cyan-500/30 flex flex-col gap-3 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>

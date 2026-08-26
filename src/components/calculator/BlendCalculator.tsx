@@ -294,8 +294,8 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
       {/* Main Grid: Inputs vs Results */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* INPUTS COLUMN */}
-        <div className="lg:col-span-7 flex flex-col gap-4">
-          <div className="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col gap-4">
+        <div className="lg:col-span-7 flex flex-col gap-4 min-w-0">
+          <div className="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col gap-4 overflow-hidden">
             {/* Blend Title */}
             <div>
               <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
@@ -508,7 +508,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
         </div>
 
         {/* RESULTS COLUMN */}
-        <div className="lg:col-span-5 flex flex-col gap-4">
+        <div className="lg:col-span-5 flex flex-col gap-4 min-w-0">
           {/* Main Draw Card */}
           <div className="glass-panel p-4 sm:p-6 rounded-2xl border-purple-500/30 flex flex-col gap-3 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>

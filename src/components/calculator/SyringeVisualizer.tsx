@@ -61,7 +61,7 @@ export const SyringeVisualizer: React.FC<SyringeVisualizerProps> = ({
   const plungerX = barrelStartX + (currentUnits / maxUnits) * barrelWidth;
 
   return (
-    <div className="flex flex-col items-center w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-3 sm:p-5 shadow-2xl backdrop-blur-md">
+    <div className="flex flex-col items-center w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-3 sm:p-5 shadow-2xl backdrop-blur-md overflow-hidden">
       {/* Header Info */}
       <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3 mb-2">
         <div className="flex items-center gap-2.5">
@@ -358,7 +358,8 @@ export const SyringeVisualizer: React.FC<SyringeVisualizerProps> = ({
         <div className="w-full mt-3 pt-3 border-t border-slate-800/80 flex flex-col gap-3">
           <div className="flex items-center justify-between text-xs text-slate-400">
             <span>0 units</span>
-            <span className="font-semibold text-cyan-400">Drag or Adjust Target Units</span>
+            <span className="font-semibold text-cyan-400 hidden sm:inline">Drag or Adjust Target Units</span>
+            <span className="font-semibold text-cyan-400 sm:hidden">Adjust Units</span>
             <span>{maxUnits} units</span>
           </div>
 
