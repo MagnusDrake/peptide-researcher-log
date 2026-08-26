@@ -42,9 +42,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
   const [brandName, setBrandName] = useState<string>('');
   const [batchNumber, setBatchNumber] = useState<string>('');
   
-  const [vialMassMg, setVialMassMg] = useState<number>(5);
-  const [bacWaterMl, setBacWaterMl] = useState<number>(2.0);
-  const [doseAmount, setDoseAmount] = useState<number>(250);
+  const [vialMassMg, setVialMassMg] = useState<number | ''>(5);
+  const [bacWaterMl, setBacWaterMl] = useState<number | ''>(2.0);
+  const [doseAmount, setDoseAmount] = useState<number | ''>(250);
   const [doseUnit, setDoseUnit] = useState<'mcg' | 'mg'>('mcg');
   const [syringeType, setSyringeType] = useState<SyringeType>('U-100');
   
@@ -54,7 +54,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
   
   const [startDate, setStartDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [reconstitutedDate, setReconstitutedDate] = useState<string>(new Date().toISOString().split('T')[0]);
-  const [plannedCycleWeeks, setPlannedCycleWeeks] = useState<number>(6);
+  const [plannedCycleWeeks, setPlannedCycleWeeks] = useState<number | ''>(6);
   const [costPerVial, setCostPerVial] = useState<number | ''>('');
   const [notes, setNotes] = useState<string>('');
   const [isPublic, setIsPublic] = useState<boolean>(false);
@@ -164,9 +164,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
 
   // Calculations
   const singleCalc = calculateReconstitution({
-    vialMassMg,
-    bacWaterMl,
-    targetDose: doseAmount,
+    vialMassMg: Number(vialMassMg) || 0,
+    bacWaterMl: Number(bacWaterMl) || 0,
+    targetDose: Number(doseAmount) || 0,
     doseUnit,
     syringeType,
     vialCost: costPerVial === '' ? undefined : Number(costPerVial)
@@ -178,20 +178,20 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
     components: blendComponents.map(c => ({
       id: c.id,
       peptideName: c.peptideName,
-      vialMassMg: c.vialMassMg,
-      targetDose: c.targetDose,
+      vialMassMg: Number(c.vialMassMg) || 0,
+      targetDose: Number(c.targetDose) || 0,
       doseUnit: c.doseUnit
     })),
-    bacWaterMl,
+    bacWaterMl: Number(bacWaterMl) || 0,
     primaryComponentId: primaryComp?.id || 'bc-1',
-    targetPrimaryDose: primaryComp?.targetDose || 250,
+    targetPrimaryDose: Number(primaryComp?.targetDose) || 0,
     primaryDoseUnit: primaryComp?.doseUnit || 'mcg',
     syringeType,
     vialCost: costPerVial === '' ? undefined : Number(costPerVial)
   });
 
   const calculatedUnits = isBlend ? blendCalc.drawUnits : singleCalc.drawUnits;
-  const concentrationMgMl = isBlend ? (blendCalc.totalVialMassMg / (bacWaterMl || 1)) : singleCalc.concentrationMgMl;
+  const concentrationMgMl = isBlend ? (blendCalc.totalVialMassMg / (Number(bacWaterMl) || 1)) : singleCalc.concentrationMgMl;
 
   // Handle Submit
   const handleSubmit = async (e: React.FormEvent) => {
@@ -218,9 +218,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
       })) : undefined,
       brandName: brandName.trim(),
       batchNumber: batchNumber.trim() || undefined,
-      vialMassMg: isBlend ? blendCalc.totalVialMassMg : Number(vialMassMg),
-      bacWaterMl: Number(bacWaterMl),
-      doseAmount: isBlend ? (primaryComp?.targetDose || 250) : Number(doseAmount),
+      vialMassMg: isBlend ? blendCalc.totalVialMassMg : Number(vialMassMg) || 0,
+      bacWaterMl: Number(bacWaterMl) || 0,
+      doseAmount: isBlend ? (Number(primaryComp?.targetDose) || 0) : (Number(doseAmount) || 0),
       doseUnit: isBlend ? (primaryComp?.doseUnit || 'mcg') : doseUnit,
       syringeType,
       calculatedUnits,
@@ -230,7 +230,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
       timingOfDay,
       startDate,
       reconstitutedDate,
-      plannedCycleWeeks: Number(plannedCycleWeeks),
+      plannedCycleWeeks: Number(plannedCycleWeeks) || 6,
       costPerVial: costPerVial === '' ? undefined : Number(costPerVial),
       notes: notes.trim() || undefined,
       isActive: editingProtocol ? editingProtocol.isActive : true,
@@ -238,11 +238,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
       shareAlias: isPublic ? (shareAlias.trim() || undefined) : undefined,
     };
 
-    if (editingProtocol) {
-      await db.protocols.put(protocolToSave);
-    } else {
-      await db.protocols.add(protocolToSave);
-    }
+    await db.protocols.put(protocolToSave);
 
     onSaved(protocolToSave);
     onClose();
@@ -357,8 +353,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                     min="0"
                     step="any"
                     required
+                    placeholder="0"
                     value={vialMassMg}
-                    onChange={(e) => setVialMassMg(parseFloat(e.target.value) || 0)}
+                    onChange={(e) => setVialMassMg(e.target.value === '' ? '' : parseFloat(e.target.value))}
                     className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
                   />
                 </div>
@@ -372,8 +369,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                     min="0"
                     step="any"
                     required
+                    placeholder="0"
                     value={bacWaterMl}
-                    onChange={(e) => setBacWaterMl(parseFloat(e.target.value) || 0)}
+                    onChange={(e) => setBacWaterMl(e.target.value === '' ? '' : parseFloat(e.target.value))}
                     className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
                   />
                 </div>
@@ -387,14 +385,24 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                     <div className="flex bg-slate-950 rounded border border-slate-700 text-[10px]">
                       <button
                         type="button"
-                        onClick={() => setDoseUnit('mcg')}
+                        onClick={() => {
+                          if (doseUnit === 'mg') {
+                            setDoseUnit('mcg');
+                            if (doseAmount !== '') setDoseAmount(Number(doseAmount) * 1000);
+                          }
+                        }}
                         className={`px-2 py-0.5 font-bold ${doseUnit === 'mcg' ? 'bg-cyan-500 text-white' : 'text-slate-400'}`}
                       >
                         mcg
                       </button>
                       <button
                         type="button"
-                        onClick={() => setDoseUnit('mg')}
+                        onClick={() => {
+                          if (doseUnit === 'mcg') {
+                            setDoseUnit('mg');
+                            if (doseAmount !== '') setDoseAmount(Number(doseAmount) / 1000);
+                          }
+                        }}
                         className={`px-2 py-0.5 font-bold ${doseUnit === 'mg' ? 'bg-cyan-500 text-white' : 'text-slate-400'}`}
                       >
                         mg
@@ -406,8 +414,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                     min="0"
                     step="any"
                     required
+                    placeholder="0"
                     value={doseAmount}
-                    onChange={(e) => setDoseAmount(parseFloat(e.target.value) || 0)}
+                    onChange={(e) => setDoseAmount(e.target.value === '' ? '' : parseFloat(e.target.value))}
                     className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
                   />
                 </div>
@@ -510,8 +519,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                           min="0"
                           step="any"
                           required
+                          placeholder="0"
                           value={comp.vialMassMg}
-                          onChange={(e) => handleUpdateBlendRow(comp.id, 'vialMassMg', parseFloat(e.target.value) || 0)}
+                          onChange={(e) => handleUpdateBlendRow(comp.id, 'vialMassMg', e.target.value === '' ? '' : parseFloat(e.target.value))}
                           className="w-full bg-slate-900 border border-slate-700 text-white text-xs rounded-lg p-2 focus:border-purple-400 outline-none font-mono"
                         />
                       </div>
@@ -540,8 +550,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                           min="0"
                           step="any"
                           required
+                          placeholder="0"
                           value={comp.targetDose}
-                          onChange={(e) => handleUpdateBlendRow(comp.id, 'targetDose', parseFloat(e.target.value) || 0)}
+                          onChange={(e) => handleUpdateBlendRow(comp.id, 'targetDose', e.target.value === '' ? '' : parseFloat(e.target.value))}
                           className={`w-full bg-slate-900 border text-white text-xs rounded-lg p-2 outline-none font-mono ${
                             comp.id === primaryBlendId ? 'border-purple-500' : 'border-slate-700'
                           }`}
@@ -563,8 +574,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                     min="0"
                     step="any"
                     required
+                    placeholder="0"
                     value={bacWaterMl}
-                    onChange={(e) => setBacWaterMl(parseFloat(e.target.value) || 0)}
+                    onChange={(e) => setBacWaterMl(e.target.value === '' ? '' : parseFloat(e.target.value))}
                     className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-2.5 focus:border-purple-400 outline-none"
                   />
                 </div>

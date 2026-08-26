@@ -37,9 +37,9 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
   const [selectedPeptideId, setSelectedPeptideId] = useState<string>(initialPeptideId);
   const [customPeptideName, setCustomPeptideName] = useState<string>('');
   const [brandName, setBrandName] = useState<string>('');
-  const [vialMassMg, setVialMassMg] = useState<number>(5);
-  const [bacWaterMl, setBacWaterMl] = useState<number>(2.0);
-  const [targetDose, setTargetDose] = useState<number>(500);
+  const [vialMassMg, setVialMassMg] = useState<number | ''>(5);
+  const [bacWaterMl, setBacWaterMl] = useState<number | ''>(2.0);
+  const [targetDose, setTargetDose] = useState<number | ''>(500);
   const [doseUnit, setDoseUnit] = useState<'mcg' | 'mg'>('mcg');
   const [syringeType, setSyringeType] = useState<SyringeType>('U-100');
   const [vialCost, setVialCost] = useState<number | ''>('');
@@ -67,9 +67,9 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
 
   // Real-time calculation result
   const result: ReconstitutionResult = calculateReconstitution({
-    vialMassMg,
-    bacWaterMl,
-    targetDose,
+    vialMassMg: Number(vialMassMg) || 0,
+    bacWaterMl: Number(bacWaterMl) || 0,
+    targetDose: Number(targetDose) || 0,
     doseUnit,
     syringeType,
     vialCost: vialCost === '' ? undefined : Number(vialCost)
@@ -99,9 +99,9 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
             onClick={() => onSaveAsProtocol({
               peptideId: selectedPeptideId,
               peptideName: currentPeptideName,
-              vialMassMg,
-              bacWaterMl,
-              doseAmount: targetDose,
+              vialMassMg: Number(vialMassMg) || 5,
+              bacWaterMl: Number(bacWaterMl) || 2.0,
+              doseAmount: Number(targetDose) || 500,
               doseUnit,
               syringeType,
               costPerVial: vialCost === '' ? undefined : Number(vialCost)
@@ -222,8 +222,9 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                 type="number"
                 min="0"
                 step="any"
+                placeholder="0"
                 value={vialMassMg}
-                onChange={(e) => setVialMassMg(parseFloat(e.target.value) || 0)}
+                onChange={(e) => setVialMassMg(e.target.value === '' ? '' : parseFloat(e.target.value))}
                 className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-xl p-2.5 focus:outline-none focus:border-cyan-400"
               />
             </div>
@@ -234,7 +235,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                 <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
                   3. Bacteriostatic (BAC) Water Added (mL)
                 </label>
-                <span className="text-xs text-cyan-400 font-mono font-bold">{bacWaterMl} mL</span>
+                <span className="text-xs text-cyan-400 font-mono font-bold">{bacWaterMl || 0} mL</span>
               </div>
 
               {/* Quick chips (Horizontal scroll on phone) */}
@@ -259,8 +260,9 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                 type="number"
                 min="0"
                 step="any"
+                placeholder="0"
                 value={bacWaterMl}
-                onChange={(e) => setBacWaterMl(parseFloat(e.target.value) || 0)}
+                onChange={(e) => setBacWaterMl(e.target.value === '' ? '' : parseFloat(e.target.value))}
                 className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-xl p-2.5 focus:outline-none focus:border-cyan-400"
               />
             </div>
@@ -277,7 +279,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                     onClick={() => {
                       if (doseUnit === 'mg') {
                         setDoseUnit('mcg');
-                        setTargetDose(targetDose * 1000);
+                        if (targetDose !== '') setTargetDose(targetDose * 1000);
                       }
                     }}
                     className={`px-2.5 py-0.5 text-xs rounded-md font-bold transition ${
@@ -291,7 +293,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                     onClick={() => {
                       if (doseUnit === 'mcg') {
                         setDoseUnit('mg');
-                        setTargetDose(targetDose / 1000);
+                        if (targetDose !== '') setTargetDose(targetDose / 1000);
                       }
                     }}
                     className={`px-2.5 py-0.5 text-xs rounded-md font-bold transition ${
@@ -342,8 +344,9 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                 type="number"
                 min="0"
                 step="any"
+                placeholder="0"
                 value={targetDose}
-                onChange={(e) => setTargetDose(parseFloat(e.target.value) || 0)}
+                onChange={(e) => setTargetDose(e.target.value === '' ? '' : parseFloat(e.target.value))}
                 className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-xl p-2.5 focus:outline-none focus:border-cyan-400"
               />
             </div>

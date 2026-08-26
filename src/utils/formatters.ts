@@ -54,3 +54,15 @@ export function formatRelativeDate(isoDateString: string): string {
 
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
 }
+
+export function parseDoseString(doseStr: string, fallbackDose: number = 250): { doseAmount: number; doseUnit: 'mcg' | 'mg' } {
+  if (!doseStr) return { doseAmount: fallbackDose, doseUnit: 'mcg' };
+  const isMg = doseStr.toLowerCase().includes('mg');
+  // Match first numerical group (e.g. "250 - 500 mcg" -> 250, "2.0 - 2.5 mg" -> 2.0)
+  const match = doseStr.match(/([0-9]+(?:\.[0-9]+)?)/);
+  const doseAmount = match ? parseFloat(match[1]) : fallbackDose;
+  return {
+    doseAmount: isNaN(doseAmount) || doseAmount <= 0 ? fallbackDose : doseAmount,
+    doseUnit: isMg ? 'mg' : 'mcg'
+  };
+}

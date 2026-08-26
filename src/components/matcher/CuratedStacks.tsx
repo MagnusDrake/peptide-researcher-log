@@ -4,7 +4,7 @@ import { CuratedStack } from '../../types';
 import { Layers, Sparkles, PlusCircle, AlertTriangle, ArrowRight } from 'lucide-react';
 
 interface CuratedStacksProps {
-  onAdoptStack?: (stack: CuratedStack) => void;
+  onAdoptStack?: (stack: CuratedStack, asSingleBlend?: boolean) => void;
   onSelectPeptideByName?: (name: string) => void;
 }
 
@@ -93,13 +93,23 @@ export const CuratedStacks: React.FC<CuratedStacksProps> = ({
             </div>
 
             {onAdoptStack && (
-              <button
-                onClick={() => onAdoptStack(stack)}
-                className="w-full mt-2 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-white text-xs font-bold border border-slate-700 transition flex items-center justify-center gap-2 shadow-md"
-              >
-                <span>Adopt Stack into Protocols</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              <div className="flex flex-col gap-2 mt-2">
+                <button
+                  type="button"
+                  onClick={() => onAdoptStack(stack, true)}
+                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-purple-950/40"
+                >
+                  <Layers className="w-4 h-4" />
+                  <span>🧪 Adopt as Single Stack Vial</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onAdoptStack(stack, false)}
+                  className="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-semibold border border-slate-800 transition flex items-center justify-center gap-1.5"
+                >
+                  <span>📋 Adopt as Separate Individual Vials</span>
+                </button>
+              </div>
             )}
           </div>
         ))}

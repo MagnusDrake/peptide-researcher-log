@@ -28,9 +28,9 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
   const defaultSite = lastIndex >= 0 ? INJECTION_SITES[(lastIndex + 1) % INJECTION_SITES.length].name : 'Abdomen - Upper Right';
 
   const [timestamp, setTimestamp] = useState<string>(new Date().toISOString().slice(0, 16));
-  const [doseAmount, setDoseAmount] = useState<number>(protocol.doseAmount);
+  const [doseAmount, setDoseAmount] = useState<number | ''>(protocol.doseAmount);
   const [doseUnit, setDoseUnit] = useState<'mcg' | 'mg'>(protocol.doseUnit);
-  const [drawUnits, setDrawUnits] = useState<number>(protocol.calculatedUnits);
+  const [drawUnits, setDrawUnits] = useState<number | ''>(protocol.calculatedUnits);
   const [syringeType, setSyringeType] = useState<SyringeType>(protocol.syringeType);
   const [injectionSite, setInjectionSite] = useState<string>(defaultSite);
   const [reactionRating, setReactionRating] = useState<'none' | 'mild_redness' | 'bruise' | 'itch' | 'sore'>('none');
@@ -45,10 +45,10 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
   const [bodyWeightLbs, setBodyWeightLbs] = useState<number | ''>('');
   const [notes, setNotes] = useState<string>('');
 
+  const currentUnits = Number(drawUnits) || 0;
   const deliveredBlendList = protocol.isBlend && protocol.blendComponents ? protocol.blendComponents.map(comp => {
-    const primaryComp = protocol.blendComponents?.[0] || comp;
     const conc = (comp.vialMassMg * 10) / (protocol.bacWaterMl || 1);
-    const deliveredMcg = drawUnits * conc;
+    const deliveredMcg = currentUnits * conc;
     const isMg = comp.doseUnit === 'mg' || deliveredMcg >= 1000;
     return {
       peptideName: comp.peptideName,
@@ -67,9 +67,9 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
       isBlend: protocol.isBlend,
       blendDelivered: deliveredBlendList,
       timestamp: new Date(timestamp).toISOString(),
-      doseAmount,
+      doseAmount: Number(doseAmount) || 0,
       doseUnit,
-      drawUnits,
+      drawUnits: Number(drawUnits) || 0,
       syringeType,
       injectionSite,
       reactionRating,
@@ -89,7 +89,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
 
     // Update protocol remaining units if applicable
     if (protocol.remainingVialUnits !== undefined && protocol.remainingVialUnits > 0) {
-      const updatedRemaining = Math.max(0, protocol.remainingVialUnits - drawUnits);
+      const updatedRemaining = Math.max(0, protocol.remainingVialUnits - (Number(drawUnits) || 0));
       await db.protocols.update(protocol.id, { remainingVialUnits: updatedRemaining });
     }
 
@@ -207,8 +207,11 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
               <label className="block text-slate-400 font-semibold uppercase mb-1">Administered Dose</label>
               <input
                 type="number"
+                min="0"
+                step="any"
+                placeholder="0"
                 value={doseAmount}
-                onChange={(e) => setDoseAmount(parseFloat(e.target.value) || 0)}
+                onChange={(e) => setDoseAmount(e.target.value === '' ? '' : parseFloat(e.target.value))}
                 className="w-full bg-slate-900 border border-slate-700 text-white font-mono font-bold text-sm rounded-lg p-2 focus:border-cyan-400 outline-none"
               />
             </div>
@@ -227,9 +230,11 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
               <label className="block text-slate-400 font-semibold uppercase mb-1">Syringe Units</label>
               <input
                 type="number"
+                min="0"
                 step="0.5"
+                placeholder="0"
                 value={drawUnits}
-                onChange={(e) => setDrawUnits(parseFloat(e.target.value) || 0)}
+                onChange={(e) => setDrawUnits(e.target.value === '' ? '' : parseFloat(e.target.value))}
                 className="w-full bg-slate-900 border border-slate-700 text-cyan-400 font-mono font-bold text-sm rounded-lg p-2 focus:border-cyan-400 outline-none"
               />
             </div>

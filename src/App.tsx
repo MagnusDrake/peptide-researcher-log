@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Protocol, DoseLogEntry, Peptide, CuratedStack, SyringeType } from './types';
+import { Protocol, DoseLogEntry, Peptide, CuratedStack, SyringeType, BlendComponent } from './types';
 import { db, initializeDatabase } from './db';
+import { PEPTIDES_DATABASE } from './data/peptides';
+import { calculateReconstitution, calculateMultiBlend } from './utils/calculations';
+import { parseDoseString } from './utils/formatters';
 import { Navbar, NavTab } from './components/layout/Navbar';
 import { MobileNav } from './components/layout/MobileNav';
 import { DailySchedule } from './components/dashboard/DailySchedule';
@@ -34,12 +37,12 @@ export function App() {
   const refreshData = async () => {
     try {
       await initializeDatabase();
-      const loadedProtocols = await db.protocols.toArray();
-      const loadedLogs = await db.doseLogs.orderBy('timestamp').reverse().toArray();
-      setProtocols(loadedProtocols);
-      setLogs(loadedLogs);
-    } catch (e) {
-      console.error('Database load error:', e);
+      const allProtocols = await db.protocols.toArray();
+      const allLogs = await db.doseLogs.orderBy('timestamp').reverse().toArray();
+      setProtocols(allProtocols);
+      setLogs(allLogs);
+    } catch (err) {
+      console.error('Database load error:', err);
     }
   };
 
@@ -97,43 +100,128 @@ export function App() {
     setActiveTab('protocols');
   };
 
-  const handleAdoptStack = async (stack: CuratedStack) => {
-    // Add all peptides in the stack as active protocols
-    for (const item of stack.peptides) {
-      const id = `proto-${item.peptideId}-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
-      const doseNum = parseFloat(item.typicalDose.replace(/[^0-9.]/g, '')) || 250;
-      const isMg = item.typicalDose.toLowerCase().includes('mg');
+  const handleAdoptStack = async (stack: CuratedStack, asSingleBlend: boolean = true) => {
+    if (asSingleBlend) {
+      // Build constituent blend components with exact dosing
+      const blendComponents: BlendComponent[] = stack.peptides.map((item, idx) => {
+        const pep = PEPTIDES_DATABASE.find(p => p.id === item.peptideId);
+        const { doseAmount: parsedDose, doseUnit: parsedUnit } = parseDoseString(
+          item.typicalDose, 
+          pep?.standardDosing.typicalDose || 250
+        );
+        const defaultMg = pep?.commonVialSizesMg[0] || (parsedUnit === 'mg' ? 10 : 5);
+        return {
+          id: `c-blend-${idx}-${Date.now()}`,
+          peptideName: item.peptideName,
+          vialMassMg: defaultMg,
+          targetDose: parsedDose,
+          doseUnit: parsedUnit
+        };
+      });
+
+      // Calculate complete multi-compound blend reconstitution
+      const blendCalc = calculateMultiBlend({
+        components: blendComponents.map(c => ({
+          id: c.id,
+          peptideName: c.peptideName,
+          vialMassMg: c.vialMassMg,
+          targetDose: c.targetDose,
+          doseUnit: c.doseUnit
+        })),
+        bacWaterMl: 2.0,
+        primaryComponentId: blendComponents[0].id,
+        targetPrimaryDose: blendComponents[0].targetDose,
+        primaryDoseUnit: blendComponents[0].doseUnit,
+        syringeType: 'U-100'
+      });
 
       const protocol: Protocol = {
-        id,
-        peptideId: item.peptideId,
-        peptideName: item.peptideName,
+        id: `proto-stack-${stack.id}-${Date.now()}`,
+        peptideId: 'custom-blend',
+        peptideName: stack.name,
+        customPeptide: true,
+        isBlend: true,
+        blendComponents: blendCalc.components.map(c => ({
+          id: c.id,
+          peptideName: c.peptideName,
+          vialMassMg: c.vialMassMg,
+          targetDose: c.targetDose,
+          doseUnit: c.doseUnit,
+          deliveredDose: c.deliveredDoseMcg >= 1000 ? Number((c.deliveredDoseMcg / 1000).toFixed(2)) : Number(c.deliveredDoseMcg.toFixed(1)),
+          deliveredUnit: c.deliveredDoseMcg >= 1000 ? 'mg' : 'mcg'
+        })),
         brandName: `${stack.name} Formulation`,
-        vialMassMg: isMg ? 10 : 5,
+        vialMassMg: blendCalc.totalVialMassMg,
         bacWaterMl: 2.0,
-        doseAmount: doseNum,
-        doseUnit: isMg ? 'mg' : 'mcg',
+        doseAmount: blendComponents[0].targetDose,
+        doseUnit: blendComponents[0].doseUnit,
         syringeType: 'U-100',
-        calculatedUnits: isMg ? (doseNum / 5) * 100 : (doseNum / 25),
-        concentrationMgMl: isMg ? 5 : 2.5,
-        frequencyType: item.frequency.toLowerCase().includes('daily') ? 'daily' : 'days_of_week',
-        daysOfWeek: [1, 3, 5],
-        timingOfDay: item.timing.toLowerCase().includes('morning') ? 'fasted_morning' : 'bedtime',
+        calculatedUnits: blendCalc.drawUnits,
+        concentrationMgMl: blendCalc.totalVialMassMg / 2.0,
+        frequencyType: 'days_of_week',
+        daysOfWeek: [1, 2, 3, 4, 5],
+        timingOfDay: 'fasted_morning',
         startDate: new Date().toISOString().split('T')[0],
-        plannedCycleWeeks: 8,
-        notes: `Adopted from ${stack.name}. Synergy: ${item.synergyReason}`,
-        isActive: true,
         reconstitutedDate: new Date().toISOString().split('T')[0],
-        remainingVialUnits: 100,
+        plannedCycleWeeks: 8,
+        notes: `Adopted from ${stack.name}. Single-vial multi-peptide stack formulation.`,
+        isActive: true,
+        remainingVialUnits: 200,
         isPublic: false
       };
 
       await db.protocols.put(protocol);
-    }
+      await refreshData();
+      setActiveTab('protocols');
+    } else {
+      // Add each compound as an individual protocol with accurate reconstitution math
+      for (const item of stack.peptides) {
+        const pep = PEPTIDES_DATABASE.find(p => p.id === item.peptideId);
+        const { doseAmount: parsedDose, doseUnit: parsedUnit } = parseDoseString(
+          item.typicalDose, 
+          pep?.standardDosing.typicalDose || 250
+        );
+        const vialMassMg = pep?.commonVialSizesMg[0] || (parsedUnit === 'mg' ? 10 : 5);
+        const bacWaterMl = pep?.typicalBacWaterMl[0] || 2.0;
 
-    await refreshData();
-    setActiveTab('protocols');
-    alert(`Successfully added all ${stack.peptides.length} compounds from "${stack.name}" to your active protocols!`);
+        const calc = calculateReconstitution({
+          vialMassMg,
+          bacWaterMl,
+          targetDose: parsedDose,
+          doseUnit: parsedUnit,
+          syringeType: 'U-100'
+        });
+
+        const protocol: Protocol = {
+          id: `proto-${item.peptideId}-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
+          peptideId: item.peptideId,
+          peptideName: item.peptideName,
+          brandName: `${stack.name} Protocol`,
+          vialMassMg,
+          bacWaterMl,
+          doseAmount: parsedDose,
+          doseUnit: parsedUnit,
+          syringeType: 'U-100',
+          calculatedUnits: calc.drawUnits,
+          concentrationMgMl: calc.concentrationMgMl,
+          frequencyType: item.frequency.toLowerCase().includes('daily') ? 'daily' : 'days_of_week',
+          daysOfWeek: [1, 3, 5],
+          timingOfDay: item.timing.toLowerCase().includes('morning') ? 'fasted_morning' : 'bedtime',
+          startDate: new Date().toISOString().split('T')[0],
+          reconstitutedDate: new Date().toISOString().split('T')[0],
+          plannedCycleWeeks: 8,
+          notes: `Adopted from ${stack.name}. Synergy: ${item.synergyReason}`,
+          isActive: true,
+          remainingVialUnits: Math.round(bacWaterMl * 100),
+          isPublic: false
+        };
+
+        await db.protocols.put(protocol);
+      }
+
+      await refreshData();
+      setActiveTab('protocols');
+    }
   };
 
   // Build log counts map for protocols

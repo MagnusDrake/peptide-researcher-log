@@ -20,7 +20,7 @@ import {
 interface PeptideMatcherProps {
   onOpenInCalculator: (peptide: Peptide) => void;
   onAddToProtocol: (peptide: Peptide) => void;
-  onAdoptStack?: (stack: CuratedStack) => void;
+  onAdoptStack?: (stack: CuratedStack, asSingleBlend?: boolean) => void;
 }
 
 const GOALS_LIST = [

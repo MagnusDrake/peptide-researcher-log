@@ -26,10 +26,10 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
   const [summary, setSummary] = useState<string>('');
   const [mechanism, setMechanism] = useState<string>('');
   const [vialSizes, setVialSizes] = useState<string>('5, 10');
-  const [typicalDose, setTypicalDose] = useState<number>(500);
+  const [typicalDose, setTypicalDose] = useState<number | ''>(500);
   const [doseUnit, setDoseUnit] = useState<'mcg' | 'mg'>('mcg');
   const [frequency, setFrequency] = useState<string>('Once daily');
-  const [halfLifeHours, setHalfLifeHours] = useState<number>(4);
+  const [halfLifeHours, setHalfLifeHours] = useState<number | ''>(4);
   const [indications, setIndications] = useState<string>('Tissue repair, Vitality');
 
   if (!isOpen) return null;
@@ -94,22 +94,22 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
         lightSensitive: true
       },
       standardDosing: {
-        minDose: typicalDose * 0.5,
-        maxDose: typicalDose * 1.5,
-        typicalDose,
+        minDose: (Number(typicalDose) || 500) * 0.5,
+        maxDose: (Number(typicalDose) || 500) * 1.5,
+        typicalDose: Number(typicalDose) || 500,
         unit: doseUnit,
         frequency,
         timing: 'Morning fasted'
       },
-      halfLifeHours,
-      halfLifeLabel: `~${halfLifeHours} hours`,
+      halfLifeHours: Number(halfLifeHours) || 4,
+      halfLifeLabel: `~${Number(halfLifeHours) || 4} hours`,
       researchIndications: indications.split(',').map(s => s.trim()).filter(Boolean),
       synergisticWith: isBlend ? blendRows.map(r => r.name) : [],
       sideEffectWarnings: ['Monitor research tolerance across all constituent compounds.'],
       literatureReferences: [],
       isCustom: true,
       isBlend,
-      blendComponents: isBlend ? blendRows.map(r => ({ name: r.name, massRatioMg: r.massRatioMg })) : undefined
+      blendComponents: isBlend ? blendRows.map(r => ({ name: r.name, massRatioMg: Number(r.massRatioMg) || 0 })) : undefined
     };
 
     await db.customPeptides.put(newPeptide);
@@ -213,7 +213,7 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
                       required
                       placeholder="mg"
                       value={r.massRatioMg}
-                      onChange={(e) => handleUpdateBlendRow(r.id, 'massRatioMg', parseFloat(e.target.value) || 0)}
+                      onChange={(e) => handleUpdateBlendRow(r.id, 'massRatioMg', e.target.value === '' ? '' : parseFloat(e.target.value))}
                       className="w-16 bg-slate-900 border border-slate-700 text-white text-xs rounded-lg p-2 text-right focus:border-purple-400 outline-none font-mono"
                     />
                     <span className="text-xs text-slate-400 font-bold">mg</span>
@@ -277,14 +277,24 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
                 <div className="flex bg-slate-950 rounded border border-slate-700 text-[10px]">
                   <button
                     type="button"
-                    onClick={() => setDoseUnit('mcg')}
+                    onClick={() => {
+                      if (doseUnit === 'mg') {
+                        setDoseUnit('mcg');
+                        if (typicalDose !== '') setTypicalDose(Number(typicalDose) * 1000);
+                      }
+                    }}
                     className={`px-1.5 py-0.5 font-bold ${doseUnit === 'mcg' ? 'bg-cyan-500 text-white' : 'text-slate-400'}`}
                   >
                     mcg
                   </button>
                   <button
                     type="button"
-                    onClick={() => setDoseUnit('mg')}
+                    onClick={() => {
+                      if (doseUnit === 'mcg') {
+                        setDoseUnit('mg');
+                        if (typicalDose !== '') setTypicalDose(Number(typicalDose) / 1000);
+                      }
+                    }}
                     className={`px-1.5 py-0.5 font-bold ${doseUnit === 'mg' ? 'bg-cyan-500 text-white' : 'text-slate-400'}`}
                   >
                     mg
@@ -296,8 +306,9 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
                 min="0"
                 step="any"
                 required
+                placeholder="0"
                 value={typicalDose}
-                onChange={(e) => setTypicalDose(parseFloat(e.target.value) || 0)}
+                onChange={(e) => setTypicalDose(e.target.value === '' ? '' : parseFloat(e.target.value))}
                 className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
               />
             </div>
@@ -310,8 +321,9 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
                 type="number"
                 min="0"
                 step="any"
+                placeholder="0"
                 value={halfLifeHours}
-                onChange={(e) => setHalfLifeHours(parseFloat(e.target.value) || 0)}
+                onChange={(e) => setHalfLifeHours(e.target.value === '' ? '' : parseFloat(e.target.value))}
                 className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
               />
             </div>

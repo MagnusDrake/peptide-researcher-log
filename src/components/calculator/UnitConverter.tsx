@@ -3,12 +3,12 @@ import { ArrowRightLeft, Sparkles, Equal } from 'lucide-react';
 import { convertUnits } from '../../utils/calculations';
 
 export const UnitConverter: React.FC = () => {
-  const [inputValue, setInputValue] = useState<number>(500);
+  const [inputValue, setInputValue] = useState<number | ''>(500);
   const [fromUnit, setFromUnit] = useState<'mg' | 'mcg' | 'ml' | 'units'>('mcg');
   const [toUnit, setToUnit] = useState<'mg' | 'mcg' | 'ml' | 'units'>('units');
-  const [concentrationMgMl, setConcentrationMgMl] = useState<number>(2.5);
+  const [concentrationMgMl, setConcentrationMgMl] = useState<number | ''>(2.5);
 
-  const convertedValue = convertUnits(inputValue, fromUnit, toUnit, concentrationMgMl);
+  const convertedValue = convertUnits(Number(inputValue) || 0, fromUnit, toUnit, Number(concentrationMgMl) || 0.1);
 
   const handleSwap = () => {
     setFromUnit(toUnit);
@@ -43,8 +43,9 @@ export const UnitConverter: React.FC = () => {
               type="number"
               min="0.01"
               step="0.5"
+              placeholder="0"
               value={concentrationMgMl}
-              onChange={(e) => setConcentrationMgMl(parseFloat(e.target.value) || 0.1)}
+              onChange={(e) => setConcentrationMgMl(e.target.value === '' ? '' : parseFloat(e.target.value))}
               className="w-24 bg-slate-950 border border-slate-700 text-amber-400 font-mono font-bold text-sm rounded-lg p-2 text-center"
             />
             <span className="text-xs text-slate-400 font-medium">mg / mL</span>
@@ -58,8 +59,11 @@ export const UnitConverter: React.FC = () => {
             <label className="text-xs font-semibold text-slate-400 uppercase">Convert From</label>
             <input
               type="number"
+              min="0"
+              step="any"
+              placeholder="0"
               value={inputValue}
-              onChange={(e) => setInputValue(parseFloat(e.target.value) || 0)}
+              onChange={(e) => setInputValue(e.target.value === '' ? '' : parseFloat(e.target.value))}
               className="w-full bg-slate-950 border border-slate-700 text-white text-xl font-bold font-mono rounded-lg p-3 outline-none focus:border-amber-400"
             />
             <div className="grid grid-cols-4 gap-1 mt-1">

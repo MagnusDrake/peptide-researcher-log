@@ -17,8 +17,8 @@ import {
 interface BlendComponentRow {
   id: string;
   peptideName: string;
-  vialMassMg: number;
-  targetDose: number;
+  vialMassMg: number | '';
+  targetDose: number | '';
   doseUnit: 'mcg' | 'mg';
 }
 
@@ -139,7 +139,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
     { id: 'c-2', peptideName: 'TB-500', vialMassMg: 5, targetDose: 250, doseUnit: 'mcg' }
   ]);
   const [primaryComponentId, setPrimaryComponentId] = useState<string>('c-1');
-  const [bacWaterMl, setBacWaterMl] = useState<number>(2.0);
+  const [bacWaterMl, setBacWaterMl] = useState<number | ''>(2.0);
   const [syringeType, setSyringeType] = useState<SyringeType>('U-100');
   const [vialCost, setVialCost] = useState<number | ''>('');
 
@@ -213,13 +213,13 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
     components: components.map(c => ({
       id: c.id,
       peptideName: c.peptideName,
-      vialMassMg: c.vialMassMg,
-      targetDose: c.targetDose,
+      vialMassMg: Number(c.vialMassMg) || 0,
+      targetDose: Number(c.targetDose) || 0,
       doseUnit: c.doseUnit
     })),
-    bacWaterMl,
+    bacWaterMl: Number(bacWaterMl) || 0,
     primaryComponentId: primaryComp?.id || 'c-1',
-    targetPrimaryDose: primaryComp?.targetDose || 250,
+    targetPrimaryDose: Number(primaryComp?.targetDose) || 0,
     primaryDoseUnit: primaryComp?.doseUnit || 'mcg',
     syringeType,
     vialCost: vialCost === '' ? undefined : Number(vialCost)
@@ -246,9 +246,9 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
           <button
             onClick={() => onSaveAsProtocol({
               peptideName: blendTitle || 'Multi-Peptide Blend',
-              vialMassMg: result.totalVialMassMg,
-              bacWaterMl,
-              doseAmount: primaryComp.targetDose,
+              vialMassMg: Number(result.totalVialMassMg) || 0,
+              bacWaterMl: Number(bacWaterMl) || 2.0,
+              doseAmount: Number(primaryComp.targetDose) || 250,
               doseUnit: primaryComp.doseUnit,
               syringeType,
               isBlend: true,
@@ -386,8 +386,9 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
                         type="number"
                         min="0"
                         step="any"
+                        placeholder="0"
                         value={comp.vialMassMg}
-                        onChange={(e) => handleUpdateComponent(comp.id, 'vialMassMg', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleUpdateComponent(comp.id, 'vialMassMg', e.target.value === '' ? '' : parseFloat(e.target.value))}
                         className="w-full bg-slate-950 border border-slate-700 text-white text-xs rounded-lg p-2 focus:border-purple-400 outline-none font-mono"
                       />
                     </div>
@@ -418,8 +419,9 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
                         type="number"
                         min="0"
                         step="any"
+                        placeholder="0"
                         value={comp.targetDose}
-                        onChange={(e) => handleUpdateComponent(comp.id, 'targetDose', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleUpdateComponent(comp.id, 'targetDose', e.target.value === '' ? '' : parseFloat(e.target.value))}
                         className={`w-full bg-slate-950 border text-white text-xs rounded-lg p-2 outline-none font-mono ${
                           comp.id === primaryComponentId ? 'border-purple-500' : 'border-slate-700 text-slate-400'
                         }`}
@@ -454,8 +456,9 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
                   type="number"
                   min="0"
                   step="any"
+                  placeholder="0"
                   value={bacWaterMl}
-                  onChange={(e) => setBacWaterMl(parseFloat(e.target.value) || 0)}
+                  onChange={(e) => setBacWaterMl(e.target.value === '' ? '' : parseFloat(e.target.value))}
                   className="w-full bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm rounded-xl p-2.5 focus:border-purple-400 outline-none"
                 />
               </div>
@@ -585,11 +588,11 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
         <SyringeVisualizer
           syringeType={syringeType}
           drawUnits={result.drawUnits}
-          concentrationMcgPerUnit={primaryComp ? (primaryComp.vialMassMg * 10) / bacWaterMl : 0}
+          concentrationMcgPerUnit={primaryComp ? ((Number(primaryComp.vialMassMg) || 0) * 10) / (Number(bacWaterMl) || 1) : 0}
           peptideName={blendTitle}
           onUnitsChange={(units) => {
-            const primaryConc = (primaryComp.vialMassMg * 10) / bacWaterMl;
-            if (primaryConc > 0) {
+            const primaryConc = ((Number(primaryComp?.vialMassMg) || 0) * 10) / (Number(bacWaterMl) || 1);
+            if (primaryConc > 0 && primaryComp) {
               const newDose = units * primaryConc;
               handleUpdateComponent(
                 primaryComp.id, 

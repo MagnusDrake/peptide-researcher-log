@@ -66,29 +66,25 @@ const PRESETS: TitrationPreset[] = [
 
 export const TitrationPlanner: React.FC = () => {
   const [selectedPresetId, setSelectedPresetId] = useState<string>('tirzepatide-std');
-  const [vialMassMg, setVialMassMg] = useState<number>(10);
-  const [bacWaterMl, setBacWaterMl] = useState<number>(2.0);
+  const [vialMassMg, setVialMassMg] = useState<number | ''>(10);
+  const [bacWaterMl, setBacWaterMl] = useState<number | ''>(2.0);
   const [syringeType, setSyringeType] = useState<SyringeType>('U-100');
 
   const activePreset = PRESETS.find(p => p.id === selectedPresetId) || PRESETS[0];
 
-  // Concentration in mg/mL
-  const concentrationMgMl = vialMassMg / bacWaterMl;
+  const concentrationMgMl = (Number(vialMassMg) || 0) / (Number(bacWaterMl) || 1);
   // Units per mg on U-100 syringe: 100 units = 1 mL -> units per mg = 100 / concentrationMgMl
   const unitsPerMg = concentrationMgMl > 0 ? 100 / concentrationMgMl : 0;
 
   return (
-    <div className="flex flex-col gap-6 max-w-5xl mx-auto pb-10">
-      <div className="bg-gradient-to-r from-emerald-900/40 via-teal-900/30 to-slate-900/60 p-6 rounded-2xl border border-emerald-500/20 backdrop-blur-md">
-        <div className="flex items-center gap-2 text-emerald-400 font-semibold text-xs uppercase tracking-wider mb-1">
-          <TrendingUp className="w-4 h-4" />
-          <span>Dose Escalation & Titration Matrix</span>
-        </div>
-        <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-          GLP-1 & Peptide Titration Planner
-        </h1>
-        <p className="text-sm text-slate-300 mt-1 max-w-xl">
-          Generate step-by-step 4-week titration ramps for incremental tolerance building. Essential for GLP-1 and incretin research to avoid gastrointestinal side effects.
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-1">
+        <h2 className="text-xl font-bold text-white flex items-center gap-2">
+          <TrendingUp className="w-5 h-5 text-emerald-400" />
+          <span>GLP-1 Incretin Titration & Escalation Planner</span>
+        </h2>
+        <p className="text-xs text-slate-400">
+          Standard 4-week clinical dosage escalation ramps designed to minimize gastrointestinal adverse events while establishing therapeutic efficacy.
         </p>
       </div>
 
@@ -124,8 +120,11 @@ export const TitrationPlanner: React.FC = () => {
           <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Your Vial Mass (mg)</label>
           <input
             type="number"
+            min="0"
+            step="any"
+            placeholder="0"
             value={vialMassMg}
-            onChange={(e) => setVialMassMg(parseFloat(e.target.value) || 1)}
+            onChange={(e) => setVialMassMg(e.target.value === '' ? '' : parseFloat(e.target.value))}
             className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-lg p-2.5 focus:border-emerald-400 outline-none"
           />
         </div>
@@ -133,15 +132,18 @@ export const TitrationPlanner: React.FC = () => {
           <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">BAC Water (mL)</label>
           <input
             type="number"
+            min="0"
+            step="any"
+            placeholder="0"
             value={bacWaterMl}
-            onChange={(e) => setBacWaterMl(parseFloat(e.target.value) || 1)}
+            onChange={(e) => setBacWaterMl(e.target.value === '' ? '' : parseFloat(e.target.value))}
             className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-lg p-2.5 focus:border-emerald-400 outline-none"
           />
         </div>
         <div>
           <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Concentration</label>
           <div className="bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm font-mono font-bold text-emerald-400">
-            {concentrationMgMl.toFixed(2)} mg/mL ({((vialMassMg * 1000 / bacWaterMl) / 100).toFixed(1)} mcg/unit)
+            {concentrationMgMl.toFixed(2)} mg/mL ({(((Number(vialMassMg) || 0) * 1000 / (Number(bacWaterMl) || 1)) / 100).toFixed(1)} mcg/unit)
           </div>
         </div>
       </div>
