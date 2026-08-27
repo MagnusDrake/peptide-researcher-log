@@ -270,7 +270,7 @@ export function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 px-4 lg:px-8 pt-6 pb-20 md:pb-12">
+      <main className="flex-1 px-4 lg:px-8 pt-6 pb-20 md:pb-12 w-full min-w-0 max-w-full overflow-x-hidden">
         {/* TAB 1: DAILY DASHBOARD */}
         {activeTab === 'dashboard' && (
           <DailySchedule
@@ -284,9 +284,9 @@ export function App() {
 
         {/* TAB 2: CALCULATOR & SYRINGE TOOLS */}
         {activeTab === 'calculator' && (
-          <div className="flex flex-col gap-6 max-w-5xl mx-auto">
+          <div className="flex flex-col gap-6 max-w-5xl mx-auto w-full min-w-0">
             {/* Calculator Sub-Tabs Switcher (Horizontal scroll on mobile) */}
-            <div className="w-full flex items-center justify-start sm:justify-center overflow-x-auto pb-1 scrollbar-none">
+            <div className="w-full max-w-full flex items-center justify-start sm:justify-center overflow-x-auto pb-1 scrollbar-none">
               <div className="bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 flex items-center gap-1 shadow-inner shrink-0">
                 <button
                   onClick={() => setCalcSubTab('recon')}

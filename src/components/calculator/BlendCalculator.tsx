@@ -335,9 +335,9 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
                       : 'bg-slate-900/60 border-slate-800'
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 font-mono font-bold text-[11px] flex items-center justify-center">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 w-full sm:w-auto flex-1 min-w-0">
+                      <span className="shrink-0 w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 font-mono font-bold text-[11px] flex items-center justify-center">
                         {idx + 1}
                       </span>
                       <input
@@ -345,7 +345,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
                         value={comp.peptideName}
                         onChange={(e) => handleUpdateComponent(comp.id, 'peptideName', e.target.value)}
                         placeholder={`Peptide #${idx + 1} Name`}
-                        className="bg-slate-950 border border-slate-700 text-white text-xs sm:text-sm font-bold rounded-lg px-2.5 py-1.5 focus:border-purple-400 outline-none w-44 sm:w-56"
+                        className="bg-slate-950 border border-slate-700 text-white text-xs sm:text-sm font-bold rounded-lg px-2.5 py-1.5 focus:border-purple-400 outline-none w-full min-w-0"
                       />
                     </div>
 

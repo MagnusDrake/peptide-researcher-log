@@ -116,7 +116,7 @@ export const SyringeVisualizer: React.FC<SyringeVisualizerProps> = ({
         <svg
           viewBox={`0 0 ${svgWidth} ${svgHeight}`}
           className="w-full select-none"
-          style={{ minWidth: '460px', maxHeight: '140px' }}
+          style={{ minWidth: '280px', maxWidth: '100%', maxHeight: '140px' }}
         >
           <defs>
             {/* Fluid Gradient */}
