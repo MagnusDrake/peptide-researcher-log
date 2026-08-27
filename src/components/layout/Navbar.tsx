@@ -9,10 +9,11 @@ import {
   Users, 
   Download, 
   Sun, 
-  Moon 
+  Moon,
+  User 
 } from 'lucide-react';
 
-export type NavTab = 'dashboard' | 'calculator' | 'library' | 'matcher' | 'protocols' | 'journal' | 'community';
+export type NavTab = 'dashboard' | 'calculator' | 'library' | 'matcher' | 'protocols' | 'journal' | 'community' | 'profile';
 
 interface NavbarProps {
   activeTab: NavTab;
@@ -42,6 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'protocols', label: 'Protocols', icon: <Layers className="w-4 h-4" />, badge: activeProtocolsCount },
     { id: 'journal', label: 'Journal & Logs', icon: <Activity className="w-4 h-4" /> },
     { id: 'community', label: 'Community', icon: <Users className="w-4 h-4" /> },
+    { id: 'profile', label: 'Vault Profile', icon: <User className="w-4 h-4" /> },
   ];
 
   return (

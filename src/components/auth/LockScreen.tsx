@@ -10,7 +10,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
   const [error, setError] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
 
-  const CORRECT_PIN = '0000'; // Hardcoded local vault PIN
+  const CORRECT_PIN = localStorage.getItem('aura_pin') || '0000';
 
   useEffect(() => {
     if (pin.length === 4) {

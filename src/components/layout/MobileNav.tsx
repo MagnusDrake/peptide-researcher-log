@@ -7,7 +7,8 @@ import {
   Sparkles, 
   Layers, 
   Activity, 
-  Users 
+  Users,
+  User
 } from 'lucide-react';
 
 interface MobileNavProps {
@@ -29,6 +30,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     { id: 'protocols', label: 'Protocols', icon: <Layers className="w-5 h-5" />, badge: activeProtocolsCount },
     { id: 'journal', label: 'Journal', icon: <Activity className="w-5 h-5" /> },
     { id: 'community', label: 'Hub', icon: <Users className="w-5 h-5" /> },
+    { id: 'profile', label: 'Profile', icon: <User className="w-5 h-5" /> },
   ];
 
   return (

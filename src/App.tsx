@@ -17,6 +17,7 @@ import { PeptideMatcher } from './components/matcher/PeptideMatcher';
 import { ProtocolManager } from './components/protocols/ProtocolManager';
 import { ResearchJournal } from './components/journal/ResearchJournal';
 import { CommunityHub } from './components/community/CommunityHub';
+import { ProfileSettings } from './components/profile/ProfileSettings';
 import { Calculator, Layers, TrendingUp, ArrowRightLeft, Sparkles, Plus } from 'lucide-react';
 
 export function App() {
@@ -414,6 +415,11 @@ export function App() {
               setActiveTab('protocols');
             }}
           />
+        )}
+
+        {/* TAB 8: VAULT PROFILE SETTINGS */}
+        {activeTab === 'profile' && (
+          <ProfileSettings />
         )}
       </main>
 
