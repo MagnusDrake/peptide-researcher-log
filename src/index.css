@@ -36,7 +36,7 @@
     --chart-grid: rgba(124, 118, 127, 0.15); /* #7c767f grid */
 
     /* LIGHT MODE: Earth & Frost Palette Implementation */
-    --color-slate-950: #aa7c5d; /* App Background: Bronze */
+    --color-slate-950: #d1ab91; /* App Background: Lighter Bronze */
     --color-slate-900: rgba(255, 255, 255, 0.6); /* Cards / Modals: Frosted glass over bronze */
     --color-slate-800: rgba(124, 118, 127, 0.2); /* Borders / Hover: Purplish-gray tint */
     --color-slate-700: rgba(124, 118, 127, 0.3); /* Dividers */
