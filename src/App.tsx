@@ -257,7 +257,7 @@ export function App() {
   }, {} as Record<string, number>);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-white">
+    <div className="min-h-screen flex flex-col text-slate-100 selection:bg-cyan-500 selection:text-white">
       {/* Top Navbar */}
       <Navbar
         activeTab={activeTab}

@@ -37,9 +37,15 @@
     z-index: 0; /* Creates a stacking context so pseudo-elements render above the background */
   }
 
+  #root {
+    position: relative;
+    z-index: 0;
+    min-height: 100vh;
+  }
+
   /* Animated glowing background blobs for dark mode */
-  body::before,
-  body::after {
+  #root::before,
+  #root::after {
     content: '';
     position: fixed;
     z-index: -1;
@@ -50,7 +56,7 @@
     pointer-events: none;
   }
 
-  body::before {
+  #root::before {
     width: 60vw;
     height: 60vw;
     max-width: 800px;
@@ -61,7 +67,7 @@
     animation-delay: -5s;
   }
 
-  body::after {
+  #root::after {
     width: 50vw;
     height: 50vw;
     max-width: 600px;
@@ -85,12 +91,12 @@
   }
 
   /* Softer blobs for light mode */
-  html.light body::before {
+  html.light #root::before {
     opacity: 0.25;
     background: radial-gradient(circle, rgba(14, 165, 233, 0.6) 0%, rgba(99, 102, 241, 0) 70%);
   }
   
-  html.light body::after {
+  html.light #root::after {
     opacity: 0.2;
     background: radial-gradient(circle, rgba(16, 185, 129, 0.5) 0%, rgba(139, 92, 246, 0) 70%);
   }
