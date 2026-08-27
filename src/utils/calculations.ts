@@ -27,7 +27,9 @@ export interface ReconstitutionResult {
 export function calculateReconstitution(input: ReconstitutionInput): ReconstitutionResult {
   const { vialMassMg, bacWaterMl, targetDose, doseUnit, syringeType, vialCost } = input;
 
-  if (!vialMassMg || vialMassMg <= 0 || !bacWaterMl || bacWaterMl <= 0 || !targetDose || targetDose <= 0) {
+  const syringeMaxUnits = syringeType === 'U-100' ? 100 : syringeType === 'U-50' ? 50 : 30;
+
+  if (!vialMassMg || vialMassMg <= 0 || !bacWaterMl || bacWaterMl <= 0) {
     return {
       concentrationMgMl: 0,
       concentrationMcgMl: 0,
@@ -37,7 +39,7 @@ export function calculateReconstitution(input: ReconstitutionInput): Reconstitut
       drawUnits: 0,
       drawVolumeMl: 0,
       totalDosesInVial: 0,
-      syringeMaxUnits: syringeType === 'U-100' ? 100 : syringeType === 'U-50' ? 50 : 30,
+      syringeMaxUnits,
       isDrawExceedingSyringe: false
     };
   }
@@ -50,6 +52,21 @@ export function calculateReconstitution(input: ReconstitutionInput): Reconstitut
   // In all standard U-insulin syringes (U-100, U-50, U-30), 100 units always represents 1.0 mL
   const concentrationMcgPerUnit = concentrationMcgMl / 100;
 
+  if (!targetDose || targetDose <= 0) {
+    return {
+      concentrationMgMl: Number(concentrationMgMl.toFixed(3)),
+      concentrationMcgMl: Number(concentrationMcgMl.toFixed(1)),
+      concentrationMcgPerUnit: Number(concentrationMcgPerUnit.toFixed(2)),
+      targetDoseMcg: 0,
+      targetDoseMg: 0,
+      drawUnits: 0,
+      drawVolumeMl: 0,
+      totalDosesInVial: 0,
+      syringeMaxUnits,
+      isDrawExceedingSyringe: false
+    };
+  }
+
   const targetDoseMcg = doseUnit === 'mg' ? targetDose * 1000 : targetDose;
   const targetDoseMg = doseUnit === 'mg' ? targetDose : targetDose / 1000;
 
@@ -59,7 +76,6 @@ export function calculateReconstitution(input: ReconstitutionInput): Reconstitut
   const totalDosesInVial = targetDoseMg > 0 ? vialMassMg / targetDoseMg : 0;
   const costPerDose = vialCost && totalDosesInVial > 0 ? vialCost / totalDosesInVial : undefined;
 
-  const syringeMaxUnits = syringeType === 'U-100' ? 100 : syringeType === 'U-50' ? 50 : 30;
   const isDrawExceedingSyringe = drawUnits > syringeMaxUnits;
 
   let precisionWarning: string | undefined;
