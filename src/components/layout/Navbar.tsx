@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
 
   const navItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { id: 'dashboard', label: 'Today', icon: <Calendar className="w-4 h-4" /> },
+    { id: 'dashboard', label: 'My Peptides', icon: <Calendar className="w-4 h-4" /> },
     { id: 'calculator', label: 'Calculator', icon: <Calculator className="w-4 h-4" /> },
     { id: 'library', label: 'Peptide DB', icon: <BookOpen className="w-4 h-4" /> },
     { id: 'matcher', label: 'Matcher Quiz', icon: <Sparkles className="w-4 h-4" /> },

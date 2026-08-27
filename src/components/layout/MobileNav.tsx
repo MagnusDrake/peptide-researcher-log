@@ -22,7 +22,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   activeProtocolsCount,
 }) => {
   const navItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { id: 'dashboard', label: 'Today', icon: <Calendar className="w-5 h-5" /> },
+    { id: 'dashboard', label: 'My Peptides', icon: <Calendar className="w-5 h-5" /> },
     { id: 'calculator', label: 'Calc', icon: <Calculator className="w-5 h-5" /> },
     { id: 'library', label: 'Library', icon: <BookOpen className="w-5 h-5" /> },
     { id: 'matcher', label: 'Matcher', icon: <Sparkles className="w-5 h-5" /> },
