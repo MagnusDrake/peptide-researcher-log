@@ -65,6 +65,8 @@ export function App() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   });
 
+  const [showFlakes, setShowFlakes] = useState(true);
+
   useEffect(() => {
     if (theme === 'light') {
       document.documentElement.classList.remove('dark');
@@ -79,6 +81,14 @@ export function App() {
     }
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    if (showFlakes) {
+      document.documentElement.classList.remove('no-flakes');
+    } else {
+      document.documentElement.classList.add('no-flakes');
+    }
+  }, [showFlakes]);
 
   const handleToggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
@@ -450,6 +460,16 @@ export function App() {
         onTabChange={handleTabChange}
         activeProtocolsCount={protocols.filter(p => p.isActive).length}
       />
+
+      {/* Debug Flakes Toggle */}
+      {theme === 'light' && (
+        <button
+          onClick={() => setShowFlakes(!showFlakes)}
+          className="fixed bottom-24 right-4 z-50 px-3 py-1 bg-slate-900 text-slate-100 text-[10px] font-semibold uppercase tracking-widest rounded-full opacity-60 hover:opacity-100 border border-slate-700 transition"
+        >
+          {showFlakes ? 'Disable Flakes' : 'Enable Flakes'}
+        </button>
+      )}
     </div>
     </>
   );

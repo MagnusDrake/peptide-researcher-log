@@ -135,6 +135,10 @@
     background-size: 150px 150px;
     background-blend-mode: soft-light;
   }
+  
+  html.light.no-flakes #root {
+    background-image: none !important;
+  }
 
   /* More visible blobs for light mode */
   html.light #root::before {
