@@ -35,9 +35,9 @@
   html.light {
     --chart-grid: rgba(124, 118, 127, 0.15); /* #7c767f grid */
 
-    /* LIGHT MODE: Palette Implementation */
-    --color-slate-950: #9fc1db; /* App Background: Powder Blue */
-    --color-slate-900: rgba(255, 255, 255, 0.6); /* Cards / Modals: Frosted glass over powder blue */
+    /* LIGHT MODE: Earth & Frost Palette Implementation */
+    --color-slate-950: #aa7c5d; /* App Background: Bronze */
+    --color-slate-900: rgba(255, 255, 255, 0.6); /* Cards / Modals: Frosted glass over bronze */
     --color-slate-800: rgba(124, 118, 127, 0.2); /* Borders / Hover: Purplish-gray tint */
     --color-slate-700: rgba(124, 118, 127, 0.3); /* Dividers */
     --color-slate-600: #7c767f; /* Purplish Gray */
@@ -52,17 +52,17 @@
     --tw-shadow-color: rgba(37, 20, 20, 0.08); /* Maroon tinted shadow */
 
     /* Override standard utility colors for the new palette */
-    --color-cyan-300: #c99b7d;
-    --color-cyan-400: #aa7c5d; /* Bronze replaces cyan entirely for accents */
-    --color-cyan-500: #936547;
-    --color-cyan-600: #7a5035;
+    --color-cyan-300: #b3d4ec;
+    --color-cyan-400: #9fc1db; /* Powder Blue replaces cyan for accents */
+    --color-cyan-500: #88b0cc;
+    --color-cyan-600: #739ebb;
     
-    --color-emerald-300: #b3d9ef;
-    --color-emerald-400: #94c4dc; /* Deeper powder blue for alternative accents */
-    --color-emerald-500: #77aac4;
+    --color-emerald-300: #c99b7d;
+    --color-emerald-400: #aa7c5d; /* Bronze replaces emerald for alternative accents */
+    --color-emerald-500: #936547;
     
     --color-violet-400: #7c767f; /* Purplish Gray replaces violet */
-    --color-amber-400: #aa7c5d; /* Bronze replaces amber */
+    --color-amber-400: #9fc1db; /* Powder Blue replaces amber */
     --color-rose-400: #251414; /* Dark Maroon */
   }
 
@@ -131,12 +131,12 @@
   /* More visible blobs for light mode */
   html.light #root::before {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(170, 124, 93, 0.7) 0%, rgba(159, 193, 219, 0) 70%); /* Bronze to powder blue */
+    background: radial-gradient(circle, rgba(159, 193, 219, 0.8) 0%, rgba(170, 124, 93, 0) 70%); /* Powder blue to transparent bronze */
   }
   
   html.light #root::after {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(145, 100, 155, 0.8) 0%, rgba(159, 193, 219, 0) 70%); /* More vibrant purplish tone */
+    background: radial-gradient(circle, rgba(145, 100, 155, 0.8) 0%, rgba(170, 124, 93, 0) 70%); /* Vibrant purplish to transparent bronze */
   }
 }
 
@@ -216,8 +216,8 @@ html.light .glass-panel-interactive {
 
 html.light .glass-panel-interactive:hover {
   background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(170, 124, 93, 0.4); /* Bronze border on hover */
-  box-shadow: 0 10px 30px -4px rgba(170, 124, 93, 0.15), 0 0 15px rgba(170, 124, 93, 0.1);
+  border-color: rgba(159, 193, 219, 0.6); /* Powder Blue border on hover */
+  box-shadow: 0 10px 30px -4px rgba(159, 193, 219, 0.3), 0 0 15px rgba(159, 193, 219, 0.25);
   transform: translateY(-2px);
 }
 
