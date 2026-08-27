@@ -43,11 +43,11 @@ export const MobileNav: React.FC<MobileNavProps> = ({
               key={item.id}
               onClick={() => onTabChange(item.id)}
               className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition relative ${
-                isActive ? 'text-cyan-400 font-bold' : 'text-slate-500 hover:text-slate-300'
+                isActive ? 'text-cyan-400 font-semibold' : 'text-slate-500 hover:text-slate-300'
               }`}
             >
               {item.icon}
-              <span className="text-[10px] mt-0.5">{item.label}</span>
+              <span className="text-[9px] font-semibold uppercase tracking-widest mt-1">{item.label}</span>
               {item.badge !== undefined && item.badge > 0 && (
                 <span className="absolute top-0 right-1 w-2 h-2 rounded-full bg-cyan-400"></span>
               )}
