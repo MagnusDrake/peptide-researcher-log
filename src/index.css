@@ -9,37 +9,43 @@
     --color-violet: #8b5cf6;
     --color-rose: #f43f5e;
     --color-amber: #f59e0b;
-    --chart-grid: rgba(255, 255, 255, 0.05);
+    --chart-grid: rgba(6, 182, 212, 0.1);
 
-    /* DARK MODE: Obsidian / Deep Space (Sleek, neutral, premium darks) */
-    --color-slate-950: #050505; /* Background */
-    --color-slate-900: #0e0e0e; /* Elevated Cards */
-    --color-slate-800: #1a1a1a; /* Borders / Inputs */
-    --color-slate-700: #27272a; /* Dividers */
-    --color-slate-600: #3f3f46; 
-    --color-slate-500: #71717a; /* Muted text */
-    --color-slate-400: #a1a1aa; /* Secondary text */
-    --color-slate-300: #d4d4d8; /* Normal text */
-    --color-slate-200: #e4e4e7;
-    --color-slate-100: #fafafa; /* Headings */
+    /* DARK MODE: Midnight Ambient (Deep blue-blacks with cyan/indigo tinted borders) */
+    --color-slate-950: #020617; /* App Background: Deep midnight */
+    --color-slate-900: #081126; /* Cards / Modals: Slightly elevated blue-black */
+    --color-slate-800: rgba(6, 182, 212, 0.12); /* Borders / Hover: Cyan tinted glass */
+    --color-slate-700: rgba(6, 182, 212, 0.2);  /* Dividers */
+    --color-slate-600: #475569; 
+    --color-slate-500: #64748b; /* Muted text */
+    --color-slate-400: #94a3b8; /* Secondary text */
+    --color-slate-300: #cbd5e1; /* Normal text */
+    --color-slate-200: #e2e8f0;
+    --color-slate-100: #f8fafc; /* Headings */
     --color-slate-50:  #ffffff;
+
+    /* Global Tinted Shadows for Dark Mode */
+    --tw-shadow-color: rgba(6, 182, 212, 0.08);
   }
 
   html.light {
-    --chart-grid: rgba(0, 0, 0, 0.05);
+    --chart-grid: rgba(6, 182, 212, 0.1);
 
-    /* LIGHT MODE: Warm Minimalist / Pastel Beige */
-    --color-slate-950: #f5f3eb; /* App Background: Soft pastel oat */
-    --color-slate-900: #fcfbf8; /* Cards / Modals: Creamy off-white */
-    --color-slate-800: #e8e2d2; /* Borders / Hover states: Deeper beige */
-    --color-slate-700: #d5ccb7; /* Dividers */
-    --color-slate-600: #a69a83; 
-    --color-slate-500: #7a705c; /* Muted text */
-    --color-slate-400: #595244; /* Secondary text */
-    --color-slate-300: #3b362c; /* Normal text */
-    --color-slate-200: #29251e; 
-    --color-slate-100: #1c1914; /* Headings: Warm Espresso */
-    --color-slate-50:  #0a0907;
+    /* LIGHT MODE: Frosty Ambient (Ice blue background, pure white cards, cyan borders) */
+    --color-slate-950: #f4f7fb; /* App Background: Frosty cool blue-white */
+    --color-slate-900: #ffffff; /* Cards / Modals: Pure white */
+    --color-slate-800: rgba(6, 182, 212, 0.12); /* Borders / Hover: Cyan tinted glass */
+    --color-slate-700: rgba(6, 182, 212, 0.2);  /* Dividers */
+    --color-slate-600: #94a3b8; 
+    --color-slate-500: #64748b; /* Muted text */
+    --color-slate-400: #475569; /* Secondary text */
+    --color-slate-300: #334155; /* Normal text */
+    --color-slate-200: #1e293b; 
+    --color-slate-100: #0f172a; /* Headings: Deep navy/slate */
+    --color-slate-50:  #020617;
+
+    /* Global Tinted Shadows for Light Mode */
+    --tw-shadow-color: rgba(6, 182, 212, 0.12);
   }
 
   body {
@@ -123,28 +129,28 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(14, 14, 14, 0.6); /* Obsidian dark track */
+  background: rgba(6, 182, 212, 0.05); /* Tinted dark track */
 }
 
 html.light ::-webkit-scrollbar-track {
-  background: rgba(245, 243, 235, 0.8); /* Beige light track */
+  background: rgba(6, 182, 212, 0.05); /* Tinted light track */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(39, 39, 42, 0.8); /* Zinc-700 dark thumb */
+  background: rgba(6, 182, 212, 0.3); /* Tinted dark thumb */
   border-radius: 9999px;
 }
 
 html.light ::-webkit-scrollbar-thumb {
-  background: rgba(166, 154, 131, 0.7); /* Beige-600 light thumb */
+  background: rgba(6, 182, 212, 0.2); /* Tinted light thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(82, 82, 91, 1);
+  background: rgba(6, 182, 212, 0.5);
 }
 
 html.light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(122, 112, 92, 1);
+  background: rgba(6, 182, 212, 0.4);
 }
 
 /* Glassmorphic utilities */
@@ -152,17 +158,17 @@ html.light ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.3), rgba(15, 23, 42, 0.4));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.15); /* Tinted border */
   box-shadow: 
-    0 4px 24px -1px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 4px 24px -1px rgba(6, 182, 212, 0.1), /* Tinted ambient shadow */
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 html.light .glass-panel {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(248, 250, 252, 0.35));
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(6, 182, 212, 0.15); /* Tinted border */
   box-shadow: 
-    0 8px 32px -4px rgba(0, 0, 0, 0.06), 
+    0 8px 32px -4px rgba(6, 182, 212, 0.08), /* Tinted ambient shadow */
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
@@ -170,30 +176,30 @@ html.light .glass-panel {
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.2), rgba(15, 23, 42, 0.3));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(6, 182, 212, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html.light .glass-panel-interactive {
   background: rgba(255, 255, 255, 0.35);
-  border-color: rgba(226, 232, 240, 0.7);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  border-color: rgba(6, 182, 212, 0.15);
+  box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.05);
 }
 
 .glass-panel-interactive:hover {
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.5));
-  border-color: rgba(56, 189, 248, 0.3);
+  border-color: rgba(6, 182, 212, 0.3);
   box-shadow: 
-    0 8px 30px rgba(0, 0, 0, 0.35), 
-    0 0 20px rgba(56, 189, 248, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 8px 30px rgba(6, 182, 212, 0.2), 
+    0 0 20px rgba(6, 182, 212, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transform: translateY(-2px);
 }
 
 html.light .glass-panel-interactive:hover {
   background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(6, 182, 212, 0.4);
-  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.08), 0 0 15px rgba(6, 182, 212, 0.1);
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: 0 10px 30px -4px rgba(6, 182, 212, 0.15), 0 0 15px rgba(6, 182, 212, 0.1);
   transform: translateY(-2px);
 }
 
@@ -254,7 +260,7 @@ html.light .fixed.inset-0.bg-slate-950\/90 {
 html.light [class*="bg-gradient-to-r"][class*="from-"]:not(button):not(a):not(.bg-clip-text) {
   background: linear-gradient(135deg, rgba(252, 251, 248, 0.95), rgba(255, 255, 255, 0.98)) !important;
   border-color: var(--color-slate-800) !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.08);
 }
 
 /* Big draw number gradient text: ensure high contrast */
