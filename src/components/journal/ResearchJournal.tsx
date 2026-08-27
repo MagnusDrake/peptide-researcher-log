@@ -115,7 +115,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
             <BookOpen className="w-4 h-4" />
             <span>Research Documentation & Outcomes</span>
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
             Research Journal & Metric Trends
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
@@ -354,7 +354,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
           <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4 border-slate-800 shadow-xl">
             <div className="flex items-center gap-2 text-cyan-400">
               <Download className="w-5 h-5" />
-              <h3 className="text-lg font-bold text-white">Export & Backup Research</h3>
+              <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-widest">Export & Backup Research</h3>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
               Export all your active protocols, custom peptide profiles, administration logs, and settings to a JSON backup file or CSV spreadsheet.
@@ -380,7 +380,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
           <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4 border-slate-800 shadow-xl">
             <div className="flex items-center gap-2 text-emerald-400">
               <Upload className="w-5 h-5" />
-              <h3 className="text-lg font-bold text-white">Restore / Import Data</h3>
+              <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-widest">Restore / Import Data</h3>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">
               Restore protocols and logs from a previously exported JSON backup file on another device or browser.

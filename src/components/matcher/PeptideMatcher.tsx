@@ -175,7 +175,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
             <Sparkles className="w-4 h-4" />
             <span>Intelligent Research Matcher</span>
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
             Peptide Goal Matcher & Synergy Finder
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
@@ -211,7 +211,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
         <div className="flex flex-col gap-6 animate-in fade-in duration-300">
           <div className="flex items-center justify-between bg-slate-900/90 p-5 rounded-2xl border border-slate-800">
             <div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+              <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-emerald-400" />
                 <span>Found {results.length} Compatible Research Compounds</span>
               </h2>
@@ -334,7 +334,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
           {step === 1 && (
             <div className="flex flex-col gap-4 animate-in fade-in duration-200">
               <div>
-                <h2 className="text-xl font-bold text-white">Select Primary Research Objectives</h2>
+                <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em]">Select Primary Research Objectives</h2>
                 <p className="text-xs text-slate-400 mt-1">Choose all physiological pathways and targets you are investigating:</p>
               </div>
 
@@ -382,7 +382,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
           {step === 2 && (
             <div className="flex flex-col gap-5 animate-in fade-in duration-200">
               <div>
-                <h2 className="text-xl font-bold text-white">Experience Level & Route Preference</h2>
+                <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em]">Experience Level & Route Preference</h2>
                 <p className="text-xs text-slate-400 mt-1">Refines compound complexity and scheduling preferences.</p>
               </div>
 

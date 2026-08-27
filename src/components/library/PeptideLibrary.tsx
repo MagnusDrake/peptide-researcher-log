@@ -91,7 +91,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
             <BookOpen className="w-4 h-4" />
             <span>Research Directory & Compendium</span>
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
             Peptide Knowledge Base
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
@@ -189,7 +189,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
           <div className="h-16 w-16 rounded-full bg-slate-900 flex items-center justify-center text-3xl">
             🔍
           </div>
-          <h3 className="text-lg font-bold text-white">No Peptides Found</h3>
+          <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-widest">No Peptides Found</h3>
           <p className="text-xs text-slate-400 max-w-sm">
             No research peptides matched your search query "{searchTerm}". Try a different term or clear filters.
           </p>

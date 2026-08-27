@@ -72,7 +72,7 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
             <Layers className="w-4 h-4" />
             <span>Active Stack & Regimen Center</span>
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
             Research Protocols & Active Stacks
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
@@ -175,7 +175,7 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
           <div className="h-16 w-16 rounded-full bg-slate-900 flex items-center justify-center text-3xl">
             🧪
           </div>
-          <h3 className="text-lg font-bold text-white">No Protocols Found</h3>
+          <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-widest">No Protocols Found</h3>
           <p className="text-xs text-slate-400 max-w-sm">
             {filterActive === 'active'
               ? "You don't have any active research protocols yet. Create your first protocol to start scheduling and tracking."

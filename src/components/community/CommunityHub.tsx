@@ -83,7 +83,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
             <Users className="w-4 h-4" />
             <span>Open Science & Peer Knowledge Exchange</span>
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
             Peer Researcher Community Hub
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
@@ -179,7 +179,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
       {isShareModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
           <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 w-full max-w-lg shadow-2xl flex flex-col gap-4">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
+            <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
               <Share2 className="w-5 h-5 text-purple-400" />
               <span>Publish Anonymized Research Finding</span>
             </h3>
