@@ -33,23 +33,37 @@
   }
 
   html.light {
-    --chart-grid: rgba(6, 182, 212, 0.1);
+    --chart-grid: rgba(124, 118, 127, 0.15); /* #7c767f grid */
 
-    /* LIGHT MODE: Frosty Ambient (Ice blue background, pure white cards, cyan borders) */
-    --color-slate-950: #f4f7fb; /* App Background: Frosty cool blue-white */
-    --color-slate-900: #ffffff; /* Cards / Modals: Pure white */
-    --color-slate-800: rgba(6, 182, 212, 0.12); /* Borders / Hover: Cyan tinted glass */
-    --color-slate-700: rgba(6, 182, 212, 0.2);  /* Dividers */
-    --color-slate-600: #94a3b8; 
-    --color-slate-500: #64748b; /* Muted text */
-    --color-slate-400: #475569; /* Secondary text */
-    --color-slate-300: #334155; /* Normal text */
-    --color-slate-200: #1e293b; 
-    --color-slate-100: #0f172a; /* Headings: Deep navy/slate */
-    --color-slate-50:  #020617;
+    /* LIGHT MODE: Palette Implementation */
+    --color-slate-950: #9fc1db; /* App Background: Powder Blue */
+    --color-slate-900: rgba(255, 255, 255, 0.6); /* Cards / Modals: Frosted glass over powder blue */
+    --color-slate-800: rgba(124, 118, 127, 0.2); /* Borders / Hover: Purplish-gray tint */
+    --color-slate-700: rgba(124, 118, 127, 0.3); /* Dividers */
+    --color-slate-600: #7c767f; /* Purplish Gray */
+    --color-slate-500: #7c767f; /* Muted text */
+    --color-slate-400: rgba(37, 20, 20, 0.6); /* Muted Maroon text */
+    --color-slate-300: #251414; /* Normal text: Dark Maroon */
+    --color-slate-200: #251414; 
+    --color-slate-100: #251414; /* Headings: Dark Maroon */
+    --color-slate-50:  #251414;
 
     /* Global Tinted Shadows for Light Mode */
-    --tw-shadow-color: rgba(6, 182, 212, 0.12);
+    --tw-shadow-color: rgba(37, 20, 20, 0.08); /* Maroon tinted shadow */
+
+    /* Override standard utility colors for the new palette */
+    --color-cyan-300: #c99b7d;
+    --color-cyan-400: #aa7c5d; /* Bronze replaces cyan entirely for accents */
+    --color-cyan-500: #936547;
+    --color-cyan-600: #7a5035;
+    
+    --color-emerald-300: #b3d9ef;
+    --color-emerald-400: #94c4dc; /* Deeper powder blue for alternative accents */
+    --color-emerald-500: #77aac4;
+    
+    --color-violet-400: #7c767f; /* Purplish Gray replaces violet */
+    --color-amber-400: #aa7c5d; /* Bronze replaces amber */
+    --color-rose-400: #251414; /* Dark Maroon */
   }
 
   body {
@@ -116,13 +130,13 @@
 
   /* Softer blobs for light mode */
   html.light #root::before {
-    opacity: 0.25;
-    background: radial-gradient(circle, rgba(14, 165, 233, 0.6) 0%, rgba(99, 102, 241, 0) 70%);
+    opacity: 0.15;
+    background: radial-gradient(circle, rgba(170, 124, 93, 0.4) 0%, rgba(159, 193, 219, 0) 70%); /* Bronze to powder blue */
   }
   
   html.light #root::after {
-    opacity: 0.2;
-    background: radial-gradient(circle, rgba(16, 185, 129, 0.5) 0%, rgba(139, 92, 246, 0) 70%);
+    opacity: 0.15;
+    background: radial-gradient(circle, rgba(124, 118, 127, 0.4) 0%, rgba(159, 193, 219, 0) 70%); /* Purplish gray to powder blue */
   }
 }
 
@@ -169,11 +183,11 @@ html.light ::-webkit-scrollbar-thumb:hover {
 }
 
 html.light .glass-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(248, 250, 252, 0.35));
-  border-color: rgba(6, 182, 212, 0.15); /* Tinted border */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.35));
+  border-color: rgba(124, 118, 127, 0.25); /* Purplish gray border */
   box-shadow: 
-    0 8px 32px -4px rgba(6, 182, 212, 0.08), /* Tinted ambient shadow */
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 8px 32px -4px rgba(37, 20, 20, 0.08), /* Maroon ambient shadow */
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .glass-panel-interactive {
@@ -186,8 +200,8 @@ html.light .glass-panel {
 
 html.light .glass-panel-interactive {
   background: rgba(255, 255, 255, 0.35);
-  border-color: rgba(6, 182, 212, 0.15);
-  box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.05);
+  border-color: rgba(124, 118, 127, 0.2);
+  box-shadow: 0 4px 20px -2px rgba(37, 20, 20, 0.05);
 }
 
 .glass-panel-interactive:hover {
@@ -202,8 +216,8 @@ html.light .glass-panel-interactive {
 
 html.light .glass-panel-interactive:hover {
   background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(6, 182, 212, 0.3);
-  box-shadow: 0 10px 30px -4px rgba(6, 182, 212, 0.15), 0 0 15px rgba(6, 182, 212, 0.1);
+  border-color: rgba(170, 124, 93, 0.4); /* Bronze border on hover */
+  box-shadow: 0 10px 30px -4px rgba(170, 124, 93, 0.15), 0 0 15px rgba(170, 124, 93, 0.1);
   transform: translateY(-2px);
 }
 
