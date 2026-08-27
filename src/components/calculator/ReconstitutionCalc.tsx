@@ -279,7 +279,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                     onClick={() => {
                       if (doseUnit === 'mg') {
                         setDoseUnit('mcg');
-                        if (targetDose !== '') setTargetDose(targetDose * 1000);
+                        if (targetDose !== '') setTargetDose(Number(targetDose) * 1000);
                       }
                     }}
                     className={`px-2.5 py-0.5 text-xs rounded-md font-bold transition ${
@@ -293,7 +293,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                     onClick={() => {
                       if (doseUnit === 'mcg') {
                         setDoseUnit('mg');
-                        if (targetDose !== '') setTargetDose(targetDose / 1000);
+                        if (targetDose !== '') setTargetDose(Number(targetDose) / 1000);
                       }
                     }}
                     className={`px-2.5 py-0.5 text-xs rounded-md font-bold transition ${
