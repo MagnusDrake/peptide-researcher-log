@@ -125,7 +125,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
                 <span className="text-xs text-slate-500 font-mono">{finding.dateShared}</span>
               </div>
 
-              <h3 className="text-xl font-extrabold text-white">{finding.peptideName}</h3>
+              <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-slate-100">{finding.peptideName}</h3>
               <div className="text-xs font-semibold text-cyan-400 font-mono mt-0.5">
                 Protocol: {finding.protocolSummary}
               </div>

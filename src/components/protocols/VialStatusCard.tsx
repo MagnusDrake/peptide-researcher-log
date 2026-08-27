@@ -103,7 +103,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
             )}
           </div>
 
-          <h3 className="text-xl font-extrabold text-white mt-1.5 flex items-center gap-2">
+          <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-slate-100 mt-1.5 flex items-center gap-2">
             <span>{protocol.peptideName}</span>
             {isScheduledToday && protocol.isActive && (
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" title="Scheduled for today!" />
@@ -290,7 +290,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
           <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 w-full max-w-lg shadow-2xl flex flex-col gap-4">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
                 <Share2 className="w-4 h-4 text-cyan-400" />
                 <span>Shareable Protocol Card</span>
               </h3>

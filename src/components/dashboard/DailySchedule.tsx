@@ -175,7 +175,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
 
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="font-extrabold text-base text-white">{protocol.peptideName}</h3>
+                            <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-slate-100">{protocol.peptideName}</h3>
                             {protocol.isBlend && (
                               <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 font-bold">
                                 🧪 Stack ({protocol.blendComponents?.length || 2} Peptides)

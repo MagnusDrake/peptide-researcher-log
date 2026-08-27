@@ -210,7 +210,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
 
                       <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-extrabold text-base text-white">{log.peptideName}</h3>
+                          <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-slate-100">{log.peptideName}</h3>
                           {log.isBlend && (
                             <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 font-bold border border-purple-800">
                               🧪 Multi-Stack
@@ -288,7 +288,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
           ) : (
             <div className="glass-panel p-12 rounded-3xl text-center flex flex-col items-center justify-center gap-2">
               <span className="text-3xl">📝</span>
-              <h3 className="text-base font-bold text-white">No Logs Found</h3>
+              <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em]">No Logs Found</h3>
               <p className="text-xs text-slate-400 max-w-sm">
                 Record your first peptide administration from the Daily Schedule or Protocols tab to populate your research journal.
               </p>
@@ -303,7 +303,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
           {trendData.length > 1 ? (
             <div className="glass-panel p-6 rounded-3xl flex flex-col gap-6 border-slate-800 shadow-xl">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-cyan-400" />
                   <span>Subjective Recovery & Energy Trends Over Time</span>
                 </h3>
