@@ -65,14 +65,14 @@ export function App() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   });
 
-  const [showFlakes, setShowFlakes] = useState(true);
+  const [flakeOpacity, setFlakeOpacity] = useState(0.18);
 
   useEffect(() => {
     if (theme === 'light') {
       document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light');
       const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', '#f8fafc');
+      if (meta) meta.setAttribute('content', '#fcfbf9');
     } else {
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');
@@ -81,14 +81,6 @@ export function App() {
     }
     localStorage.setItem('theme', theme);
   }, [theme]);
-
-  useEffect(() => {
-    if (showFlakes) {
-      document.documentElement.classList.remove('no-flakes');
-    } else {
-      document.documentElement.classList.add('no-flakes');
-    }
-  }, [showFlakes]);
 
   const handleToggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
@@ -461,14 +453,37 @@ export function App() {
         activeProtocolsCount={protocols.filter(p => p.isActive).length}
       />
 
-      {/* Debug Flakes Toggle */}
+      {/* Dynamic Flake Overlay */}
+      {theme === 'light' && flakeOpacity > 0 && (
+        <div 
+          className="fixed inset-0 pointer-events-none mix-blend-soft-light"
+          style={{
+            zIndex: 0,
+            opacity: flakeOpacity,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='flake'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.0' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23flake)' opacity='1'/%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
+            backgroundSize: '150px 150px'
+          }}
+        />
+      )}
+
+      {/* Debug Flakes Slider */}
       {theme === 'light' && (
-        <button
-          onClick={() => setShowFlakes(!showFlakes)}
-          className="fixed bottom-24 right-4 z-50 px-3 py-1 bg-slate-900 text-slate-100 text-[10px] font-semibold uppercase tracking-widest rounded-full opacity-60 hover:opacity-100 border border-slate-700 transition"
-        >
-          {showFlakes ? 'Disable Flakes' : 'Enable Flakes'}
-        </button>
+        <div className="fixed bottom-24 right-4 z-50 p-3 bg-slate-900/90 backdrop-blur-md rounded-xl border border-slate-700 shadow-2xl flex flex-col gap-2 w-48">
+          <label className="text-slate-200 text-[10px] font-semibold uppercase tracking-widest flex justify-between">
+            <span>Flake Intensity</span>
+            <span className="text-cyan-400">{Math.round(flakeOpacity * 100)}%</span>
+          </label>
+          <input 
+            type="range" 
+            min="0" 
+            max="1" 
+            step="0.01" 
+            value={flakeOpacity} 
+            onChange={(e) => setFlakeOpacity(parseFloat(e.target.value))}
+            className="w-full accent-cyan-500"
+          />
+        </div>
       )}
     </div>
     </>
