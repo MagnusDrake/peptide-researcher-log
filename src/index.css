@@ -136,7 +136,7 @@
   
   html.light #root::after {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(124, 118, 127, 0.7) 0%, rgba(159, 193, 219, 0) 70%); /* Purplish gray to powder blue */
+    background: radial-gradient(circle, rgba(145, 100, 155, 0.8) 0%, rgba(159, 193, 219, 0) 70%); /* More vibrant purplish tone */
   }
 }
 
