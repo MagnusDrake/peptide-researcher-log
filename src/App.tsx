@@ -25,7 +25,22 @@ export function App() {
     return sessionStorage.getItem('aura_unlocked') === 'true';
   });
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [calcSubTab, setCalcSubTab] = useState<'recon' | 'blend' | 'titration' | 'convert'>('recon');
+
+  const handleTabChange = (newTab: NavTab) => {
+    if (newTab === activeTab) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveTab(newTab);
+      // Let React render the new tab, then fade it in on the next tick
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsTransitioning(false);
+        });
+      });
+    }, 400); // 400ms out-transition
+  };
 
   const handleUnlock = () => {
     sessionStorage.setItem('aura_unlocked', 'true');
@@ -120,7 +135,7 @@ export function App() {
   const handleOpenInCalculator = (peptide: Peptide) => {
     setSelectedPeptideForCalc(peptide.id);
     setCalcSubTab('recon');
-    setActiveTab('calculator');
+    handleTabChange('calculator');
   };
 
   const handleAddToProtocol = (peptide: Peptide) => {
@@ -133,12 +148,12 @@ export function App() {
       bacWaterMl: peptide.typicalBacWaterMl[0] || 2.0,
       syringeType: 'U-100'
     });
-    setActiveTab('protocols');
+    handleTabChange('protocols');
   };
 
   const handleSaveCalcAsProtocol = (data: Partial<Protocol>) => {
     setInitialProtocolData(data);
-    setActiveTab('protocols');
+    handleTabChange('protocols');
   };
 
   const handleAdoptStack = async (stack: CuratedStack, asSingleBlend: boolean = true) => {
@@ -213,7 +228,7 @@ export function App() {
 
       await db.protocols.put(protocol);
       await refreshData();
-      setActiveTab('protocols');
+      handleTabChange('protocols');
     } else {
       // Add each compound as an individual protocol with accurate reconstitution math
       for (const item of stack.peptides) {
@@ -261,7 +276,7 @@ export function App() {
       }
 
       await refreshData();
-      setActiveTab('protocols');
+      handleTabChange('protocols');
     }
   };
 
@@ -278,7 +293,7 @@ export function App() {
         {/* Top Navbar */}
       <Navbar
         activeTab={activeTab}
-        onTabChange={setActiveTab}
+        onTabChange={handleTabChange}
         activeProtocolsCount={protocols.filter(p => p.isActive).length}
         onInstallClick={handleInstallPwa}
         canInstall={canInstall}
@@ -288,15 +303,15 @@ export function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 px-4 lg:px-8 pt-6 pb-20 md:pb-12 w-full min-w-0 max-w-full overflow-x-hidden">
+      <main className={`flex-1 px-4 lg:px-8 pt-6 pb-20 md:pb-12 w-full min-w-0 max-w-full overflow-x-hidden transition-all duration-[400ms] ease-out ${isTransitioning ? 'opacity-0 scale-[0.98] blur-[2px]' : 'opacity-100 scale-100 blur-0'}`}>
         {/* TAB 1: DAILY DASHBOARD */}
         {activeTab === 'dashboard' && (
           <DailySchedule
             protocols={protocols}
             logs={logs}
             onLogSaved={refreshData}
-            onNavigateToProtocols={() => setActiveTab('protocols')}
-            onNavigateToCalculator={() => setActiveTab('calculator')}
+            onNavigateToProtocols={() => handleTabChange('protocols')}
+            onNavigateToCalculator={() => handleTabChange('calculator')}
           />
         )}
 
@@ -394,7 +409,7 @@ export function App() {
             protocols={protocols}
             onProtocolsChanged={refreshData}
             onLogDose={(proto) => {
-              setActiveTab('dashboard');
+              handleTabChange('dashboard');
             }}
             logsCountMap={logsCountMap}
             initialProtocolData={initialProtocolData}
@@ -418,7 +433,7 @@ export function App() {
             logs={logs}
             onAdoptProtocol={(proto) => {
               setInitialProtocolData(proto);
-              setActiveTab('protocols');
+              handleTabChange('protocols');
             }}
           />
         )}
@@ -432,7 +447,7 @@ export function App() {
       {/* Mobile Bottom Nav */}
       <MobileNav
         activeTab={activeTab}
-        onTabChange={setActiveTab}
+        onTabChange={handleTabChange}
         activeProtocolsCount={protocols.filter(p => p.isActive).length}
       />
     </div>
