@@ -10,6 +10,7 @@ import {
   Download, 
   Sun, 
   Moon,
+  Lock,
   User 
 } from 'lucide-react';
 
@@ -23,6 +24,7 @@ interface NavbarProps {
   canInstall?: boolean;
   theme: 'dark' | 'light';
   onToggleTheme: () => void;
+  onLogout?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({

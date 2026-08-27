@@ -32,6 +32,11 @@ export function App() {
     setIsAuthenticated(true);
   };
 
+  const handleLogout = () => {
+    sessionStorage.removeItem('aura_unlocked');
+    setIsAuthenticated(false);
+  };
+
   // Database state
   const [protocols, setProtocols] = useState<Protocol[]>([]);
   const [logs, setLogs] = useState<DoseLogEntry[]>([]);
@@ -279,6 +284,7 @@ export function App() {
         canInstall={canInstall}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        onLogout={handleLogout}
       />
 
       {/* Main Content Area */}
@@ -419,7 +425,7 @@ export function App() {
 
         {/* TAB 8: VAULT PROFILE SETTINGS */}
         {activeTab === 'profile' && (
-          <ProfileSettings />
+          <ProfileSettings onLogout={handleLogout} />
         )}
       </main>
 

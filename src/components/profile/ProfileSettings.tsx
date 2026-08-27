@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { User, Lock, Download, Upload, Shield, Settings, AlertTriangle } from 'lucide-react';
 
-export const ProfileSettings: React.FC = () => {
+interface ProfileSettingsProps { onLogout: () => void; }
+
+export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ onLogout }) => {
   const [name, setName] = useState('');
   const [currentPin, setCurrentPin] = useState('');
   const [newPin, setNewPin] = useState('');
@@ -145,12 +147,20 @@ export const ProfileSettings: React.FC = () => {
             </button>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-slate-800/50">
-            <button className="flex items-center gap-2 text-rose-500/70 hover:text-rose-400 text-xs font-semibold uppercase tracking-widest transition-colors">
-              <AlertTriangle className="w-4 h-4" />
-              <span>Purge All Local Data (Irreversible)</span>
-            </button>
-          </div>
+          <div className="mt-8 pt-6 border-t border-slate-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <button 
+            onClick={onLogout}
+            className="flex items-center gap-2 text-cyan-500 hover:text-cyan-400 text-xs font-bold uppercase tracking-widest transition-colors w-full sm:w-auto justify-center bg-cyan-500/10 hover:bg-cyan-500/20 px-6 py-3 rounded-xl border border-cyan-500/20"
+          >
+            <Lock className="w-4 h-4" />
+            <span>Lock Secure Terminal</span>
+          </button>
+          
+          <button className="flex items-center gap-2 text-rose-500/70 hover:text-rose-400 text-xs font-semibold uppercase tracking-widest transition-colors w-full sm:w-auto justify-center">
+            <AlertTriangle className="w-4 h-4" />
+            <span>Purge All Local Data (Irreversible)</span>
+          </button>
+        </div>
         </div>
 
       </div>
