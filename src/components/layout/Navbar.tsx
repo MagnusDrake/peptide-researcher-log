@@ -35,6 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   canInstall = false,
   theme,
   onToggleTheme,
+  onLogout,
 }) => {
 
   const navItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: number }[] = [
@@ -106,6 +107,20 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Status Badges & Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
+          
+          {/* Lock Secure Terminal */}
+          {onLogout && (
+            <button
+              type="button"
+              onClick={onLogout}
+              className="flex items-center justify-center w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/10 text-slate-300 hover:text-cyan-400 transition active:scale-95 shadow-sm"
+              title="Lock Secure Terminal"
+              aria-label="Lock Secure Terminal"
+            >
+              <Lock className="w-4 h-4" />
+            </button>
+          )}
+
           {/* Light / Dark Mode Toggle */}
           <button
             type="button"
