@@ -128,15 +128,15 @@
     
   }
 
-  /* Softer blobs for light mode */
+  /* More visible blobs for light mode */
   html.light #root::before {
-    opacity: 0.15;
-    background: radial-gradient(circle, rgba(170, 124, 93, 0.4) 0%, rgba(159, 193, 219, 0) 70%); /* Bronze to powder blue */
+    opacity: 0.65;
+    background: radial-gradient(circle, rgba(170, 124, 93, 0.7) 0%, rgba(159, 193, 219, 0) 70%); /* Bronze to powder blue */
   }
   
   html.light #root::after {
-    opacity: 0.15;
-    background: radial-gradient(circle, rgba(124, 118, 127, 0.4) 0%, rgba(159, 193, 219, 0) 70%); /* Purplish gray to powder blue */
+    opacity: 0.65;
+    background: radial-gradient(circle, rgba(124, 118, 127, 0.7) 0%, rgba(159, 193, 219, 0) 70%); /* Purplish gray to powder blue */
   }
 }
 
