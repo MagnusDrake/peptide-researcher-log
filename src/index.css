@@ -209,14 +209,20 @@ html.light .text-white {
 }
 
 /* Headings and table headers */
-html.light h1,
-html.light h2,
-html.light h3,
-html.light h4,
-html.light h5,
-html.light h6,
+html.light h1:not(.bg-clip-text),
+html.light h2:not(.bg-clip-text),
+html.light h3:not(.bg-clip-text),
+html.light h4:not(.bg-clip-text),
+html.light h5:not(.bg-clip-text),
+html.light h6:not(.bg-clip-text),
 html.light th {
   color: #0f172a;
+}
+
+/* Ensure descriptions and subtexts are readable in light mode */
+html.light .text-slate-300,
+html.light .text-slate-400 {
+  color: #475569 !important;
 }
 
 /* Form controls in light mode: inputs, selects, textareas */
@@ -251,6 +257,9 @@ html.light [class*="bg-gradient-to-r"][class*="from-"]:not(button):not(a) {
 html.light .bg-clip-text {
   background-image: linear-gradient(to right, #0284c7, #0d9488, #0369a1) !important;
   color: transparent !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
 /* Preserve crisp white text on saturated / colored / gradient buttons and badges */
