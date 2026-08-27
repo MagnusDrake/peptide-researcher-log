@@ -59,6 +59,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
           </div>
           <h1 className="text-[2rem] font-light tracking-[0.3em] text-slate-100 mb-2 ml-2">AURA</h1>
           <p className="text-[0.65rem] uppercase tracking-[0.2em] text-cyan-400/80 font-medium">Advanced research, simplified.</p>
+          <p className="text-[0.55rem] uppercase tracking-[0.5em] text-slate-500 font-bold mt-3 ml-1">PEPTIDES</p>
         </div>
 
         {/* PIN Indicators */}
