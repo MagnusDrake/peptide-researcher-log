@@ -86,7 +86,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
             <Calculator className="w-3.5 h-3.5" />
             <span>Interactive Reconstitution Engine</span>
           </div>
-          <h1 className="text-lg sm:text-2xl font-black text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
             Peptide Reconstitution & Syringe
           </h1>
           <p className="text-xs text-slate-300 mt-0.5 max-w-xl hidden sm:block">
@@ -139,7 +139,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
         {/* INPUTS COLUMN (7 Cols on desktop) */}
         <div className="lg:col-span-7 flex flex-col gap-4 min-w-0">
           <div className="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col gap-4 overflow-hidden">
-            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+            <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2 border-b border-slate-800 pb-3">
               <Sparkles className="w-4 h-4 text-cyan-400" />
               <span>Vial & Solution Parameters</span>
             </h2>

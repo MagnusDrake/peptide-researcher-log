@@ -53,17 +53,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           onClick={() => onTabChange('dashboard')}
           className="flex items-center gap-3 cursor-pointer select-none group shrink-0"
         >
-          <div className="h-10 w-10 rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition btn-glow-cyan">
-            <span className="text-xl font-bold">🧪</span>
+          {/* Minimal Aura Logo SVG */}
+          <div className="relative w-8 h-8 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform duration-300">
+            <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]">
+              <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="60 10" className="group-hover:animate-[spin_4s_linear_infinite]" />
+              <circle cx="50" cy="50" r="22" fill="none" stroke="currentColor" strokeWidth="5" />
+              <circle cx="50" cy="50" r="8" fill="currentColor" />
+            </svg>
           </div>
           <div>
-            <div className="text-base font-black text-white tracking-tight flex items-center gap-1.5">
-              <span>Peptide<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">Log</span></span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-cyan-950 text-cyan-300 font-bold border border-cyan-800">
-                PWA
+            <div className="text-xl font-light text-slate-100 tracking-[0.2em] flex items-center gap-2">
+              <span>AURA</span>
+              <span className="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-semibold border border-cyan-500/20 tracking-wider">
+                VAULT
               </span>
             </div>
-            <div className="text-[10px] text-slate-400 font-medium">Research Log & Calculator</div>
+            <div className="text-[9px] text-cyan-500/70 uppercase tracking-[0.2em] font-medium mt-0.5">Advanced Research</div>
           </div>
         </div>
 

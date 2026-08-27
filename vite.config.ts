@@ -24,9 +24,9 @@ export default defineConfig({
         'maskable-icon.png'
       ],
       manifest: {
-        name: 'Peptide Researcher Log & Calculator',
-        short_name: 'PeptideLog',
-        description: 'Advanced peptide reconstitution calculator, research directory, matcher, protocol scheduler, and injection site tracker.',
+        name: 'Aura - Advanced Research',
+        short_name: 'Aura',
+        description: 'Advanced research, simplified. Precision protocol management, titration calculation, and vault-secured tracking.',
         theme_color: '#090d16',
         background_color: '#090d16',
         display: 'standalone',

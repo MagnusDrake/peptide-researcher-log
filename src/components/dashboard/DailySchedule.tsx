@@ -82,8 +82,8 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
               {today.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
             </span>
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-tight">
-            Daily Research Schedule & Dashboard
+          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em]">
+            RESEARCH DASHBOARD
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
             {scheduledToday.length === 0
@@ -138,8 +138,8 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
         <div className="lg:col-span-7 flex flex-col gap-6">
           <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4 border-slate-800 shadow-xl">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                <Clock className="w-5 h-5 text-cyan-400" />
+              <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
+                <Clock className="w-3.5 h-3.5" />
                 <span>Today's Administrations</span>
               </h2>
 
@@ -259,7 +259,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
 
           {/* Recent Administrations Mini Timeline */}
           <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4 border-slate-800 shadow-xl">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center justify-between border-b border-slate-800 pb-3">
               <span>Recent Research Logs</span>
               <span className="text-xs font-normal text-slate-400">{logs.length} Total</span>
             </h3>

@@ -6,6 +6,7 @@ import { calculateReconstitution, calculateMultiBlend } from './utils/calculatio
 import { parseDoseString } from './utils/formatters';
 import { Navbar, NavTab } from './components/layout/Navbar';
 import { MobileNav } from './components/layout/MobileNav';
+import { LockScreen } from './components/auth/LockScreen';
 import { DailySchedule } from './components/dashboard/DailySchedule';
 import { ReconstitutionCalc } from './components/calculator/ReconstitutionCalc';
 import { BlendCalculator } from './components/calculator/BlendCalculator';
@@ -19,8 +20,16 @@ import { CommunityHub } from './components/community/CommunityHub';
 import { Calculator, Layers, TrendingUp, ArrowRightLeft, Sparkles, Plus } from 'lucide-react';
 
 export function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return sessionStorage.getItem('aura_unlocked') === 'true';
+  });
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
   const [calcSubTab, setCalcSubTab] = useState<'recon' | 'blend' | 'titration' | 'convert'>('recon');
+
+  const handleUnlock = () => {
+    sessionStorage.setItem('aura_unlocked', 'true');
+    setIsAuthenticated(true);
+  };
 
   // Database state
   const [protocols, setProtocols] = useState<Protocol[]>([]);
@@ -257,8 +266,10 @@ export function App() {
   }, {} as Record<string, number>);
 
   return (
-    <div className="min-h-screen flex flex-col text-slate-100 selection:bg-cyan-500 selection:text-white">
-      {/* Top Navbar */}
+    <>
+      {!isAuthenticated && <LockScreen onUnlock={handleUnlock} />}
+      <div className={`min-h-screen flex flex-col text-slate-100 selection:bg-cyan-500 selection:text-white transition-opacity duration-1000 ${!isAuthenticated ? 'opacity-0 overflow-hidden' : 'opacity-100'}`}>
+        {/* Top Navbar */}
       <Navbar
         activeTab={activeTab}
         onTabChange={setActiveTab}
@@ -413,6 +424,7 @@ export function App() {
         activeProtocolsCount={protocols.filter(p => p.isActive).length}
       />
     </div>
+    </>
   );
 }
 
