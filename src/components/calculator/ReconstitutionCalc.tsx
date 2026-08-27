@@ -37,12 +37,12 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
   const [selectedPeptideId, setSelectedPeptideId] = useState<string>(initialPeptideId);
   const [customPeptideName, setCustomPeptideName] = useState<string>('');
   const [brandName, setBrandName] = useState<string>('');
-  const [vialMassMg, setVialMassMg] = useState<number | ''>(5);
-  const [bacWaterMl, setBacWaterMl] = useState<number | ''>(2.0);
-  const [targetDose, setTargetDose] = useState<number | ''>(500);
+  const [vialMassMg, setVialMassMg] = useState<number | string>(5);
+  const [bacWaterMl, setBacWaterMl] = useState<number | string>(2.0);
+  const [targetDose, setTargetDose] = useState<number | string>(500);
   const [doseUnit, setDoseUnit] = useState<'mcg' | 'mg'>('mcg');
   const [syringeType, setSyringeType] = useState<SyringeType>('U-100');
-  const [vialCost, setVialCost] = useState<number | ''>('');
+  const [vialCost, setVialCost] = useState<number | string>('');
   const [isTipsOpen, setIsTipsOpen] = useState<boolean>(false);
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
 
@@ -224,7 +224,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                 step="any"
                 placeholder="0"
                 value={vialMassMg}
-                onChange={(e) => setVialMassMg(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                onChange={(e) => setVialMassMg(e.target.value)}
                 className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-xl p-2.5 focus:outline-none focus:border-cyan-400"
               />
             </div>
@@ -262,7 +262,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                 step="any"
                 placeholder="0"
                 value={bacWaterMl}
-                onChange={(e) => setBacWaterMl(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                onChange={(e) => setBacWaterMl(e.target.value)}
                 className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-xl p-2.5 focus:outline-none focus:border-cyan-400"
               />
             </div>
@@ -346,7 +346,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                 step="any"
                 placeholder="0"
                 value={targetDose}
-                onChange={(e) => setTargetDose(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                onChange={(e) => setTargetDose(e.target.value)}
                 className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-xl p-2.5 focus:outline-none focus:border-cyan-400"
               />
             </div>
@@ -390,7 +390,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
                   step="any"
                   placeholder="e.g. 45"
                   value={vialCost}
-                  onChange={(e) => setVialCost(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                  onChange={(e) => setVialCost(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-800 text-white text-xs sm:text-sm rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-cyan-400"
                 />
               </div>

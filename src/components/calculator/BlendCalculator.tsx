@@ -17,8 +17,8 @@ import {
 interface BlendComponentRow {
   id: string;
   peptideName: string;
-  vialMassMg: number | '';
-  targetDose: number | '';
+  vialMassMg: number | string;
+  targetDose: number | string;
   doseUnit: 'mcg' | 'mg';
 }
 
@@ -139,9 +139,9 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
     { id: 'c-2', peptideName: 'TB-500', vialMassMg: 5, targetDose: 250, doseUnit: 'mcg' }
   ]);
   const [primaryComponentId, setPrimaryComponentId] = useState<string>('c-1');
-  const [bacWaterMl, setBacWaterMl] = useState<number | ''>(2.0);
+  const [bacWaterMl, setBacWaterMl] = useState<number | string>(2.0);
   const [syringeType, setSyringeType] = useState<SyringeType>('U-100');
-  const [vialCost, setVialCost] = useState<number | ''>('');
+  const [vialCost, setVialCost] = useState<number | string>('');
 
   const primaryComp = components.find(c => c.id === primaryComponentId) || components[0];
 
@@ -388,7 +388,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
                         step="any"
                         placeholder="0"
                         value={comp.vialMassMg}
-                        onChange={(e) => handleUpdateComponent(comp.id, 'vialMassMg', e.target.value === '' ? '' : parseFloat(e.target.value))}
+                        onChange={(e) => handleUpdateComponent(comp.id, 'vialMassMg', e.target.value)}
                         className="w-full bg-slate-950 border border-slate-700 text-white text-xs rounded-lg p-2 focus:border-purple-400 outline-none font-mono"
                       />
                     </div>
@@ -421,7 +421,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
                         step="any"
                         placeholder="0"
                         value={comp.targetDose}
-                        onChange={(e) => handleUpdateComponent(comp.id, 'targetDose', e.target.value === '' ? '' : parseFloat(e.target.value))}
+                        onChange={(e) => handleUpdateComponent(comp.id, 'targetDose', e.target.value)}
                         className={`w-full bg-slate-950 border text-white text-xs rounded-lg p-2 outline-none font-mono ${
                           comp.id === primaryComponentId ? 'border-purple-500' : 'border-slate-700 text-slate-400'
                         }`}
@@ -458,7 +458,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
                   step="any"
                   placeholder="0"
                   value={bacWaterMl}
-                  onChange={(e) => setBacWaterMl(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                  onChange={(e) => setBacWaterMl(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm rounded-xl p-2.5 focus:border-purple-400 outline-none"
                 />
               </div>
@@ -499,7 +499,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
                   step="any"
                   placeholder="e.g. 65"
                   value={vialCost}
-                  onChange={(e) => setVialCost(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                  onChange={(e) => setVialCost(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-800 text-white text-xs sm:text-sm rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-purple-400"
                 />
               </div>

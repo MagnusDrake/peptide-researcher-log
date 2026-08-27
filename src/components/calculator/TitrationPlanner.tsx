@@ -66,8 +66,8 @@ const PRESETS: TitrationPreset[] = [
 
 export const TitrationPlanner: React.FC = () => {
   const [selectedPresetId, setSelectedPresetId] = useState<string>('tirzepatide-std');
-  const [vialMassMg, setVialMassMg] = useState<number | ''>(10);
-  const [bacWaterMl, setBacWaterMl] = useState<number | ''>(2.0);
+  const [vialMassMg, setVialMassMg] = useState<number | string>(10);
+  const [bacWaterMl, setBacWaterMl] = useState<number | string>(2.0);
   const [syringeType, setSyringeType] = useState<SyringeType>('U-100');
 
   const activePreset = PRESETS.find(p => p.id === selectedPresetId) || PRESETS[0];
@@ -124,7 +124,7 @@ export const TitrationPlanner: React.FC = () => {
             step="any"
             placeholder="0"
             value={vialMassMg}
-            onChange={(e) => setVialMassMg(e.target.value === '' ? '' : parseFloat(e.target.value))}
+            onChange={(e) => setVialMassMg(e.target.value)}
             className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-lg p-2.5 focus:border-emerald-400 outline-none"
           />
         </div>
@@ -136,7 +136,7 @@ export const TitrationPlanner: React.FC = () => {
             step="any"
             placeholder="0"
             value={bacWaterMl}
-            onChange={(e) => setBacWaterMl(e.target.value === '' ? '' : parseFloat(e.target.value))}
+            onChange={(e) => setBacWaterMl(e.target.value)}
             className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-lg p-2.5 focus:border-emerald-400 outline-none"
           />
         </div>

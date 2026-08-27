@@ -28,9 +28,9 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
   const defaultSite = lastIndex >= 0 ? INJECTION_SITES[(lastIndex + 1) % INJECTION_SITES.length].name : 'Abdomen - Upper Right';
 
   const [timestamp, setTimestamp] = useState<string>(new Date().toISOString().slice(0, 16));
-  const [doseAmount, setDoseAmount] = useState<number | ''>(protocol.doseAmount);
+  const [doseAmount, setDoseAmount] = useState<number | string>(protocol.doseAmount);
   const [doseUnit, setDoseUnit] = useState<'mcg' | 'mg'>(protocol.doseUnit);
-  const [drawUnits, setDrawUnits] = useState<number | ''>(protocol.calculatedUnits);
+  const [drawUnits, setDrawUnits] = useState<number | string>(protocol.calculatedUnits);
   const [syringeType, setSyringeType] = useState<SyringeType>(protocol.syringeType);
   const [injectionSite, setInjectionSite] = useState<string>(defaultSite);
   const [reactionRating, setReactionRating] = useState<'none' | 'mild_redness' | 'bruise' | 'itch' | 'sore'>('none');
@@ -42,7 +42,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
   const [appetiteSuppression, setAppetiteSuppression] = useState<number>(7);
   const [sleepQuality, setSleepQuality] = useState<number>(8);
   const [symptomPainScore, setSymptomPainScore] = useState<number>(2);
-  const [bodyWeightLbs, setBodyWeightLbs] = useState<number | ''>('');
+  const [bodyWeightLbs, setBodyWeightLbs] = useState<number | string>('');
   const [notes, setNotes] = useState<string>('');
 
   const currentUnits = Number(drawUnits) || 0;
@@ -211,7 +211,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
                 step="any"
                 placeholder="0"
                 value={doseAmount}
-                onChange={(e) => setDoseAmount(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                onChange={(e) => setDoseAmount(e.target.value)}
                 className="w-full bg-slate-900 border border-slate-700 text-white font-mono font-bold text-sm rounded-lg p-2 focus:border-cyan-400 outline-none"
               />
             </div>
@@ -234,7 +234,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
                 step="0.5"
                 placeholder="0"
                 value={drawUnits}
-                onChange={(e) => setDrawUnits(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                onChange={(e) => setDrawUnits(e.target.value)}
                 className="w-full bg-slate-900 border border-slate-700 text-cyan-400 font-mono font-bold text-sm rounded-lg p-2 focus:border-cyan-400 outline-none"
               />
             </div>
@@ -345,7 +345,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
                     step="0.1"
                     placeholder="e.g. 182.4"
                     value={bodyWeightLbs}
-                    onChange={(e) => setBodyWeightLbs(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                    onChange={(e) => setBodyWeightLbs(e.target.value)}
                     className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-xl p-2.5 focus:border-cyan-400 outline-none"
                   />
                 </div>

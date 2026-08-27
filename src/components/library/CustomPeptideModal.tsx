@@ -26,10 +26,10 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
   const [summary, setSummary] = useState<string>('');
   const [mechanism, setMechanism] = useState<string>('');
   const [vialSizes, setVialSizes] = useState<string>('5, 10');
-  const [typicalDose, setTypicalDose] = useState<number | ''>(500);
+  const [typicalDose, setTypicalDose] = useState<number | string>(500);
   const [doseUnit, setDoseUnit] = useState<'mcg' | 'mg'>('mcg');
   const [frequency, setFrequency] = useState<string>('Once daily');
-  const [halfLifeHours, setHalfLifeHours] = useState<number | ''>(4);
+  const [halfLifeHours, setHalfLifeHours] = useState<number | string>(4);
   const [indications, setIndications] = useState<string>('Tissue repair, Vitality');
 
   if (!isOpen) return null;
@@ -213,7 +213,7 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
                       required
                       placeholder="mg"
                       value={r.massRatioMg}
-                      onChange={(e) => handleUpdateBlendRow(r.id, 'massRatioMg', e.target.value === '' ? '' : parseFloat(e.target.value))}
+                      onChange={(e) => handleUpdateBlendRow(r.id, 'massRatioMg', e.target.value)}
                       className="w-16 bg-slate-900 border border-slate-700 text-white text-xs rounded-lg p-2 text-right focus:border-purple-400 outline-none font-mono"
                     />
                     <span className="text-xs text-slate-400 font-bold">mg</span>
@@ -308,7 +308,7 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
                 required
                 placeholder="0"
                 value={typicalDose}
-                onChange={(e) => setTypicalDose(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                onChange={(e) => setTypicalDose(e.target.value)}
                 className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
               />
             </div>
@@ -323,7 +323,7 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
                 step="any"
                 placeholder="0"
                 value={halfLifeHours}
-                onChange={(e) => setHalfLifeHours(e.target.value === '' ? '' : parseFloat(e.target.value))}
+                onChange={(e) => setHalfLifeHours(e.target.value)}
                 className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
               />
             </div>
