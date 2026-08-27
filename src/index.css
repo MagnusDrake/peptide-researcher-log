@@ -35,9 +35,9 @@
   html.light {
     --chart-grid: rgba(124, 118, 127, 0.15); /* #7c767f grid */
 
-    /* LIGHT MODE: Earth & Frost Palette Implementation */
-    --color-slate-950: #d1ab91; /* App Background: Lighter Bronze */
-    --color-slate-900: rgba(255, 255, 255, 0.6); /* Cards / Modals: Frosted glass over bronze */
+    /* LIGHT MODE: Pearl & Frost Palette Implementation */
+    --color-slate-950: #fcfbf9; /* App Background: White Pearl */
+    --color-slate-900: rgba(255, 255, 255, 0.6); /* Cards / Modals: Frosted glass */
     --color-slate-800: rgba(124, 118, 127, 0.2); /* Borders / Hover: Purplish-gray tint */
     --color-slate-700: rgba(124, 118, 127, 0.3); /* Dividers */
     --color-slate-600: #7c767f; /* Purplish Gray */
@@ -131,12 +131,12 @@
   /* More visible blobs for light mode */
   html.light #root::before {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(159, 193, 219, 0.8) 0%, rgba(170, 124, 93, 0) 70%); /* Powder blue to transparent bronze */
+    background: radial-gradient(circle, rgba(159, 193, 219, 0.7) 0%, rgba(252, 251, 249, 0) 70%); /* Powder blue to transparent pearl */
   }
   
   html.light #root::after {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(145, 100, 155, 0.8) 0%, rgba(170, 124, 93, 0) 70%); /* Vibrant purplish to transparent bronze */
+    background: radial-gradient(circle, rgba(145, 100, 155, 0.7) 0%, rgba(252, 251, 249, 0) 70%); /* Vibrant purplish to transparent pearl */
   }
 }
 
