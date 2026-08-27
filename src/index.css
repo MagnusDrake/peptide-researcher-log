@@ -9,28 +9,42 @@
     --color-violet: #8b5cf6;
     --color-rose: #f43f5e;
     --color-amber: #f59e0b;
-    --chart-grid: #1e293b;
+    --chart-grid: rgba(255, 255, 255, 0.05);
+
+    /* DARK MODE: Obsidian / Deep Space (Sleek, neutral, premium darks) */
+    --color-slate-950: #050505; /* Background */
+    --color-slate-900: #0e0e0e; /* Elevated Cards */
+    --color-slate-800: #1a1a1a; /* Borders / Inputs */
+    --color-slate-700: #27272a; /* Dividers */
+    --color-slate-600: #3f3f46; 
+    --color-slate-500: #71717a; /* Muted text */
+    --color-slate-400: #a1a1aa; /* Secondary text */
+    --color-slate-300: #d4d4d8; /* Normal text */
+    --color-slate-200: #e4e4e7;
+    --color-slate-100: #fafafa; /* Headings */
+    --color-slate-50:  #ffffff;
   }
 
   html.light {
-    --chart-grid: #e2e8f0;
+    --chart-grid: rgba(0, 0, 0, 0.05);
 
-    /* Slate palette override for clean, radiant medical-grade light theme */
-    --color-slate-950: #f8fafc;
-    --color-slate-900: #ffffff;
-    --color-slate-800: #e2e8f0;
-    --color-slate-700: #cbd5e1;
-    --color-slate-600: #94a3b8;
-    --color-slate-500: #64748b;
-    --color-slate-400: #475569;
-    --color-slate-300: #334155;
-    --color-slate-200: #1e293b;
-    --color-slate-100: #0f172a;
+    /* LIGHT MODE: Warm Minimalist / Pastel Beige */
+    --color-slate-950: #f5f3eb; /* App Background: Soft pastel oat */
+    --color-slate-900: #fcfbf8; /* Cards / Modals: Creamy off-white */
+    --color-slate-800: #e8e2d2; /* Borders / Hover states: Deeper beige */
+    --color-slate-700: #d5ccb7; /* Dividers */
+    --color-slate-600: #a69a83; 
+    --color-slate-500: #7a705c; /* Muted text */
+    --color-slate-400: #595244; /* Secondary text */
+    --color-slate-300: #3b362c; /* Normal text */
+    --color-slate-200: #29251e; 
+    --color-slate-100: #1c1914; /* Headings: Warm Espresso */
+    --color-slate-50:  #0a0907;
   }
 
   body {
     @apply bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-cyan-500 selection:text-white;
-    background-color: #020617; /* Even darker slate for better contrast */
+    
     transition: background-color 0.3s ease, color 0.3s ease;
     position: relative;
     overflow-x: hidden;
@@ -86,8 +100,8 @@
   }
 
   html.light body {
-    background-color: #f1f5f9;
-    color: #0f172a;
+    
+    
   }
 
   /* Softer blobs for light mode */
@@ -109,28 +123,28 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(14, 14, 14, 0.6); /* Obsidian dark track */
 }
 
 html.light ::-webkit-scrollbar-track {
-  background: rgba(241, 245, 249, 0.8);
+  background: rgba(245, 243, 235, 0.8); /* Beige light track */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(51, 65, 85, 0.8);
+  background: rgba(39, 39, 42, 0.8); /* Zinc-700 dark thumb */
   border-radius: 9999px;
 }
 
 html.light ::-webkit-scrollbar-thumb {
-  background: rgba(203, 213, 225, 0.9);
+  background: rgba(166, 154, 131, 0.7); /* Beige-600 light thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 1);
+  background: rgba(82, 82, 91, 1);
 }
 
 html.light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 1);
+  background: rgba(122, 112, 92, 1);
 }
 
 /* Glassmorphic utilities */
@@ -212,51 +226,34 @@ html.light .glass-panel-interactive:hover {
 
 /* In light mode, default .text-white to deep charcoal slate */
 html.light .text-white {
-  color: #0f172a !important;
-}
-
-/* Headings and table headers */
-html.light h1:not(.bg-clip-text),
-html.light h2:not(.bg-clip-text),
-html.light h3:not(.bg-clip-text),
-html.light h4:not(.bg-clip-text),
-html.light h5:not(.bg-clip-text),
-html.light h6:not(.bg-clip-text),
-html.light th {
-  color: #0f172a;
-}
-
-/* Ensure descriptions and subtexts are readable in light mode */
-html.light .text-slate-300,
-html.light .text-slate-400 {
-  color: #475569 !important;
+  color: var(--color-slate-100) !important;
 }
 
 /* Form controls in light mode: inputs, selects, textareas */
 html.light input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
 html.light select,
 html.light textarea {
-  color: #0f172a !important;
-  background-color: #ffffff !important;
-  border-color: #cbd5e1 !important;
+  color: var(--color-slate-100) !important;
+  background-color: var(--color-slate-900) !important;
+  border-color: var(--color-slate-700) !important;
 }
 
 html.light input::placeholder,
 html.light textarea::placeholder {
-  color: #94a3b8 !important;
+  color: var(--color-slate-500) !important;
 }
 
 /* Modal overlays in light mode maintain focus with dark translucent backdrop */
 html.light .fixed.inset-0.bg-slate-950\/85,
 html.light .fixed.inset-0.bg-slate-950\/80,
 html.light .fixed.inset-0.bg-slate-950\/90 {
-  background-color: rgba(15, 23, 42, 0.6) !important;
+  background-color: rgba(10, 9, 7, 0.6) !important;
 }
 
 /* Top feature hero banners in light mode */
 html.light [class*="bg-gradient-to-r"][class*="from-"]:not(button):not(a):not(.bg-clip-text) {
-  background: linear-gradient(135deg, rgba(241, 245, 249, 0.95), rgba(255, 255, 255, 0.98)) !important;
-  border-color: #e2e8f0 !important;
+  background: linear-gradient(135deg, rgba(252, 251, 248, 0.95), rgba(255, 255, 255, 0.98)) !important;
+  border-color: var(--color-slate-800) !important;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
 }
 
