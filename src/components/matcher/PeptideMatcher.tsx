@@ -300,7 +300,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
 
                   <button
                     onClick={() => onAddToProtocol(res.peptide)}
-                    className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-md shadow-cyan-500/20 transition flex items-center justify-center gap-1.5"
+                    className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-md shadow-cyan-500/20 transition flex items-center justify-center gap-1.5"
                   >
                     <PlusCircle className="w-3.5 h-3.5" />
                     <span>Add Protocol</span>
@@ -370,7 +370,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
               <button
                 disabled={selectedGoals.length === 0}
                 onClick={() => setStep(2)}
-                className="mt-4 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm shadow-lg shadow-cyan-500/20 transition flex items-center justify-center gap-2"
+                className="mt-4 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm shadow-lg shadow-cyan-500/20 transition flex items-center justify-center gap-2"
               >
                 <span>Continue to Protocol Preferences</span>
                 <ArrowRight className="w-4 h-4" />
@@ -456,7 +456,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
                     setStep(3);
                     calculateMatches();
                   }}
-                  className="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-cyan-500/20 transition flex items-center gap-2"
+                  className="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-cyan-500/20 transition flex items-center gap-2"
                 >
                   <span>Generate Matches</span>
                   <Sparkles className="w-4 h-4" />

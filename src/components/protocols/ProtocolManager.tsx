@@ -82,7 +82,7 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
 
         <button
           onClick={handleCreateNew}
-          className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 transition active:scale-95 self-start md:self-auto"
+          className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 transition active:scale-95 self-start md:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>New Protocol</span>
@@ -183,7 +183,7 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
           </p>
           <button
             onClick={handleCreateNew}
-            className="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-cyan-500/20 mt-2"
+            className="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-cyan-500/20 mt-2"
           >
             Create Your First Protocol
           </button>

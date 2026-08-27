@@ -82,7 +82,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
               {today.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
             </span>
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-tight">
             Daily Research Schedule & Dashboard
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
@@ -94,7 +94,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
 
         {/* Today's Progress Card */}
         {scheduledToday.length > 0 && (
-          <div className="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl flex items-center gap-4 shrink-0 shadow-lg">
+          <div className="glass-panel border-cyan-500/20 p-4 rounded-2xl flex items-center gap-4 shrink-0 shadow-lg">
             <div className="relative w-14 h-14 flex items-center justify-center">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                 <path

@@ -810,7 +810,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
           <button
             type="button"
             onClick={handleSubmit}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-sm font-bold shadow-lg shadow-cyan-500/20 transition active:scale-95 flex items-center gap-2"
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white text-sm font-bold shadow-lg shadow-cyan-500/20 transition active:scale-95 flex items-center gap-2"
           >
             <Check className="w-4 h-4" />
             <span>{editingProtocol ? 'Update Protocol' : 'Save Protocol'}</span>
