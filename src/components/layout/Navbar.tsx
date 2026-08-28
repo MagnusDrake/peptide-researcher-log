@@ -71,7 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 PEPTIDES
               </span>
             </div>
-            <div className="text-[9px] text-cyan-500/70 uppercase tracking-[0.2em] font-medium mt-0.5">Daily Peptide Tracker</div>
+            <div className="text-[9px] text-cyan-400 uppercase tracking-[0.2em] font-bold mt-0.5">Daily Peptide Tracker</div>
           </div>
         </div>
 
