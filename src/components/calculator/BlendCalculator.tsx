@@ -228,7 +228,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
   return (
     <div className="flex flex-col gap-4 max-w-5xl mx-auto pb-10">
       {/* Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-gradient-to-r from-purple-900/40 via-indigo-900/30 to-slate-900/60 p-4 sm:p-6 rounded-2xl border border-purple-500/20 backdrop-blur-md">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
         <div>
           <div className="flex items-center gap-1.5 text-purple-400 font-semibold text-[11px] uppercase tracking-wider mb-0.5">
             <Layers className="w-3.5 h-3.5" />
