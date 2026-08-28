@@ -33,37 +33,37 @@
   }
 
   html.light {
-    --chart-grid: rgba(129, 153, 158, 0.15); /* Steel Blue grid */
+    --chart-grid: rgba(52, 64, 69, 0.15); /* Dark slate grid */
 
-    /* LIGHT MODE: Dark Slate Palette Implementation */
-    --color-slate-950: #344045; /* App Background: Dark Slate Gray */
-    --color-slate-900: rgba(255, 255, 255, 0.08); /* Cards / Modals: Subtle frosted glass */
-    --color-slate-800: rgba(129, 153, 158, 0.2); /* Borders / Hover: Steel Blue tint */
-    --color-slate-700: rgba(129, 153, 158, 0.3); /* Dividers */
-    --color-slate-600: rgba(129, 153, 158, 0.5); /* Muted slate */
-    --color-slate-500: #81999e; /* Muted text: Steel Blue */
-    --color-slate-400: #81999e; /* Secondary text: Steel Blue */
-    --color-slate-300: rgba(255, 255, 255, 0.85); /* Normal text: Soft white for readability */
-    --color-slate-200: rgba(255, 255, 255, 0.95); 
-    --color-slate-100: #cb9b52; /* Headings: Golden Mustard */
-    --color-slate-50:  #ffffff;
+    /* LIGHT MODE: Steel Blue Palette Implementation */
+    --color-slate-950: #81999e; /* App Background: Steel Blue */
+    --color-slate-900: rgba(255, 255, 255, 0.35); /* Cards / Modals: Frosted glass */
+    --color-slate-800: rgba(52, 64, 69, 0.15); /* Borders / Hover: Dark slate tint */
+    --color-slate-700: rgba(52, 64, 69, 0.25); /* Dividers */
+    --color-slate-600: rgba(52, 64, 69, 0.6); /* Muted slate */
+    --color-slate-500: rgba(52, 64, 69, 0.75); /* Muted text */
+    --color-slate-400: rgba(52, 64, 69, 0.9); /* Secondary text */
+    --color-slate-300: #344045; /* Normal text: Dark Slate Gray */
+    --color-slate-200: #344045; 
+    --color-slate-100: #344045; /* Headings: Dark Slate Gray */
+    --color-slate-50:  #344045;
 
     /* Global Tinted Shadows for Light Mode */
-    --tw-shadow-color: rgba(0, 0, 0, 0.25); /* Deep shadow */
+    --tw-shadow-color: rgba(52, 64, 69, 0.1); /* Dark slate tinted shadow */
 
     /* Override standard utility colors for the new palette */
-    --color-cyan-300: #a8471a;
-    --color-cyan-400: #873814; /* Burnt Sienna replaces cyan for primary accents */
-    --color-cyan-500: #63290f;
-    --color-cyan-600: #421b0a;
+    --color-cyan-300: #88393e;
+    --color-cyan-400: #6d282f; /* Burgundy replaces cyan for primary accents */
+    --color-cyan-500: #551d23;
+    --color-cyan-600: #42151b;
     
-    --color-emerald-300: #8a323b;
-    --color-emerald-400: #6d282f; /* Burgundy replaces emerald for secondary accents */
-    --color-emerald-500: #4d1c21;
+    --color-emerald-300: #e3b063;
+    --color-emerald-400: #cb9b52; /* Golden Mustard replaces emerald for secondary accents */
+    --color-emerald-500: #a37c42;
     
-    --color-violet-400: #6d282f; /* Burgundy */
+    --color-violet-400: #873814; /* Burnt Sienna */
     --color-amber-400: #cb9b52; /* Golden Mustard */
-    --color-rose-400: #873814; /* Burnt Sienna */
+    --color-rose-400: #6d282f; /* Burgundy */
   }
 
   body {
@@ -135,12 +135,12 @@
   /* More visible blobs for light mode */
   html.light #root::before {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(203, 155, 82, 0.4) 0%, rgba(52, 64, 69, 0) 70%); /* Golden Mustard fading to Dark Slate */
+    background: radial-gradient(circle, rgba(203, 155, 82, 0.6) 0%, rgba(129, 153, 158, 0) 70%); /* Golden Mustard fading to Steel Blue */
   }
   
   html.light #root::after {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(135, 56, 20, 0.4) 0%, rgba(52, 64, 69, 0) 70%); /* Burnt Sienna fading to Dark Slate */
+    background: radial-gradient(circle, rgba(135, 56, 20, 0.5) 0%, rgba(129, 153, 158, 0) 70%); /* Burnt Sienna fading to Steel Blue */
   }
 }
 
@@ -207,9 +207,9 @@ html.light .glass-panel {
 }
 
 html.light .glass-panel-interactive:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(135, 56, 20, 0.6); /* Burnt Sienna border on hover */
-  box-shadow: 0 10px 30px -4px rgba(135, 56, 20, 0.3), 0 0 15px rgba(135, 56, 20, 0.25);
+  background: rgba(255, 255, 255, 0.45);
+  border-color: rgba(109, 40, 47, 0.6); /* Burgundy border on hover */
+  box-shadow: 0 10px 30px -4px rgba(109, 40, 47, 0.3), 0 0 15px rgba(109, 40, 47, 0.25);
   transform: translateY(-2px);
 }
 
