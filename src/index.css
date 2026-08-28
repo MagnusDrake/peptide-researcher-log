@@ -265,9 +265,29 @@ html.light textarea::placeholder {
 
 /* Modal overlays in light mode maintain focus with dark translucent backdrop */
 html.light .fixed.inset-0.bg-slate-950\/85,
-html.light .fixed.inset-0.bg-slate-950\/80,
+html.light .fixed.inset-0.bg-slate-950\/80:not(.lock-screen-container),
 html.light .fixed.inset-0.bg-slate-950\/90 {
   background-color: rgba(10, 9, 7, 0.6) !important;
+}
+
+/* Lock screen ambient backdrop and high-contrast typography in light mode */
+html.light .lock-screen-container {
+  background-color: rgba(15, 23, 42, 0.92) !important;
+}
+
+html.light .lock-screen-container .text-cyan-400,
+html.light .lock-screen-container .text-cyan-300 {
+  color: #38bdf8 !important;
+}
+
+html.light .lock-screen-container .bg-cyan-400,
+html.light .lock-screen-container .bg-cyan-500 {
+  background-color: #38bdf8 !important;
+}
+
+html.light .lock-screen-container .border-cyan-400,
+html.light .lock-screen-container .border-cyan-500 {
+  border-color: #38bdf8 !important;
 }
 
 /* Top feature hero banners in light mode */

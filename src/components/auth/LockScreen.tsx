@@ -44,7 +44,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
   };
 
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-[1000ms] ease-out ${unlocked ? 'opacity-0 scale-110 pointer-events-none blur-md' : 'opacity-100 bg-slate-950/80 backdrop-blur-3xl'}`}>
+    <div className={`lock-screen-container fixed inset-0 z-50 flex items-center justify-center transition-all duration-[1000ms] ease-out ${unlocked ? 'opacity-0 scale-110 pointer-events-none blur-md' : 'opacity-100 bg-slate-950/80 backdrop-blur-3xl'}`}>
       
       <div className={`relative z-10 w-full max-w-sm p-8 flex flex-col items-center transition-all duration-700 ${unlocked ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
         
@@ -59,8 +59,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
             </svg>
           </div>
           <h1 className="text-[2rem] font-light tracking-[0.3em] text-slate-100 mb-2 ml-2">AURA</h1>
-          <p className="text-[0.65rem] uppercase tracking-[0.2em] text-cyan-400/80 font-medium">Peptide tracking made easy.</p>
-          <p className="text-[0.55rem] uppercase tracking-[0.5em] text-slate-500 font-bold mt-3 ml-1">PEPTIDES</p>
+          <p className="text-[0.68rem] uppercase tracking-[0.22em] text-cyan-400 font-semibold">Peptide tracking made easy.</p>
         </div>
 
         {/* PIN Indicators */}
@@ -111,11 +110,11 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
         <div className="mt-12 h-6 flex items-center justify-center">
           {unlocked ? (
             <div className="flex items-center text-emerald-400 text-xs tracking-widest uppercase font-medium animate-pulse">
-              <Unlock className="w-3.5 h-3.5 mr-2" /> Decrypting Vault...
+              <Unlock className="w-3.5 h-3.5 mr-2" /> Unlocking...
             </div>
           ) : (
-            <div className="flex items-center text-slate-600 text-[0.65rem] tracking-[0.2em] uppercase font-semibold">
-              <Lock className="w-3 h-3 mr-2" /> Secure Terminal
+            <div className="flex items-center text-slate-400 text-[0.65rem] tracking-[0.2em] uppercase font-semibold">
+              <Lock className="w-3 h-3 mr-2" /> Secure Passcode
             </div>
           )}
         </div>
