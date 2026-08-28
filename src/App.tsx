@@ -389,7 +389,7 @@ export function App() {
         {activeTab === 'calculator' && (
           <div className="flex flex-col gap-6 max-w-5xl mx-auto w-full min-w-0">
             {/* Calculator Sub-Tabs Switcher (Horizontal scroll on mobile) */}
-            <div className="w-full max-w-full flex items-center justify-start sm:justify-center overflow-x-auto pb-1 scrollbar-none">
+            <div className="w-full max-w-full flex items-center justify-start sm:justify-center overflow-x-auto pb-1 scrollbar-none touch-pan-x">
               <div className="bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 flex items-center gap-1 shadow-inner shrink-0">
                 <button
                   onClick={() => setCalcSubTab('recon')}
