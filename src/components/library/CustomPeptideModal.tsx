@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Peptide, PeptideCategory } from '../../types';
 import { X, Plus, Sparkles, Layers, Trash2 } from 'lucide-react';
 import { db } from '../../db';
@@ -117,7 +118,7 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
     onClose();
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
       <div className="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
         <div className="p-5 sm:p-6 border-b border-slate-700 flex items-center justify-between">
@@ -360,6 +361,7 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

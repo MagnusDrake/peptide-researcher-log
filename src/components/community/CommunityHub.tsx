@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Protocol, DoseLogEntry } from '../../types';
 import { db, SharedCommunityFinding } from '../../db';
 import { 
@@ -176,7 +177,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
       </div>
 
       {/* Share Finding Modal */}
-      {isShareModalOpen && (
+      {isShareModalOpen && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
           <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 w-full max-w-lg shadow-2xl flex flex-col gap-4">
             <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
@@ -237,7 +238,8 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

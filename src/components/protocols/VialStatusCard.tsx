@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Protocol } from '../../types';
 import { formatTiming, formatDaysOfWeek } from '../../utils/formatters';
 import { generateShareableProtocolText, triggerDownload } from '../../utils/exportImport';
@@ -286,7 +287,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
       )}
 
       {/* Share / Export Protocol Modal */}
-      {showShareModal && (
+      {showShareModal && createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
           <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 w-full max-w-lg shadow-2xl flex flex-col gap-4">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -316,7 +317,8 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

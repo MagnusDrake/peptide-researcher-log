@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Protocol, DoseLogEntry, SyringeType } from '../../types';
 import { INJECTION_SITES } from '../../data/injectionSites';
 import { SiteRotationMap } from './SiteRotationMap';
@@ -104,7 +105,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
     onClose();
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
       <div className="bg-slate-900 border border-slate-700/80 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
         
@@ -384,6 +385,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

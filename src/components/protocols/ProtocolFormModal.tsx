@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Protocol, SyringeType, FrequencyType, TimingOfDay, BlendComponent } from '../../types';
 import { PEPTIDES_DATABASE } from '../../data/peptides';
 import { calculateReconstitution, calculateMultiBlend } from '../../utils/calculations';
@@ -246,7 +247,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
       <div className="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
         
@@ -817,6 +818,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
