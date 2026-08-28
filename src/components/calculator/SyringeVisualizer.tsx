@@ -47,32 +47,33 @@ export const SyringeVisualizer: React.FC<SyringeVisualizerProps> = ({
     });
   }
 
-  // SVG dimensions
-  const svgWidth = 850;
+  // SVG dimensions - calibrated so plunger never clips or overflows viewBox
+  const svgWidth = 860;
   const svgHeight = 180;
-  const barrelStartX = 140;
-  const barrelEndX = 720;
-  const barrelWidth = barrelEndX - barrelStartX;
+  const barrelStartX = 120;
+  const barrelWidth = 350;
+  const barrelEndX = barrelStartX + barrelWidth; // 470
   const barrelTopY = 40;
   const barrelBottomY = 140;
   const barrelHeight = barrelBottomY - barrelTopY;
+  const rodLength = 345;
 
   // Plunger position: 0 units is at barrelStartX (left), maxUnits is at barrelEndX (right)
   const plungerX = barrelStartX + (currentUnits / maxUnits) * barrelWidth;
 
   return (
-    <div className="flex flex-col items-center w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-3 sm:p-5 shadow-2xl backdrop-blur-md overflow-hidden">
+    <div className="flex flex-col items-center w-full min-w-0 max-w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-3 sm:p-5 shadow-2xl backdrop-blur-md overflow-hidden">
       {/* Header Info */}
-      <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3 mb-2">
-        <div className="flex items-center gap-2.5">
+      <div className="w-full min-w-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3 mb-2">
+        <div className="flex items-center gap-2.5 min-w-0">
           <div className="h-9 w-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold text-base shrink-0">
             💉
           </div>
-          <div>
-            <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Syringe Visualizer</div>
+          <div className="min-w-0">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 truncate">Syringe Visualizer</div>
             <div className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
               <span>{syringeType}</span>
-              <span className="text-[11px] px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800 font-normal">
+              <span className="text-[11px] px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800 font-normal shrink-0">
                 {syringeType === 'U-100' ? '1.0 mL' : syringeType === 'U-50' ? '0.5 mL' : '0.3 mL'}
               </span>
             </div>
@@ -111,12 +112,12 @@ export const SyringeVisualizer: React.FC<SyringeVisualizerProps> = ({
         </div>
       </div>
 
-      {/* Syringe SVG Graphic (Smooth horizontal scrolling on small screens with no cutoffs) */}
-      <div className="w-full overflow-x-auto py-1 flex justify-start sm:justify-center scrollbar-none">
+      {/* Syringe SVG Graphic */}
+      <div className="w-full min-w-0 max-w-full py-1 flex items-center justify-center overflow-hidden">
         <svg
           viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-          className="w-full select-none"
-          style={{ minWidth: '280px', maxWidth: '100%', maxHeight: '140px' }}
+          className="w-full max-w-full h-auto select-none"
+          style={{ maxHeight: '140px' }}
         >
           <defs>
             {/* Fluid Gradient */}
@@ -159,33 +160,33 @@ export const SyringeVisualizer: React.FC<SyringeVisualizerProps> = ({
           {/* === NEEDLE & HUB (Left Side) === */}
           {/* Needle Shaft */}
           <line
-            x1="20"
+            x1="15"
             y1="90"
-            x2="100"
+            x2="85"
             y2="90"
             stroke="url(#metalNeedle)"
-            strokeWidth="3.5"
+            strokeWidth="3"
             strokeLinecap="round"
           />
           {/* Needle Beveled Tip */}
-          <polygon points="18,88 24,90 18,92" fill="#94a3b8" />
+          <polygon points="13,88.5 18,90 13,91.5" fill="#94a3b8" />
           
           {/* Needle Hub (Luer connection) */}
           <polygon
-            points="100,75 125,80 140,82 140,98 125,100 100,105"
+            points="85,76 108,80 120,82 120,98 108,100 85,104"
             fill="#0284c7"
             stroke="#38bdf8"
             strokeWidth="1.5"
           />
-          <rect x="125" y="78" width="15" height="24" rx="2" fill="#0369a1" />
+          <rect x="108" y="78" width="12" height="24" rx="2" fill="#0369a1" />
 
           {/* === BARREL FLANGE (Right Side Finger Rest) === */}
           <rect
             x={barrelEndX - 2}
             y="25"
-            width="18"
+            width="14"
             height="130"
-            rx="5"
+            rx="4"
             fill="#334155"
             stroke="#64748b"
             strokeWidth="1.5"
@@ -194,20 +195,20 @@ export const SyringeVisualizer: React.FC<SyringeVisualizerProps> = ({
           {/* === PLUNGER ROD (extends to the right) === */}
           <rect
             x={plungerX + 20}
-            y="82"
-            width={barrelEndX - barrelStartX + 80}
-            height="16"
+            y="83"
+            width={rodLength}
+            height="14"
             fill="#475569"
             stroke="#64748b"
             strokeWidth="1"
           />
           {/* Plunger Thumb Press */}
           <rect
-            x={plungerX + 20 + (barrelEndX - barrelStartX + 80)}
-            y="50"
-            width="14"
-            height="80"
-            rx="4"
+            x={plungerX + 20 + rodLength}
+            y="52"
+            width="12"
+            height="76"
+            rx="3"
             fill="#334155"
             stroke="#94a3b8"
             strokeWidth="1.5"
@@ -392,12 +393,12 @@ export const SyringeVisualizer: React.FC<SyringeVisualizerProps> = ({
           </div>
 
           {/* Helpful drawing tip */}
-          <div className="flex items-center justify-between text-[11px] text-slate-400 bg-slate-950/60 p-2 rounded-lg border border-slate-800">
-            <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-              Draw so the <strong className="text-slate-200">front ring</strong> of the black rubber stopper aligns with the <strong className="text-cyan-400">{currentUnits.toFixed(1)}</strong> mark.
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[11px] text-slate-400 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800 w-full min-w-0">
+            <span className="flex items-start sm:items-center gap-1.5 leading-snug">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse shrink-0 mt-1 sm:mt-0"></span>
+              <span>Draw until the <strong className="text-slate-200">front ring</strong> of the stopper aligns with <strong className="text-cyan-400 font-mono">{currentUnits.toFixed(1)}</strong> mark.</span>
             </span>
-            <span className="text-slate-500 font-mono">{volumeMl} mL total fluid</span>
+            <span className="text-slate-500 font-mono shrink-0 text-[10px] sm:text-[11px]">{volumeMl} mL total fluid</span>
           </div>
         </div>
       )}

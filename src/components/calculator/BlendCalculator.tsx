@@ -249,7 +249,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
   };
 
   return (
-    <div className="flex flex-col gap-4 max-w-5xl mx-auto pb-10">
+    <div className="flex flex-col gap-4 max-w-5xl mx-auto pb-10 w-full min-w-0 max-w-full overflow-x-hidden">
       {/* Banner */}
       <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6">
         <div>
@@ -297,11 +297,11 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
       </div>
 
       {/* Preset Pills */}
-      <div className="glass-panel p-3 sm:p-4 rounded-2xl flex flex-col gap-2">
+      <div className="glass-panel p-3 sm:p-4 rounded-2xl flex flex-col gap-2 w-full min-w-0 max-w-full">
         <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
           Popular Pre-Mixed Blends
         </label>
-        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none touch-pan-x sm:flex-wrap">
+        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none touch-pan-x sm:flex-wrap w-full min-w-0 max-w-full">
           {PRESET_BLENDS.map((preset, idx) => (
             <button
               key={`preset-${idx}`}
@@ -621,7 +621,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
       </div>
 
       {/* Syringe Visualizer */}
-      <div className="mt-1">
+      <div className="mt-1 w-full min-w-0 max-w-full overflow-hidden">
         <SyringeVisualizer
           syringeType={syringeType}
           drawUnits={result.drawUnits}

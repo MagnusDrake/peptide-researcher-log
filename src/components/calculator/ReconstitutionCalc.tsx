@@ -78,7 +78,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
   const currentPeptideName = activePeptide ? activePeptide.name : (customPeptideName || 'Custom Peptide');
 
   return (
-    <div className="flex flex-col gap-4 max-w-5xl mx-auto pb-10">
+    <div className="flex flex-col gap-4 max-w-5xl mx-auto pb-10 w-full min-w-0 max-w-full overflow-x-hidden">
       {/* Top Banner (Compact on mobile) */}
       <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
         <div>
@@ -543,7 +543,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
       </div>
 
       {/* FULL-WIDTH SYRINGE VISUALIZER SECTION */}
-      <div className="mt-1">
+      <div className="mt-1 w-full min-w-0 max-w-full overflow-hidden">
         <SyringeVisualizer
           syringeType={syringeType}
           drawUnits={result.drawUnits}
