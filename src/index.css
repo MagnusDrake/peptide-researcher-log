@@ -33,37 +33,37 @@
   }
 
   html.light {
-    --chart-grid: rgba(52, 64, 69, 0.15); /* #344045 grid */
+    --chart-grid: rgba(129, 153, 158, 0.15); /* Steel Blue grid */
 
-    /* LIGHT MODE: Golden Ochre Palette Implementation */
-    --color-slate-950: #cb9b52; /* App Background: Golden Mustard (Lightest) */
-    --color-slate-900: rgba(255, 255, 255, 0.45); /* Cards / Modals: Frosted glass */
-    --color-slate-800: rgba(52, 64, 69, 0.15); /* Borders / Hover: Dark slate tint */
-    --color-slate-700: rgba(52, 64, 69, 0.25); /* Dividers */
-    --color-slate-600: rgba(52, 64, 69, 0.6); /* Muted slate */
-    --color-slate-500: rgba(52, 64, 69, 0.75); /* Muted text */
-    --color-slate-400: rgba(52, 64, 69, 0.9); /* Secondary text */
-    --color-slate-300: #344045; /* Normal text: Dark Slate Gray */
-    --color-slate-200: #344045; 
-    --color-slate-100: #344045; /* Headings: Dark Slate Gray */
-    --color-slate-50:  #344045;
+    /* LIGHT MODE: Dark Slate Palette Implementation */
+    --color-slate-950: #344045; /* App Background: Dark Slate Gray */
+    --color-slate-900: rgba(255, 255, 255, 0.08); /* Cards / Modals: Subtle frosted glass */
+    --color-slate-800: rgba(129, 153, 158, 0.2); /* Borders / Hover: Steel Blue tint */
+    --color-slate-700: rgba(129, 153, 158, 0.3); /* Dividers */
+    --color-slate-600: rgba(129, 153, 158, 0.5); /* Muted slate */
+    --color-slate-500: #81999e; /* Muted text: Steel Blue */
+    --color-slate-400: #81999e; /* Secondary text: Steel Blue */
+    --color-slate-300: rgba(255, 255, 255, 0.85); /* Normal text: Soft white for readability */
+    --color-slate-200: rgba(255, 255, 255, 0.95); 
+    --color-slate-100: #cb9b52; /* Headings: Golden Mustard */
+    --color-slate-50:  #ffffff;
 
     /* Global Tinted Shadows for Light Mode */
-    --tw-shadow-color: rgba(52, 64, 69, 0.08); /* Dark slate tinted shadow */
+    --tw-shadow-color: rgba(0, 0, 0, 0.25); /* Deep shadow */
 
     /* Override standard utility colors for the new palette */
-    --color-cyan-300: #88393e;
-    --color-cyan-400: #6d282f; /* Burgundy replaces cyan for primary accents */
-    --color-cyan-500: #551d23;
-    --color-cyan-600: #42151b;
+    --color-cyan-300: #a8471a;
+    --color-cyan-400: #873814; /* Burnt Sienna replaces cyan for primary accents */
+    --color-cyan-500: #63290f;
+    --color-cyan-600: #421b0a;
     
-    --color-emerald-300: #9ab0b4;
-    --color-emerald-400: #81999e; /* Steel Blue replaces emerald for secondary accents */
-    --color-emerald-500: #6c8388;
+    --color-emerald-300: #8a323b;
+    --color-emerald-400: #6d282f; /* Burgundy replaces emerald for secondary accents */
+    --color-emerald-500: #4d1c21;
     
-    --color-violet-400: #873814; /* Burnt Sienna replaces violet */
-    --color-amber-400: #6d282f; /* Burgundy replaces amber */
-    --color-rose-400: #873814; /* Burnt Sienna replaces rose */
+    --color-violet-400: #6d282f; /* Burgundy */
+    --color-amber-400: #cb9b52; /* Golden Mustard */
+    --color-rose-400: #873814; /* Burnt Sienna */
   }
 
   body {
@@ -135,12 +135,12 @@
   /* More visible blobs for light mode */
   html.light #root::before {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(129, 153, 158, 0.8) 0%, rgba(203, 155, 82, 0) 70%); /* Steel Blue fading to Gold */
+    background: radial-gradient(circle, rgba(203, 155, 82, 0.4) 0%, rgba(52, 64, 69, 0) 70%); /* Golden Mustard fading to Dark Slate */
   }
   
   html.light #root::after {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(109, 40, 47, 0.8) 0%, rgba(203, 155, 82, 0) 70%); /* Burgundy fading to Gold */
+    background: radial-gradient(circle, rgba(135, 56, 20, 0.4) 0%, rgba(52, 64, 69, 0) 70%); /* Burnt Sienna fading to Dark Slate */
   }
 }
 
@@ -155,7 +155,7 @@
 }
 
 html.light ::-webkit-scrollbar-track {
-  background: rgba(52, 64, 69, 0.05); /* Dark slate track */
+  background: rgba(129, 153, 158, 0.05); /* Steel blue track */
 }
 
 ::-webkit-scrollbar-thumb {
@@ -164,7 +164,7 @@ html.light ::-webkit-scrollbar-track {
 }
 
 html.light ::-webkit-scrollbar-thumb {
-  background: rgba(52, 64, 69, 0.2); /* Dark slate thumb */
+  background: rgba(129, 153, 158, 0.2); /* Steel blue thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -172,40 +172,28 @@ html.light ::-webkit-scrollbar-thumb {
 }
 
 html.light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(52, 64, 69, 0.4); /* Dark slate thumb hover */
+  background: rgba(129, 153, 158, 0.4); /* Steel blue thumb hover */
 }
 
-/* Glassmorphic utilities */
+/* Glass panel components */
 .glass-panel {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.3), rgba(15, 23, 42, 0.4));
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(6, 182, 212, 0.15); /* Tinted border */
-  box-shadow: 
-    0 4px 24px -1px rgba(6, 182, 212, 0.1), /* Tinted ambient shadow */
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  background: rgba(8, 17, 38, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-slate-800);
+  box-shadow: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
 }
 
 html.light .glass-panel {
   background: var(--color-slate-900);
-  border-color: var(--color-slate-800);
-  box-shadow: 
-    0 8px 32px -4px var(--tw-shadow-color),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-slate-800);
+  box-shadow: 0 10px 30px -5px var(--tw-shadow-color);
 }
 
 .glass-panel-interactive {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.2), rgba(15, 23, 42, 0.3));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(6, 182, 212, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-html.light .glass-panel-interactive {
-  background: rgba(255, 255, 255, 0.35);
-  border-color: var(--color-slate-800);
-  box-shadow: 0 4px 20px -2px var(--tw-shadow-color);
 }
 
 .glass-panel-interactive:hover {
@@ -219,9 +207,9 @@ html.light .glass-panel-interactive {
 }
 
 html.light .glass-panel-interactive:hover {
-  background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(129, 153, 158, 0.6); /* Steel Blue border on hover */
-  box-shadow: 0 10px 30px -4px rgba(129, 153, 158, 0.3), 0 0 15px rgba(129, 153, 158, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(135, 56, 20, 0.6); /* Burnt Sienna border on hover */
+  box-shadow: 0 10px 30px -4px rgba(135, 56, 20, 0.3), 0 0 15px rgba(135, 56, 20, 0.25);
   transform: translateY(-2px);
 }
 
@@ -340,3 +328,10 @@ html.light .text-white-force * {
   20%, 60% { transform: translateX(-10px); }
   40%, 80% { transform: translateX(10px); }
 }
+
+html.light .glass-panel-interactive {
+  background: var(--color-slate-900);
+  border-color: var(--color-slate-800);
+  box-shadow: 0 4px 20px -2px var(--tw-shadow-color);
+}
+
