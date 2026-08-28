@@ -97,6 +97,8 @@
   #root::before {
     width: 60vw;
     height: 60vw;
+    min-width: 500px;
+    min-height: 500px;
     max-width: 800px;
     max-height: 800px;
     background: radial-gradient(circle, rgba(14, 165, 233, 0.8) 0%, rgba(99, 102, 241, 0) 70%);
@@ -108,6 +110,8 @@
   #root::after {
     width: 50vw;
     height: 50vw;
+    min-width: 400px;
+    min-height: 400px;
     max-width: 600px;
     max-height: 600px;
     background: radial-gradient(circle, rgba(16, 185, 129, 0.6) 0%, rgba(139, 92, 246, 0) 70%);

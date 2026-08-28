@@ -503,7 +503,7 @@ export function App() {
       {/* Dynamic Flake Overlay */}
       {theme === 'light' && flakeOpacity > 0 && (
         <div 
-          className="fixed inset-0 pointer-events-none mix-blend-soft-light"
+          className="fixed inset-[-150px] pointer-events-none mix-blend-soft-light transform-gpu translate-z-0"
           style={{
             zIndex: 0,
             opacity: flakeOpacity,
