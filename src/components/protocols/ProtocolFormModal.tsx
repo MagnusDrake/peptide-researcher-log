@@ -304,7 +304,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
           {/* Section 1: Compound Parameters */}
           {!isBlend ? (
             <div className="space-y-4">
-              <h3 className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
+              <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-cyan-500">
                 1. Single Compound & Reconstitution Parameters
               </h3>
 
@@ -627,7 +627,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
 
           {/* Section 2: Frequency & Schedule */}
           <div className="space-y-4 pt-2 border-t border-slate-800">
-            <h3 className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
+            <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-cyan-500">
               2. Administration Schedule & Frequency
             </h3>
 

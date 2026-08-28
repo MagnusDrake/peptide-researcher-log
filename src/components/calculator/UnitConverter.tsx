@@ -23,7 +23,7 @@ export const UnitConverter: React.FC = () => {
           <ArrowRightLeft className="w-4 h-4" />
           <span>Biochemical Unit Converter</span>
         </div>
-        <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+        <h1 className="text-[0.85rem] font-bold text-white uppercase tracking-widest">
           Peptide & Syringe Unit Converter
         </h1>
         <p className="text-sm text-slate-300 mt-1">

@@ -115,7 +115,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
             <BookOpen className="w-4 h-4" />
             <span>Research Documentation & Outcomes</span>
           </div>
-          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
+          <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
             Research Journal & Metric Trends
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
@@ -210,7 +210,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
 
                       <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-slate-100">{log.peptideName}</h3>
+                          <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-100">{log.peptideName}</h3>
                           {log.isBlend && (
                             <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 font-bold border border-purple-800">
                               🧪 Multi-Stack

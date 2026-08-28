@@ -39,7 +39,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ onLogout }) =>
   return (
     <div className="max-w-4xl mx-auto pb-24">
       <div className="mb-8">
-        <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
+        <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
           RESEARCHER PROFILE
         </h1>
         <p className="text-slate-500 mt-2 text-sm font-medium">Manage your Vault identity and security parameters.</p>

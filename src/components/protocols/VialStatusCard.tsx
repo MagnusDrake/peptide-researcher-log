@@ -104,7 +104,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
             )}
           </div>
 
-          <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-slate-100 mt-1.5 flex items-center gap-2">
+          <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-100 mt-1.5 flex items-center gap-2">
             <span>{protocol.peptideName}</span>
             {isScheduledToday && protocol.isActive && (
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" title="Scheduled for today!" />

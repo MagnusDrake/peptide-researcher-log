@@ -15,7 +15,7 @@ export const CuratedStacks: React.FC<CuratedStacksProps> = ({
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-1">
-        <h2 className="text-xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-[0.85rem] font-bold text-white uppercase tracking-widest flex items-center gap-2">
           <Layers className="w-5 h-5 text-cyan-400" />
           <span>Curated Research Stacks & Combinations</span>
         </h2>

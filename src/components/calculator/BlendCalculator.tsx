@@ -234,7 +234,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
             <Layers className="w-3.5 h-3.5" />
             <span>Multi-Compound Blend Reconstitution (2, 3, 4+ Peptides)</span>
           </div>
-          <h1 className="text-lg sm:text-2xl font-black text-white tracking-tight">
+          <h1 className="text-[0.85rem] font-bold text-white uppercase tracking-widest">
             Multi-Peptide Stack Vial Calculator
           </h1>
           <p className="text-xs text-slate-300 mt-0.5 max-w-xl hidden sm:block">

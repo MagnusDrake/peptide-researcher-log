@@ -79,7 +79,7 @@ export const TitrationPlanner: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-1">
-        <h2 className="text-xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-[0.85rem] font-bold text-white uppercase tracking-widest flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-emerald-400" />
           <span>GLP-1 Incretin Titration & Escalation Planner</span>
         </h2>

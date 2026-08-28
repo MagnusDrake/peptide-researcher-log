@@ -91,7 +91,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
             <BookOpen className="w-4 h-4" />
             <span>Research Directory & Compendium</span>
           </div>
-          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
+          <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
             Peptide Knowledge Base
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">

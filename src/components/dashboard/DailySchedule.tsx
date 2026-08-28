@@ -82,7 +82,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
               {today.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
             </span>
           </div>
-          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em]">
+          <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest">
             RESEARCH DASHBOARD
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
@@ -175,7 +175,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
 
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-slate-100">{protocol.peptideName}</h3>
+                            <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-100">{protocol.peptideName}</h3>
                             {protocol.isBlend && (
                               <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 font-bold">
                                 🧪 Stack ({protocol.blendComponents?.length || 2} Peptides)

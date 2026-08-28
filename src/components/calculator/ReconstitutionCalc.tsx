@@ -86,7 +86,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
             <Calculator className="w-3.5 h-3.5" />
             <span>Interactive Reconstitution Engine</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
+          <h1 className="text-xl sm:text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
             Peptide Reconstitution & Syringe
           </h1>
           <p className="text-xs text-slate-300 mt-0.5 max-w-xl hidden sm:block">

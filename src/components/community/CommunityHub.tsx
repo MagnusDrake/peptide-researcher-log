@@ -84,7 +84,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
             <Users className="w-4 h-4" />
             <span>Open Science & Peer Knowledge Exchange</span>
           </div>
-          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
+          <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
             Peer Researcher Community Hub
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
@@ -126,7 +126,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
                 <span className="text-xs text-slate-500 font-mono">{finding.dateShared}</span>
               </div>
 
-              <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-slate-100">{finding.peptideName}</h3>
+              <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-100">{finding.peptideName}</h3>
               <div className="text-xs font-semibold text-cyan-400 font-mono mt-0.5">
                 Protocol: {finding.protocolSummary}
               </div>

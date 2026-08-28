@@ -48,7 +48,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
                 </span>
               )}
             </div>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight mt-1">
+            <h2 className="text-[0.85rem] font-bold text-white uppercase tracking-widest mt-1">
               {peptide.name}
             </h2>
             {peptide.aliases.length > 0 && (
@@ -70,7 +70,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
         <div className="p-6 overflow-y-auto flex flex-col gap-6 text-slate-200 text-sm">
           {/* Summary & Molecular Overview */}
           <div className="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col gap-3">
-            <h3 className="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
+            <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-cyan-500 flex items-center gap-1.5">
               <Sparkles className="w-4 h-4" />
               <span>Overview & Mechanism of Action</span>
             </h3>

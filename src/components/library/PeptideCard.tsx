@@ -68,7 +68,7 @@ export const PeptideCard: React.FC<PeptideCardProps> = ({
 
       {/* Title & Aliases */}
       <div>
-        <h3 className="text-sm font-semibold tracking-[0.15em] uppercase text-slate-100 group-hover:text-cyan-300 transition flex items-center justify-between">
+        <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-100 group-hover:text-cyan-300 transition flex items-center justify-between">
           <span>{peptide.name}</span>
           <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition transform group-hover:translate-x-1" />
         </h3>

@@ -175,7 +175,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
             <Sparkles className="w-4 h-4" />
             <span>Intelligent Research Matcher</span>
           </div>
-          <h1 className="text-2xl font-light text-slate-100 tracking-[0.1em] uppercase">
+          <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
             Peptide Goal Matcher & Synergy Finder
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
