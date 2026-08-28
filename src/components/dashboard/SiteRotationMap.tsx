@@ -40,19 +40,19 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
   return (
     <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4 border-slate-800 shadow-xl">
       {/* Header & Rotation Status */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3 min-w-0">
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="h-8 w-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
             <Shield className="w-4 h-4" />
           </div>
-          <div>
-            <h3 className="text-base font-bold text-white">Subcutaneous Site Rotation Map</h3>
-            <p className="text-[11px] text-slate-400">Rotate injection sites to prevent lipohypertrophy & scar tissue</p>
+          <div className="min-w-0">
+            <h3 className="text-base font-bold text-white truncate">Subcutaneous Site Rotation Map</h3>
+            <p className="text-[11px] text-slate-400 truncate">Rotate injection sites to prevent lipohypertrophy & scar tissue</p>
           </div>
         </div>
 
         {suggestedSite && (
-          <div className="flex items-center gap-1.5 text-xs bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-emerald-300">
+          <div className="flex items-center gap-1.5 text-xs bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-emerald-300 min-w-0 shrink-0 sm:shrink max-w-full">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
             <span className="truncate">Suggested Next: <strong>{suggestedSite.name}</strong></span>
           </div>
