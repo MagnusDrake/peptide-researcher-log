@@ -33,37 +33,37 @@
   }
 
   html.light {
-    --chart-grid: rgba(124, 118, 127, 0.15); /* #7c767f grid */
+    --chart-grid: rgba(52, 64, 69, 0.15); /* #344045 grid */
 
-    /* LIGHT MODE: Pearl & Frost Palette Implementation */
-    --color-slate-950: #fcfbf9; /* App Background: White Pearl */
-    --color-slate-900: rgba(255, 255, 255, 0.6); /* Cards / Modals: Frosted glass */
-    --color-slate-800: rgba(124, 118, 127, 0.2); /* Borders / Hover: Purplish-gray tint */
-    --color-slate-700: rgba(124, 118, 127, 0.3); /* Dividers */
-    --color-slate-600: #7c767f; /* Purplish Gray */
-    --color-slate-500: #7c767f; /* Muted text */
-    --color-slate-400: rgba(37, 20, 20, 0.6); /* Muted Maroon text */
-    --color-slate-300: #251414; /* Normal text: Dark Maroon */
-    --color-slate-200: #251414; 
-    --color-slate-100: #251414; /* Headings: Dark Maroon */
-    --color-slate-50:  #251414;
+    /* LIGHT MODE: Golden Ochre Palette Implementation */
+    --color-slate-950: #cb9b52; /* App Background: Golden Mustard (Lightest) */
+    --color-slate-900: rgba(255, 255, 255, 0.45); /* Cards / Modals: Frosted glass */
+    --color-slate-800: rgba(52, 64, 69, 0.15); /* Borders / Hover: Dark slate tint */
+    --color-slate-700: rgba(52, 64, 69, 0.25); /* Dividers */
+    --color-slate-600: rgba(52, 64, 69, 0.6); /* Muted slate */
+    --color-slate-500: rgba(52, 64, 69, 0.75); /* Muted text */
+    --color-slate-400: rgba(52, 64, 69, 0.9); /* Secondary text */
+    --color-slate-300: #344045; /* Normal text: Dark Slate Gray */
+    --color-slate-200: #344045; 
+    --color-slate-100: #344045; /* Headings: Dark Slate Gray */
+    --color-slate-50:  #344045;
 
     /* Global Tinted Shadows for Light Mode */
-    --tw-shadow-color: rgba(37, 20, 20, 0.08); /* Maroon tinted shadow */
+    --tw-shadow-color: rgba(52, 64, 69, 0.08); /* Dark slate tinted shadow */
 
     /* Override standard utility colors for the new palette */
-    --color-cyan-300: #b3d4ec;
-    --color-cyan-400: #9fc1db; /* Powder Blue replaces cyan for accents */
-    --color-cyan-500: #88b0cc;
-    --color-cyan-600: #739ebb;
+    --color-cyan-300: #88393e;
+    --color-cyan-400: #6d282f; /* Burgundy replaces cyan for primary accents */
+    --color-cyan-500: #551d23;
+    --color-cyan-600: #42151b;
     
-    --color-emerald-300: #c99b7d;
-    --color-emerald-400: #aa7c5d; /* Bronze replaces emerald for alternative accents */
-    --color-emerald-500: #936547;
+    --color-emerald-300: #9ab0b4;
+    --color-emerald-400: #81999e; /* Steel Blue replaces emerald for secondary accents */
+    --color-emerald-500: #6c8388;
     
-    --color-violet-400: #7c767f; /* Purplish Gray replaces violet */
-    --color-amber-400: #9fc1db; /* Powder Blue replaces amber */
-    --color-rose-400: #251414; /* Dark Maroon */
+    --color-violet-400: #873814; /* Burnt Sienna replaces violet */
+    --color-amber-400: #6d282f; /* Burgundy replaces amber */
+    --color-rose-400: #873814; /* Burnt Sienna replaces rose */
   }
 
   body {
@@ -135,12 +135,12 @@
   /* More visible blobs for light mode */
   html.light #root::before {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(159, 193, 219, 0.7) 0%, rgba(252, 251, 249, 0) 70%); /* Powder blue to transparent pearl */
+    background: radial-gradient(circle, rgba(129, 153, 158, 0.8) 0%, rgba(203, 155, 82, 0) 70%); /* Steel Blue fading to Gold */
   }
   
   html.light #root::after {
     opacity: 0.80;
-    background: radial-gradient(circle, rgba(145, 100, 155, 0.7) 0%, rgba(252, 251, 249, 0) 70%); /* Vibrant purplish to transparent pearl */
+    background: radial-gradient(circle, rgba(109, 40, 47, 0.8) 0%, rgba(203, 155, 82, 0) 70%); /* Burgundy fading to Gold */
   }
 }
 
@@ -155,7 +155,7 @@
 }
 
 html.light ::-webkit-scrollbar-track {
-  background: rgba(6, 182, 212, 0.05); /* Tinted light track */
+  background: rgba(52, 64, 69, 0.05); /* Dark slate track */
 }
 
 ::-webkit-scrollbar-thumb {
@@ -164,15 +164,15 @@ html.light ::-webkit-scrollbar-track {
 }
 
 html.light ::-webkit-scrollbar-thumb {
-  background: rgba(6, 182, 212, 0.2); /* Tinted light thumb */
+  background: rgba(52, 64, 69, 0.2); /* Dark slate thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.5);
+  background: rgba(6, 182, 212, 0.5); /* Tinted dark thumb hover */
 }
 
 html.light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.4);
+  background: rgba(52, 64, 69, 0.4); /* Dark slate thumb hover */
 }
 
 /* Glassmorphic utilities */
@@ -187,10 +187,10 @@ html.light ::-webkit-scrollbar-thumb:hover {
 }
 
 html.light .glass-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.35));
-  border-color: rgba(124, 118, 127, 0.25); /* Purplish gray border */
+  background: var(--color-slate-900);
+  border-color: var(--color-slate-800);
   box-shadow: 
-    0 8px 32px -4px rgba(37, 20, 20, 0.08), /* Maroon ambient shadow */
+    0 8px 32px -4px var(--tw-shadow-color),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
@@ -204,8 +204,8 @@ html.light .glass-panel {
 
 html.light .glass-panel-interactive {
   background: rgba(255, 255, 255, 0.35);
-  border-color: rgba(124, 118, 127, 0.2);
-  box-shadow: 0 4px 20px -2px rgba(37, 20, 20, 0.05);
+  border-color: var(--color-slate-800);
+  box-shadow: 0 4px 20px -2px var(--tw-shadow-color);
 }
 
 .glass-panel-interactive:hover {
@@ -220,8 +220,8 @@ html.light .glass-panel-interactive {
 
 html.light .glass-panel-interactive:hover {
   background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(159, 193, 219, 0.6); /* Powder Blue border on hover */
-  box-shadow: 0 10px 30px -4px rgba(159, 193, 219, 0.3), 0 0 15px rgba(159, 193, 219, 0.25);
+  border-color: rgba(129, 153, 158, 0.6); /* Steel Blue border on hover */
+  box-shadow: 0 10px 30px -4px rgba(129, 153, 158, 0.3), 0 0 15px rgba(129, 153, 158, 0.25);
   transform: translateY(-2px);
 }
 
