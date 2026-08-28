@@ -18,7 +18,7 @@ import { ProtocolManager } from './components/protocols/ProtocolManager';
 import { ResearchJournal } from './components/journal/ResearchJournal';
 import { CommunityHub } from './components/community/CommunityHub';
 import { ProfileSettings } from './components/profile/ProfileSettings';
-import { Calculator, Layers, TrendingUp, ArrowRightLeft, Sparkles, Plus } from 'lucide-react';
+import { Calculator, Layers, TrendingUp, ArrowRightLeft, Sparkles, Plus, Calendar, Activity } from 'lucide-react';
 
 export function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
@@ -27,6 +27,7 @@ export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [calcSubTab, setCalcSubTab] = useState<'recon' | 'blend' | 'titration' | 'convert'>('recon');
+  const [myPeptidesSubTab, setMyPeptidesSubTab] = useState<'schedule' | 'protocols' | 'journal'>('schedule');
 
   const handleTabChange = (newTab: NavTab) => {
     if (newTab === activeTab) return;
@@ -150,12 +151,12 @@ export function App() {
       bacWaterMl: peptide.typicalBacWaterMl[0] || 2.0,
       syringeType: 'U-100'
     });
-    handleTabChange('protocols');
+    setMyPeptidesSubTab('protocols'); handleTabChange('dashboard');
   };
 
   const handleSaveCalcAsProtocol = (data: Partial<Protocol>) => {
     setInitialProtocolData(data);
-    handleTabChange('protocols');
+    setMyPeptidesSubTab('protocols'); handleTabChange('dashboard');
   };
 
   const handleAdoptStack = async (stack: CuratedStack, asSingleBlend: boolean = true) => {
@@ -230,7 +231,8 @@ export function App() {
 
       await db.protocols.put(protocol);
       await refreshData();
-      handleTabChange('protocols');
+      setMyPeptidesSubTab('protocols');
+      handleTabChange('dashboard');
     } else {
       // Add each compound as an individual protocol with accurate reconstitution math
       for (const item of stack.peptides) {
@@ -278,7 +280,8 @@ export function App() {
       }
 
       await refreshData();
-      handleTabChange('protocols');
+      setMyPeptidesSubTab('protocols');
+      handleTabChange('dashboard');
     }
   };
 
@@ -306,15 +309,81 @@ export function App() {
 
       {/* Main Content Area */}
       <main className={`flex-1 px-4 lg:px-8 pt-6 pb-20 md:pb-12 w-full min-w-0 max-w-full overflow-x-hidden transition-all duration-[400ms] ease-out ${isTransitioning ? 'opacity-0 scale-[0.98] blur-[2px]' : 'opacity-100 scale-100 blur-0'}`}>
-        {/* TAB 1: DAILY DASHBOARD */}
+        {/* TAB 1: MY PEPTIDES (Merged Dashboard, Protocols, Journal) */}
         {activeTab === 'dashboard' && (
-          <DailySchedule
-            protocols={protocols}
-            logs={logs}
-            onLogSaved={refreshData}
-            onNavigateToProtocols={() => handleTabChange('protocols')}
-            onNavigateToCalculator={() => handleTabChange('calculator')}
-          />
+          <div className="flex flex-col gap-6 max-w-5xl mx-auto w-full min-w-0">
+            {/* Sub-Tabs Switcher */}
+            <div className="w-full max-w-full flex items-center justify-start sm:justify-center overflow-x-auto pb-1 scrollbar-none">
+              <div className="bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 flex items-center gap-1 shadow-inner shrink-0">
+                <button
+                  onClick={() => setMyPeptidesSubTab('schedule')}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
+                    myPeptidesSubTab === 'schedule'
+                      ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/20'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Calendar className="w-4 h-4 shrink-0" />
+                  <span>Daily Schedule</span>
+                </button>
+
+                <button
+                  onClick={() => setMyPeptidesSubTab('protocols')}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
+                    myPeptidesSubTab === 'protocols'
+                      ? 'bg-purple-500 text-white shadow-md shadow-purple-500/20'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Layers className="w-4 h-4 shrink-0" />
+                  <span>My Protocols</span>
+                </button>
+
+                <button
+                  onClick={() => setMyPeptidesSubTab('journal')}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
+                    myPeptidesSubTab === 'journal'
+                      ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Activity className="w-4 h-4 shrink-0" />
+                  <span>Journal & Logs</span>
+                </button>
+              </div>
+            </div>
+
+            {myPeptidesSubTab === 'schedule' && (
+              <DailySchedule
+                protocols={protocols}
+                logs={logs}
+                onLogSaved={refreshData}
+                onNavigateToProtocols={() => setMyPeptidesSubTab('protocols')}
+                onNavigateToCalculator={() => handleTabChange('calculator')}
+              />
+            )}
+            
+            {myPeptidesSubTab === 'protocols' && (
+              <ProtocolManager
+                protocols={protocols}
+                onProtocolsChanged={refreshData}
+                onLogDose={(proto) => {
+                  setMyPeptidesSubTab('schedule');
+                }}
+                logsCountMap={logsCountMap}
+                initialProtocolData={initialProtocolData}
+                initialModalOpen={initialProtocolData !== null}
+              />
+            )}
+
+            {myPeptidesSubTab === 'journal' && (
+              <ResearchJournal
+                logs={logs}
+                protocols={protocols}
+                onLogsChanged={refreshData}
+              />
+            )}
+          </div>
         )}
 
         {/* TAB 2: CALCULATOR & SYRINGE TOOLS */}
@@ -405,29 +474,6 @@ export function App() {
           />
         )}
 
-        {/* TAB 5: PROTOCOLS & STACKS */}
-        {activeTab === 'protocols' && (
-          <ProtocolManager
-            protocols={protocols}
-            onProtocolsChanged={refreshData}
-            onLogDose={(proto) => {
-              handleTabChange('dashboard');
-            }}
-            logsCountMap={logsCountMap}
-            initialProtocolData={initialProtocolData}
-            initialModalOpen={initialProtocolData !== null}
-          />
-        )}
-
-        {/* TAB 6: JOURNAL & BIOMARKER TRENDS */}
-        {activeTab === 'journal' && (
-          <ResearchJournal
-            logs={logs}
-            protocols={protocols}
-            onLogsChanged={refreshData}
-          />
-        )}
-
         {/* TAB 7: PEER RESEARCHER COMMUNITY HUB */}
         {activeTab === 'community' && (
           <CommunityHub
@@ -435,7 +481,8 @@ export function App() {
             logs={logs}
             onAdoptProtocol={(proto) => {
               setInitialProtocolData(proto);
-              handleTabChange('protocols');
+              setMyPeptidesSubTab('protocols');
+              handleTabChange('dashboard');
             }}
           />
         )}

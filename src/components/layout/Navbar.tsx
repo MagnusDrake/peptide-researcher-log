@@ -14,7 +14,7 @@ import {
   User 
 } from 'lucide-react';
 
-export type NavTab = 'dashboard' | 'calculator' | 'library' | 'matcher' | 'protocols' | 'journal' | 'community' | 'profile';
+export type NavTab = 'dashboard' | 'calculator' | 'library' | 'matcher' | 'community' | 'profile';
 
 interface NavbarProps {
   activeTab: NavTab;
@@ -39,12 +39,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
 
   const navItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { id: 'dashboard', label: 'My Peptides', icon: <Calendar className="w-4 h-4" /> },
+    { id: 'dashboard', label: 'My Peptides', icon: <Calendar className="w-4 h-4" />, badge: activeProtocolsCount },
     { id: 'calculator', label: 'Calculator', icon: <Calculator className="w-4 h-4" /> },
     { id: 'library', label: 'Peptide DB', icon: <BookOpen className="w-4 h-4" /> },
     { id: 'matcher', label: 'Matcher Quiz', icon: <Sparkles className="w-4 h-4" /> },
-    { id: 'protocols', label: 'Protocols', icon: <Layers className="w-4 h-4" />, badge: activeProtocolsCount },
-    { id: 'journal', label: 'Journal & Logs', icon: <Activity className="w-4 h-4" /> },
     { id: 'community', label: 'Community', icon: <Users className="w-4 h-4" /> },
     { id: 'profile', label: 'Vault Profile', icon: <User className="w-4 h-4" /> },
   ];
