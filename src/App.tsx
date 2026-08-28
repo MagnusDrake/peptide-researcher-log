@@ -464,7 +464,7 @@ export function App() {
           />
         )}
 
-        {/* TAB 4: GOAL MATCHER & CURATED STACKS (inspired by MyPeptideMatch) */}
+        {/* TAB 4: GOAL MATCHER & CURATED STACKS */}
         {activeTab === 'matcher' && (
           <PeptideMatcher
             onOpenInCalculator={handleOpenInCalculator}

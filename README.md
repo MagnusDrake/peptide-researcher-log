@@ -1,6 +1,6 @@
 # 🧪 Peptide Researcher Log & Reconstitution Calculator (PWA)
 
-A scientific Progressive Web App (PWA) for peptide reconstitution calculation, research protocol logging, pharmacokinetic simulation, injection site rotation, and peer knowledge exchange. Inspired by `mypeptidematch.com`.
+A scientific Progressive Web App (PWA) for peptide reconstitution calculation, research protocol logging, pharmacokinetic simulation, injection site rotation, and peer knowledge exchange.
 
 ---
 
@@ -16,7 +16,7 @@ A scientific Progressive Web App (PWA) for peptide reconstitution calculation, r
    - Molecular formulas, amino acid sequences, mechanisms, half-lives, BAC suggestions, stability, and PubMed citations.
    - Side-by-side peptide comparison and custom compound creator.
 
-3. **Intelligent Matcher & Curated Stacks** (*inspired by MyPeptideMatch*):
+3. **Intelligent Matcher & Curated Stacks**:
    - Multi-step interactive quiz scoring affinity across 8 research target areas.
    - Curated synergy stacks (*The Wolverine Stack*, *GH Axis Synergy Stack*, *Metabolic Incretin Reset*, *Cellular Longevity*, etc.) with 1-click protocol adoption.
 

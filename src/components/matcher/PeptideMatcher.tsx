@@ -179,7 +179,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
             Peptide Goal Matcher & Synergy Finder
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-            Inspired by *MyPeptideMatch.com*. Discover scientifically compatible research compounds and synergy stacks tailored to specific physiological research targets.
+            Discover scientifically compatible research compounds and synergy stacks tailored to specific physiological research targets.
           </p>
         </div>
 
