@@ -66,7 +66,6 @@ export function App() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   });
 
-  const [flakeOpacity, setFlakeOpacity] = useState(0.18);
 
   useEffect(() => {
     if (theme === 'light') {
@@ -499,42 +498,11 @@ export function App() {
         onTabChange={handleTabChange}
         activeProtocolsCount={protocols.filter(p => p.isActive).length}
       />
-
-      {/* Dynamic Flake Overlay */}
-      {theme === 'light' && flakeOpacity > 0 && (
-        <div 
-          className="fixed inset-[-150px] pointer-events-none mix-blend-soft-light transform-gpu translate-z-0"
-          style={{
-            zIndex: 0,
-            opacity: flakeOpacity,
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='flake'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.0' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23flake)' opacity='1'/%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat',
-            backgroundSize: '150px 150px'
-          }}
-        />
-      )}
-
-      {/* Debug Flakes Slider */}
-      {theme === 'light' && (
-        <div className="fixed bottom-24 right-4 z-50 p-3 bg-slate-900/90 backdrop-blur-md rounded-xl border border-slate-700 shadow-2xl flex flex-col gap-2 w-48">
-          <label className="text-slate-200 text-[10px] font-semibold uppercase tracking-widest flex justify-between">
-            <span>Flake Intensity</span>
-            <span className="text-cyan-400">{Math.round(flakeOpacity * 100)}%</span>
-          </label>
-          <input 
-            type="range" 
-            min="0" 
-            max="1" 
-            step="0.01" 
-            value={flakeOpacity} 
-            onChange={(e) => setFlakeOpacity(parseFloat(e.target.value))}
-            className="w-full accent-cyan-500"
-          />
-        </div>
-      )}
     </div>
     </>
   );
 }
 
 export default App;
+
+

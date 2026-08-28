@@ -33,20 +33,20 @@
   }
 
   html.light {
-    --chart-grid: rgba(52, 64, 69, 0.15); /* Dark slate grid */
+    --chart-grid: rgba(255, 255, 255, 0.1); /* Light grid for dark cards */
 
-    /* LIGHT MODE: Steel Blue Palette Implementation */
+    /* LIGHT MODE: Steel Blue Canvas with Obsidian Glass */
     --color-slate-950: #81999e; /* App Background: Steel Blue */
-    --color-slate-900: rgba(255, 255, 255, 0.35); /* Cards / Modals: Frosted glass */
-    --color-slate-800: rgba(52, 64, 69, 0.15); /* Borders / Hover: Dark slate tint */
-    --color-slate-700: rgba(52, 64, 69, 0.25); /* Dividers */
-    --color-slate-600: rgba(52, 64, 69, 0.6); /* Muted slate */
-    --color-slate-500: rgba(52, 64, 69, 0.75); /* Muted text */
-    --color-slate-400: rgba(52, 64, 69, 0.9); /* Secondary text */
-    --color-slate-300: #344045; /* Normal text: Dark Slate Gray */
-    --color-slate-200: #344045; 
-    --color-slate-100: #344045; /* Headings: Dark Slate Gray */
-    --color-slate-50:  #344045;
+    --color-slate-900: rgba(15, 23, 30, 0.65); /* Cards / Modals: Obsidian Glass */
+    --color-slate-800: rgba(15, 23, 30, 0.8); /* Borders / Hover */
+    --color-slate-700: rgba(255, 255, 255, 0.15); /* Dividers */
+    --color-slate-600: rgba(255, 255, 255, 0.3); /* Muted elements */
+    --color-slate-500: rgba(255, 255, 255, 0.5); /* Muted text */
+    --color-slate-400: rgba(255, 255, 255, 0.7); /* Secondary text */
+    --color-slate-300: rgba(255, 255, 255, 0.85); /* Normal text */
+    --color-slate-200: rgba(255, 255, 255, 0.95); 
+    --color-slate-100: #ffffff; /* Headings */
+    --color-slate-50:  #ffffff;
 
     /* Global Tinted Shadows for Light Mode */
     --tw-shadow-color: rgba(52, 64, 69, 0.1); /* Dark slate tinted shadow */
