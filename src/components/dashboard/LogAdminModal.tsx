@@ -109,7 +109,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
       <div className="bg-slate-900 border border-slate-700/80 rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
         
         {/* Modal Header */}
-        <div className="p-6 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-900 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-6 border-b border-slate-800 flex items-center justify-between">
           <div>
             <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">
               Administer Research Injection

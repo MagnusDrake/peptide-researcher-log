@@ -251,7 +251,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
       <div className="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-5 sm:p-6 border-b border-slate-800 bg-slate-950/50">
+        <div className="flex items-center justify-between p-5 sm:p-6 border-b border-slate-800 ">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold">
               {isBlend ? <Layers className="w-5 h-5" /> : <Sparkles className="w-5 h-5" />}
@@ -799,7 +799,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
         </form>
 
         {/* Footer */}
-        <div className="p-4 sm:p-6 border-t border-slate-800 bg-slate-950/50 flex items-center justify-end gap-3">
+        <div className="p-4 sm:p-6 border-t border-slate-800  flex items-center justify-end gap-3">
           <button
             type="button"
             onClick={onClose}

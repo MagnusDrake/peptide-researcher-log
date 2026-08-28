@@ -120,7 +120,7 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
       <div className="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200">
-        <div className="p-5 sm:p-6 bg-slate-800/80 border-b border-slate-700 flex items-center justify-between">
+        <div className="p-5 sm:p-6 border-b border-slate-700 flex items-center justify-between">
           <div className="flex items-center gap-2">
             {isBlend ? <Layers className="w-5 h-5 text-purple-400" /> : <Sparkles className="w-5 h-5 text-cyan-400" />}
             <h2 className="text-lg sm:text-xl font-bold text-white">
