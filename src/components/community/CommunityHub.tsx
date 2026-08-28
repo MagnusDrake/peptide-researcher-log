@@ -77,7 +77,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
   return (
     <div className="flex flex-col gap-6 max-w-6xl mx-auto pb-16">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/40 p-6 md:p-8 rounded-3xl border border-purple-500/20 shadow-xl backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 text-purple-400 font-semibold text-xs uppercase tracking-wider mb-1">
             <Users className="w-4 h-4" />

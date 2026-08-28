@@ -85,7 +85,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
   return (
     <div className="flex flex-col gap-6 max-w-7xl mx-auto pb-16">
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-blue-950/40 to-slate-900 p-6 md:p-8 rounded-3xl border border-slate-800 shadow-xl backdrop-blur-md">
+      <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 text-cyan-400 font-semibold text-xs uppercase tracking-wider mb-1">
             <BookOpen className="w-4 h-4" />

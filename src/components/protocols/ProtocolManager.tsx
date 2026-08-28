@@ -66,7 +66,7 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
   return (
     <div className="flex flex-col gap-6 max-w-7xl mx-auto pb-16">
       {/* Header Banner */}
-      <div className="glass-panel p-6 md:p-8 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 text-cyan-400 font-semibold text-xs uppercase tracking-wider mb-1">
             <Layers className="w-4 h-4" />
