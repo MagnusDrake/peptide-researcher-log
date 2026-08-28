@@ -84,13 +84,13 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
         <div>
           <div className="flex items-center gap-1.5 text-cyan-400 font-semibold text-[11px] uppercase tracking-wider mb-0.5">
             <Calculator className="w-3.5 h-3.5" />
-            <span>Interactive Reconstitution Engine</span>
+            <span>Easy Mixing Calculator</span>
           </div>
           <h1 className="text-xl sm:text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
-            Peptide Reconstitution & Syringe
+            Mixing & Syringe Calculator
           </h1>
           <p className="text-xs text-slate-300 mt-0.5 max-w-xl hidden sm:block">
-            Calculate precise liquid concentrations, syringe draw tick marks, doses per vial, and cost metrics for research protocols.
+            Figure out how much water to add to your powder, how many units to pull into your syringe, and how many doses you'll get from the vial.
           </p>
         </div>
 
@@ -109,7 +109,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
             className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-500/20 transition active:scale-95 shrink-0"
           >
             <BookmarkPlus className="w-4 h-4" />
-            <span>Save to Protocol</span>
+            <span>Save to Routine</span>
           </button>
         )}
       </div>
@@ -121,7 +121,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
             💉
           </div>
           <div>
-            <div className="text-[10px] uppercase font-bold text-slate-400">Draw into Syringe</div>
+            <div className="text-[10px] uppercase font-bold text-slate-400">Pull in Syringe</div>
             <div className="text-base font-black text-cyan-300 font-mono leading-none">
               {result.drawUnits} <span className="text-xs font-semibold text-slate-300">{syringeType} units</span>
             </div>
@@ -141,7 +141,7 @@ export const ReconstitutionCalc: React.FC<ReconstitutionCalcProps> = ({
           <div className="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col gap-4 overflow-hidden">
             <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2 border-b border-slate-800 pb-3">
               <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span>Vial & Solution Parameters</span>
+              <span>1. Powder & Water Details</span>
             </h2>
 
             {/* 1. Peptide Selection */}

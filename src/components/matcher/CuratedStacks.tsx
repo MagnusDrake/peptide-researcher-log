@@ -100,14 +100,14 @@ export const CuratedStacks: React.FC<CuratedStacksProps> = ({
                   className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-purple-950/40"
                 >
                   <Layers className="w-4 h-4" />
-                  <span>🧪 Adopt as Single Stack Vial</span>
+                  <span>🧪 Start as One Pre-Mixed Vial</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => onAdoptStack(stack, false)}
                   className="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-semibold border border-slate-800 transition flex items-center justify-center gap-1.5"
                 >
-                  <span>📋 Adopt as Separate Individual Vials</span>
+                  <span>📋 Start as Separate Vials</span>
                 </button>
               </div>
             )}

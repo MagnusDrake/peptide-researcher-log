@@ -131,7 +131,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
                 className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-slate-800 text-slate-200 text-left transition"
               >
                 <Edit3 className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Edit Protocol</span>
+                <span>Edit Routine</span>
               </button>
 
               <button
@@ -142,7 +142,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
                 className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-slate-800 text-slate-200 text-left transition"
               >
                 <Share2 className="w-3.5 h-3.5 text-purple-400" />
-                <span>Share / Export Card</span>
+                <span>Share Routine Card</span>
               </button>
 
               <button
@@ -153,7 +153,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
                 className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-slate-800 text-slate-200 text-left transition"
               >
                 <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
-                <span>{protocol.isActive ? 'Pause Protocol' : 'Resume Protocol'}</span>
+                <span>{protocol.isActive ? 'Pause Routine' : 'Resume Routine'}</span>
               </button>
 
               <div className="border-t border-slate-800 my-0.5" />
@@ -166,7 +166,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
                 className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-red-950/60 text-red-400 text-left transition"
               >
                 <Trash2 className="w-3.5 h-3.5" />
-                <span>Delete Protocol</span>
+                <span>Delete Routine</span>
               </button>
             </div>
           )}
@@ -176,7 +176,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
       {/* Syringe & Dosage Snapshot Box */}
       <div className="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 flex items-center justify-between gap-3">
         <div className="flex flex-col">
-          <span className="text-[10px] uppercase font-bold text-slate-400">Draw into Syringe</span>
+          <span className="text-[10px] uppercase font-bold text-slate-400">Pull in Syringe</span>
           <div className="text-2xl font-black text-cyan-400 font-mono flex items-baseline gap-1">
             <span>{protocol.calculatedUnits}</span>
             <span className="text-xs font-bold text-slate-400 uppercase">units</span>
@@ -187,7 +187,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
         </div>
 
         <div className="text-right flex flex-col">
-          <span className="text-[10px] uppercase font-bold text-slate-400">Reconstitution</span>
+          <span className="text-[10px] uppercase font-bold text-slate-400">Mixing Ratio</span>
           <span className="text-sm font-bold text-slate-200 font-mono">
             {protocol.vialMassMg}mg in {protocol.bacWaterMl}mL
           </span>
@@ -201,8 +201,8 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
       {protocol.isBlend && protocol.blendComponents && protocol.blendComponents.length > 0 && (
         <div className="bg-purple-950/30 border border-purple-800/50 rounded-2xl p-3 flex flex-col gap-1.5">
           <div className="text-[10px] font-bold uppercase tracking-wider text-purple-300 flex items-center justify-between">
-            <span>Stack Formulation</span>
-            <span>{protocol.blendComponents.length} Compounds</span>
+            <span>Peptides in this Mix</span>
+            <span>{protocol.blendComponents.length} Peptides</span>
           </div>
           <div className="flex flex-wrap gap-1.5">
             {protocol.blendComponents.map(comp => (
@@ -266,7 +266,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
 
         {/* Administrations recorded */}
         <div className="flex items-center justify-between text-[11px] text-slate-400">
-          <span>Administrations Logged:</span>
+          <span>Doses Logged:</span>
           <span className="font-bold text-slate-200 font-mono">{logsCount} doses</span>
         </div>
       </div>
@@ -282,7 +282,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
           }`}
         >
           <PlusCircle className="w-4 h-4" />
-          <span>{isScheduledToday ? "Log Today's Administration" : 'Log Dose Entry'}</span>
+          <span>{isScheduledToday ? "Log Today's Dose" : 'Log a Dose'}</span>
         </button>
       )}
 

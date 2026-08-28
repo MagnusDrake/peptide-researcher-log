@@ -73,13 +73,13 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
 
   const categories = [
     { id: 'all', label: 'All Peptides', icon: '🧪' },
-    { id: 'healing', label: 'Tissue & Healing', icon: '🩹' },
-    { id: 'metabolic', label: 'GLP-1 & Metabolic', icon: '🔥' },
-    { id: 'gh_secretagogue', label: 'GH & Anabolism', icon: '⚡' },
-    { id: 'longevity', label: 'Longevity & Energy', icon: '🧬' },
-    { id: 'nootropic', label: 'Nootropic & Brain', icon: '🧠' },
-    { id: 'cosmetic', label: 'Skin & Aesthetics', icon: '✨' },
-    { id: 'immune', label: 'Immune Modulators', icon: '🛡️' },
+    { id: 'healing', label: 'Injury & Healing', icon: '🩹' },
+    { id: 'metabolic', label: 'Fat Loss & Appetite (GLP-1)', icon: '🔥' },
+    { id: 'gh_secretagogue', label: 'Muscle & Growth Hormone', icon: '⚡' },
+    { id: 'longevity', label: 'Energy & Anti-Aging', icon: '🧬' },
+    { id: 'nootropic', label: 'Brain & Focus', icon: '🧠' },
+    { id: 'cosmetic', label: 'Skin, Hair & Glow', icon: '✨' },
+    { id: 'immune', label: 'Immunity & Health', icon: '🛡️' },
   ];
 
   return (
@@ -89,13 +89,13 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
         <div>
           <div className="flex items-center gap-2 text-cyan-400 font-semibold text-xs uppercase tracking-wider mb-1">
             <BookOpen className="w-4 h-4" />
-            <span>Research Directory & Compendium</span>
+            <span>Peptide Guide & Directory</span>
           </div>
           <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
-            Peptide Knowledge Base
+            Peptide Guide & Library
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-            Explore 35+ evidence-based research profiles, pharmacokinetic half-lives, reconstitution guidelines, studied indications, and side-by-side comparisons.
+            Browse 35+ peptide profiles, see what they're used for, how long they stay in your body, and how to mix them.
           </p>
         </div>
 
@@ -105,7 +105,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition"
           >
             <Plus className="w-4 h-4 text-cyan-400" />
-            <span>Add Custom Peptide</span>
+            <span>Add Your Own Peptide</span>
           </button>
         </div>
       </div>

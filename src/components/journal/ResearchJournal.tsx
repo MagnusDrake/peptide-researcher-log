@@ -113,13 +113,13 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
         <div>
           <div className="flex items-center gap-2 text-cyan-400 font-semibold text-xs uppercase tracking-wider mb-1">
             <BookOpen className="w-4 h-4" />
-            <span>Research Documentation & Outcomes</span>
+            <span>Dose History & Results</span>
           </div>
           <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
-            Research Journal & Metric Trends
+            Dose Log & Progress Trends
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-            Review detailed historical injection logs, monitor subjective recovery scores and biomarkers over time, and export data in CSV/JSON formats.
+            Review your past doses, track how you feel over time (energy, sleep, recovery), and download your records anytime.
           </p>
         </div>
 
@@ -151,7 +151,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
               activeTab === 'timeline' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
           >
-            📋 Log Timeline ({filteredLogs.length})
+            📋 Dose History ({filteredLogs.length})
           </button>
           <button
             onClick={() => setActiveTab('trends')}
@@ -159,7 +159,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
               activeTab === 'trends' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
           >
-            📈 Biomarker Trends
+            📈 Progress Charts
           </button>
           <button
             onClick={() => setActiveTab('backup')}
@@ -167,7 +167,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
               activeTab === 'backup' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
           >
-            💾 Data Backup & Restore
+            💾 Backup & Export
           </button>
         </div>
 
@@ -288,9 +288,9 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
           ) : (
             <div className="glass-panel p-12 rounded-3xl text-center flex flex-col items-center justify-center gap-2">
               <span className="text-3xl">📝</span>
-              <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em]">No Logs Found</h3>
+              <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em]">No Doses Logged Yet</h3>
               <p className="text-xs text-slate-400 max-w-sm">
-                Record your first peptide administration from the Daily Schedule or Protocols tab to populate your research journal.
+                Log your first dose from Today's Schedule to start seeing your history and charts here.
               </p>
             </div>
           )}
@@ -305,9 +305,9 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
               <div>
                 <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-cyan-400" />
-                  <span>Subjective Recovery & Energy Trends Over Time</span>
+                  <span>How You're Feeling Over Time (Energy & Recovery)</span>
                 </h3>
-                <p className="text-xs text-slate-400">Chronological ratings recorded during dose administrations</p>
+                <p className="text-xs text-slate-400">Ratings you gave when logging your doses</p>
               </div>
 
               <div className="w-full h-80">

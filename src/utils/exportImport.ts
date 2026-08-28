@@ -117,16 +117,16 @@ export function generateShareableProtocolText(protocol: Protocol, logsCount: num
     ? 'Everyday'
     : protocol.daysOfWeek.map(d => days[d]).join(', ');
 
-  return `🔬 **Peptide Research Protocol Summary**
+  return `🔬 **Peptide Routine Summary**
 ----------------------------------------
-**Compound:** ${protocol.peptideName}
-**Brand/Source:** ${protocol.brandName || 'Research Standard'}
+**Peptide:** ${protocol.peptideName}
+**Brand/Source:** ${protocol.brandName || 'Standard'}
 **Vial Size:** ${protocol.vialMassMg} mg | **BAC Water:** ${protocol.bacWaterMl} mL
 **Dose:** ${protocol.doseAmount} ${protocol.doseUnit} (${protocol.calculatedUnits} units on ${protocol.syringeType})
 **Schedule:** ${dayStr} | Timing: ${protocol.timingOfDay.replace('_', ' ')}
 **Cycle Length:** ${protocol.plannedCycleWeeks} weeks
-**Total Recorded Administrations:** ${logsCount}
+**Total Doses Logged:** ${logsCount}
 ${protocol.notes ? `**Notes:** ${protocol.notes}` : ''}
 ----------------------------------------
-*Generated via Peptide Researcher Log PWA*`;
+*Generated via Aura Peptide Tracker*`;
 }

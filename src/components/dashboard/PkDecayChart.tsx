@@ -74,10 +74,10 @@ export const PkDecayChart: React.FC<PkDecayChartProps> = ({
           </div>
           <div>
             <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <span>Pharmacokinetic Decay & Accumulation Simulator</span>
+              <span>Estimated Active Levels in Your Body</span>
             </h3>
             <p className="text-xs text-slate-400">
-              One-compartment biological half-life modeling showing circulating concentration accumulation
+              Shows how much peptide builds up and remains active in your system based on your dosing schedule
             </p>
           </div>
         </div>
@@ -116,17 +116,17 @@ export const PkDecayChart: React.FC<PkDecayChartProps> = ({
       {/* PK Key Highlights Ribbon */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
         <div className="bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
-          <span className="text-[10px] text-slate-400 uppercase font-medium block">Biological Half-Life (t½)</span>
+          <span className="text-[10px] text-slate-400 uppercase font-medium block">Half-Life (Time in Body)</span>
           <span className="text-base font-extrabold text-cyan-300 font-mono mt-0.5">{halfLifeHours} Hours</span>
         </div>
 
         <div className="bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
-          <span className="text-[10px] text-slate-400 uppercase font-medium block">Steady-State Plateau</span>
+          <span className="text-[10px] text-slate-400 uppercase font-medium block">Peak Steady Level</span>
           <span className="text-base font-extrabold text-emerald-400 font-mono mt-0.5">~{steadyStateInfo.days} Days</span>
         </div>
 
         <div className="bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
-          <span className="text-[10px] text-slate-400 uppercase font-medium block">Dosing Cadence</span>
+          <span className="text-[10px] text-slate-400 uppercase font-medium block">Dosing Schedule</span>
           <span className="text-base font-extrabold text-purple-300 font-mono mt-0.5">Every {dosingIntervalHours}h</span>
         </div>
       </div>

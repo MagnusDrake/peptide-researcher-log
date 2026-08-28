@@ -72,13 +72,13 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
           <div className="bg-slate-950/60 p-5 rounded-2xl border border-slate-800 flex flex-col gap-3">
             <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-cyan-500 flex items-center gap-1.5">
               <Sparkles className="w-4 h-4" />
-              <span>Overview & Mechanism of Action</span>
+              <span>What It Is & How It Works</span>
             </h3>
             <p className="text-slate-300 leading-relaxed">
               {peptide.summary}
             </p>
             <p className="text-xs text-slate-400 leading-relaxed border-t border-slate-800/80 pt-3">
-              <strong className="text-slate-300">Biochemical Mechanism:</strong> {peptide.mechanism}
+              <strong className="text-slate-300">How It Works in the Body:</strong> {peptide.mechanism}
             </p>
             
             {(peptide.molecularFormula || peptide.sequence) && (
@@ -105,7 +105,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
             <div className="glass-panel p-5 rounded-2xl flex flex-col gap-3">
               <h3 className="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
                 <Clock className="w-4 h-4" />
-                <span>Research Dosing Guidelines</span>
+                <span>Standard Dosing Guide</span>
               </h3>
               <div className="flex flex-col gap-2 text-xs">
                 <div className="flex justify-between py-1 border-b border-slate-800">
@@ -121,20 +121,20 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
                   </span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-slate-800">
-                  <span className="text-slate-400">Administration Frequency</span>
+                  <span className="text-slate-400">How Often People Take It</span>
                   <span className="font-medium text-slate-200 text-right max-w-[180px]">
                     {peptide.standardDosing.frequency}
                   </span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-slate-800">
-                  <span className="text-slate-400">Optimal Timing</span>
+                  <span className="text-slate-400">Best Time to Take It</span>
                   <span className="font-medium text-slate-200 text-right max-w-[180px]">
                     {peptide.standardDosing.timing}
                   </span>
                 </div>
                 {peptide.standardDosing.cycleLengthWeeks && (
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-400">Typical Cycle Length</span>
+                    <span className="text-slate-400">How Long to Run It</span>
                     <span className="font-medium text-emerald-400">
                       {peptide.standardDosing.cycleLengthWeeks}
                     </span>
@@ -147,11 +147,11 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
             <div className="glass-panel p-5 rounded-2xl flex flex-col gap-3">
               <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                 <ThermometerSnowflake className="w-4 h-4" />
-                <span>Kinetics & Storage</span>
+                <span>Half-Life & How to Store It</span>
               </h3>
               <div className="flex flex-col gap-2 text-xs">
                 <div className="flex justify-between py-1 border-b border-slate-800">
-                  <span className="text-slate-400">Biological Half-Life</span>
+                  <span className="text-slate-400">Half-Life (Time in Body)</span>
                   <span className="font-bold text-cyan-300 font-mono">
                     {peptide.halfLifeHours} hours
                   </span>
@@ -166,15 +166,15 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
                   </span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-slate-800">
-                  <span className="text-slate-400">Typical BAC Water Volume</span>
+                  <span className="text-slate-400">Typical Mixing Water (BAC)</span>
                   <span className="font-medium text-slate-200 font-mono">
                     {peptide.typicalBacWaterMl.map(v => `${v}mL`).join(', ')}
                   </span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="text-slate-400">Reconstituted Shelf Life</span>
+                  <span className="text-slate-400">How Long It Lasts Once Mixed</span>
                   <span className="font-medium text-amber-300">
-                    {peptide.storageGuidance.shelfLifeReconstitutedDays} days @ 2-8°C
+                    {peptide.storageGuidance.shelfLifeReconstitutedDays} days (keep in fridge)
                   </span>
                 </div>
               </div>
@@ -184,7 +184,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
           {/* Studied Indications */}
           <div>
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-              Primary Research Indications & Objectives
+              Common Goals & What It's Used For
             </h3>
             <div className="flex flex-wrap gap-2">
               {peptide.researchIndications.map((ind, i) => (
@@ -204,7 +204,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
             <div className="bg-slate-950/50 p-4 rounded-2xl border border-slate-800 flex flex-col gap-2">
               <h4 className="text-xs font-bold text-slate-300 uppercase flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Handling & Mixing Notes</span>
+                <span>Mixing & Handling Tips</span>
               </h4>
               <ul className="text-xs text-slate-400 flex flex-col gap-1.5 list-disc list-inside">
                 {peptide.reconstitutionTips.map((tip, i) => (
@@ -217,7 +217,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
             <div className="bg-amber-950/20 p-4 rounded-2xl border border-amber-900/40 flex flex-col gap-2">
               <h4 className="text-xs font-bold text-amber-400 uppercase flex items-center gap-1.5">
                 <ShieldAlert className="w-4 h-4" />
-                <span>Side Effect Observations & Cautions</span>
+                <span>Things to Watch Out For & Side Effects</span>
               </h4>
               <ul className="text-xs text-amber-200/80 flex flex-col gap-1.5 list-disc list-inside">
                 {peptide.sideEffectWarnings.map((warn, i) => (
@@ -264,7 +264,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
         {/* Modal Footer Actions */}
         <div className="p-5 bg-slate-950 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
           <div className="text-xs text-slate-500">
-            For laboratory & educational research logging.
+            For personal tracking & educational reference.
           </div>
 
           <div className="flex items-center gap-3">
@@ -276,7 +276,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-white text-xs font-bold border border-slate-700 transition"
             >
               <Calculator className="w-4 h-4" />
-              <span>Calculate Reconstitution</span>
+              <span>Open in Mix Calculator</span>
             </button>
 
             <button
@@ -287,7 +287,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/20 transition active:scale-95"
             >
               <PlusCircle className="w-4 h-4" />
-              <span>Create Protocol</span>
+              <span>Start New Routine</span>
             </button>
           </div>
         </div>

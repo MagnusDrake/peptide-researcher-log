@@ -173,13 +173,13 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
         <div>
           <div className="flex items-center gap-2 text-cyan-400 font-semibold text-xs uppercase tracking-wider mb-1">
             <Sparkles className="w-4 h-4" />
-            <span>Intelligent Research Matcher</span>
+            <span>Find Your Ideal Peptide</span>
           </div>
           <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
-            Peptide Goal Matcher & Synergy Finder
+            Peptide Goal Matcher
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-            Discover scientifically compatible research compounds and synergy stacks tailored to specific physiological research targets.
+            Answer a few simple questions about your goals (healing, fat loss, muscle, energy, focus) to find the best peptides and combos for you.
           </p>
         </div>
 
@@ -191,7 +191,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
               activeTab === 'quiz' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
           >
-            🎯 Match Finder Quiz
+            🎯 Goal Quiz
           </button>
           <button
             onClick={() => setActiveTab('stacks')}
@@ -199,7 +199,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
               activeTab === 'stacks' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
           >
-            🧬 Curated Stacks ({CURATED_STACKS.length})
+            🧬 Popular Combos ({CURATED_STACKS.length})
           </button>
         </div>
       </div>
@@ -265,7 +265,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
 
                 {/* Suggested Protocol Box */}
                 <div className="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 text-xs flex flex-col gap-1">
-                  <span className="text-[10px] font-bold uppercase text-slate-400">Suggested Research Protocol</span>
+                  <span className="text-[10px] font-bold uppercase text-slate-400">Suggested Routine</span>
                   <span className="font-semibold text-white">{res.suggestedProtocol}</span>
                   <span className="text-[11px] text-slate-400">{res.peptide.standardDosing.timing}</span>
                 </div>
@@ -274,7 +274,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
                 {res.suggestedStack && (
                   <div className="bg-purple-950/20 border border-purple-900/40 p-3 rounded-2xl flex items-center justify-between text-xs">
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-purple-400 block">Recommended Synergy Stack</span>
+                      <span className="text-[10px] uppercase font-bold text-purple-400 block">Recommended Combo Stack</span>
                       <span className="font-semibold text-purple-200">{res.suggestedStack.name}</span>
                     </div>
                     {onAdoptStack && (
@@ -295,7 +295,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
                     className="flex-1 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-white text-xs font-bold border border-slate-700 transition flex items-center justify-center gap-1.5"
                   >
                     <Calculator className="w-3.5 h-3.5" />
-                    <span>Calculate</span>
+                    <span>Mix Calculator</span>
                   </button>
 
                   <button
@@ -303,7 +303,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
                     className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-md shadow-cyan-500/20 transition flex items-center justify-center gap-1.5"
                   >
                     <PlusCircle className="w-3.5 h-3.5" />
-                    <span>Add Protocol</span>
+                    <span>Start Routine</span>
                   </button>
                 </div>
               </div>
@@ -382,20 +382,20 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
           {step === 2 && (
             <div className="flex flex-col gap-5 animate-in fade-in duration-200">
               <div>
-                <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em]">Experience Level & Route Preference</h2>
-                <p className="text-xs text-slate-400 mt-1">Refines compound complexity and scheduling preferences.</p>
+                <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em]">Experience Level & How You Take It</h2>
+                <p className="text-xs text-slate-400 mt-1">Helps recommend simple single peptides or multi-peptide routines.</p>
               </div>
 
               {/* Experience */}
               <div>
                 <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
-                  Research Experience Level
+                  Your Peptide Experience
                 </label>
                 <div className="grid grid-cols-3 gap-3">
                   {[
-                    { id: 'beginner', label: 'Beginner', desc: 'Established safety profile, easy reconstitution' },
-                    { id: 'intermediate', label: 'Intermediate', desc: 'Synergistic dual stacks & titration' },
-                    { id: 'advanced', label: 'Advanced', desc: 'Complex multi-compound cellular cascades' }
+                    { id: 'beginner', label: 'Beginner', desc: 'Well-known, simple to mix and take' },
+                    { id: 'intermediate', label: 'Intermediate', desc: 'Popular combos & step-up schedules' },
+                    { id: 'advanced', label: 'Advanced', desc: 'Multi-peptide blends & customized routines' }
                   ].map(exp => (
                     <button
                       key={exp.id}
@@ -417,14 +417,14 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
               {/* Administration Frequency */}
               <div>
                 <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
-                  Preferred Administration Frequency / Route
+                  How Often You Want to Take It
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { id: 'any', label: 'Any Frequency / Route', desc: 'Maximize all relevant compound matches' },
-                    { id: 'subq_weekly', label: 'Weekly SubQ (1x/week)', desc: 'Long half-life compounds (e.g. GLP-1s, TB-500)' },
-                    { id: 'subq_daily', label: 'Daily SubQ', desc: 'Pulsatile compounds (e.g. BPC-157, GH Secretagogues)' },
-                    { id: 'nasal_topical', label: 'Nasal Spray or Topical', desc: 'Non-injectable options (e.g. Semax, Selank, GHK-Cu)' }
+                    { id: 'any', label: 'Any Frequency', desc: 'Show all matching peptides' },
+                    { id: 'subq_weekly', label: 'Once a Week', desc: 'Weekly shots (e.g. Tirzepatide, Semaglutide)' },
+                    { id: 'subq_daily', label: 'Daily', desc: 'Daily shots (e.g. BPC-157, CJC/Ipamorelin)' },
+                    { id: 'nasal_topical', label: 'Nasal Spray or Skin Cream', desc: 'No needles (e.g. Semax, Selank, GHK-Cu)' }
                   ].map(adm => (
                     <button
                       key={adm.id}
@@ -458,7 +458,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
                   }}
                   className="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-cyan-500/20 transition flex items-center gap-2"
                 >
-                  <span>Generate Matches</span>
+                  <span>Show My Matches</span>
                   <Sparkles className="w-4 h-4" />
                 </button>
               </div>

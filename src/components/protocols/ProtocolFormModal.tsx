@@ -259,10 +259,10 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-black text-white">
-                {editingProtocol ? 'Edit Research Protocol' : 'Create New Research Protocol'}
+                {editingProtocol ? 'Edit Routine' : 'Create New Routine'}
               </h2>
               <p className="text-xs text-slate-400">
-                {isBlend ? 'Configure multi-peptide stack formulated in a single vial' : 'Configure compound parameters, reconstitution volume, and schedule'}
+                {isBlend ? 'Set up a vial containing 2 or more peptides mixed together' : 'Set up your peptide, how you mix it, dose amount, and schedule'}
               </p>
             </div>
           </div>
@@ -305,7 +305,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
           {!isBlend ? (
             <div className="space-y-4">
               <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-cyan-500">
-                1. Single Compound & Reconstitution Parameters
+                1. Peptide & Mixing Details
               </h3>
 
               <div>
@@ -336,7 +336,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Proprietary Blend or Research Compound"
+                    placeholder="e.g. Tirzepatide / BPC-157"
                     value={peptideName}
                     onChange={(e) => setPeptideName(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
@@ -347,7 +347,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                    Vial Mass (mg)
+                    Powder in Vial (mg)
                   </label>
                   <input
                     type="number"
@@ -363,7 +363,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                    BAC Water Added (mL)
+                    Mixing Water (BAC mL)
                   </label>
                   <input
                     type="number"
@@ -814,7 +814,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
             className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white text-sm font-bold shadow-lg shadow-cyan-500/20 transition active:scale-95 flex items-center gap-2"
           >
             <Check className="w-4 h-4" />
-            <span>{editingProtocol ? 'Update Protocol' : 'Save Protocol'}</span>
+            <span>{editingProtocol ? 'Update Routine' : 'Save Routine'}</span>
           </button>
         </div>
       </div>

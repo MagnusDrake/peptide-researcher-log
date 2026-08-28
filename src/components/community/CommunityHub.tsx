@@ -82,13 +82,13 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
         <div>
           <div className="flex items-center gap-2 text-purple-400 font-semibold text-xs uppercase tracking-wider mb-1">
             <Users className="w-4 h-4" />
-            <span>Open Science & Peer Knowledge Exchange</span>
+            <span>Community Hub & Real Experiences</span>
           </div>
           <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
-            Peer Researcher Community Hub
+            Community Hub & Experiences
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-            Opt-in community space to share anonymized protocol findings, explore real-world observational outcomes from peer researchers, and adopt verified regimens.
+            See real experiences shared by other people, compare results, and copy proven routines into your tracker.
           </p>
         </div>
 
@@ -98,7 +98,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
           className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 disabled:opacity-50 text-white font-bold text-xs shadow-lg shadow-purple-500/20 transition active:scale-95 self-start md:self-auto"
         >
           <Share2 className="w-4 h-4" />
-          <span>Publish Anonymized Finding</span>
+          <span>Share Your Experience</span>
         </button>
       </div>
 
@@ -168,7 +168,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
                   className="flex items-center gap-1 text-xs text-cyan-400 hover:text-white font-bold transition"
                 >
                   <BookmarkPlus className="w-3.5 h-3.5" />
-                  <span>Adopt as Template</span>
+                  <span>Copy to My Routines</span>
                 </button>
               )}
             </div>
@@ -182,12 +182,12 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({
           <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 w-full max-w-lg shadow-2xl flex flex-col gap-4">
             <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
               <Share2 className="w-5 h-5 text-purple-400" />
-              <span>Publish Anonymized Research Finding</span>
+              <span>Share Your Experience Anonymously</span>
             </h3>
 
             <form onSubmit={handlePublishFinding} className="flex flex-col gap-4 text-xs text-slate-300">
               <div>
-                <label className="block text-slate-400 font-semibold uppercase mb-1">Select Protocol to Summarize</label>
+                <label className="block text-slate-400 font-semibold uppercase mb-1">Choose Routine to Share</label>
                 <select
                   value={selectedProtocolId}
                   onChange={(e) => setSelectedProtocolId(e.target.value)}

@@ -21,13 +21,13 @@ export const UnitConverter: React.FC = () => {
       <div className="mb-6">
         <div className="flex items-center gap-2 text-amber-400 font-semibold text-xs uppercase tracking-wider mb-1">
           <ArrowRightLeft className="w-4 h-4" />
-          <span>Biochemical Unit Converter</span>
+          <span>Quick Unit Converter</span>
         </div>
         <h1 className="text-[0.85rem] font-bold text-white uppercase tracking-widest">
           Peptide & Syringe Unit Converter
         </h1>
         <p className="text-sm text-slate-300 mt-1">
-          Convert instantly across milligrams (mg), micrograms (mcg), volume (mL), and insulin syringe units based on active vial concentration.
+          Easily switch between milligrams (mg), micrograms (mcg), volume (mL), and syringe units so you never second-guess your math.
         </p>
       </div>
 

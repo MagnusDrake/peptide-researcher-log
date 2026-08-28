@@ -232,13 +232,13 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
         <div>
           <div className="flex items-center gap-1.5 text-purple-400 font-semibold text-[11px] uppercase tracking-wider mb-0.5">
             <Layers className="w-3.5 h-3.5" />
-            <span>Multi-Compound Blend Reconstitution (2, 3, 4+ Peptides)</span>
+            <span>All-in-One Multi-Peptide Mix</span>
           </div>
           <h1 className="text-[0.85rem] font-bold text-white uppercase tracking-widest">
-            Multi-Peptide Stack Vial Calculator
+            Blend & Stack Calculator
           </h1>
           <p className="text-xs text-slate-300 mt-0.5 max-w-xl hidden sm:block">
-            For vials containing multiple peptides pre-mixed in the same lyophilized powder. Calculate exact draw volume and delivered doses for all compounds simultaneously.
+            Have a vial that has 2 or more peptides mixed together (like BPC-157 + TB-500)? Calculate your syringe pull and how much of each peptide you get in each dose.
           </p>
         </div>
 
@@ -266,7 +266,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
             className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-purple-500/20 transition active:scale-95 shrink-0"
           >
             <BookmarkPlus className="w-4 h-4" />
-            <span>Save Blend to Protocol</span>
+            <span>Save Blend as Routine</span>
           </button>
         )}
       </div>
@@ -274,7 +274,7 @@ export const BlendCalculator: React.FC<BlendCalculatorProps> = ({ onSaveAsProtoc
       {/* Preset Pills */}
       <div className="glass-panel p-3 sm:p-4 rounded-2xl flex flex-col gap-2">
         <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-          Commercial & Compounded Blend Presets
+          Popular Pre-Mixed Blends
         </label>
         <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none sm:flex-wrap">
           {PRESET_BLENDS.map((preset, idx) => (

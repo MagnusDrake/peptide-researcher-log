@@ -41,7 +41,7 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
   };
 
   const handleDelete = async (protocolId: string) => {
-    if (confirm('Are you sure you want to delete this research protocol? Log history will remain preserved.')) {
+    if (confirm('Are you sure you want to delete this routine? Your past dose history will still be kept.')) {
       await db.protocols.delete(protocolId);
       onProtocolsChanged();
     }
@@ -70,13 +70,13 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
         <div>
           <div className="flex items-center gap-2 text-cyan-400 font-semibold text-xs uppercase tracking-wider mb-1">
             <Layers className="w-4 h-4" />
-            <span>Active Stack & Regimen Center</span>
+            <span>Dosing Plans & Routines</span>
           </div>
           <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
-            Research Protocols & Active Stacks
+            My Peptide Routines
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-            Configure compound dosages, reconstitution ratios, day-of-week administration schedules, and reconstituted vial shelf-life tracking.
+            Set your dose amounts, schedule your injection days, and keep track of vial freshness.
           </p>
         </div>
 
@@ -85,7 +85,7 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
           className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 transition active:scale-95 self-start md:self-auto"
         >
           <Plus className="w-4 h-4" />
-          <span>New Protocol</span>
+          <span>New Routine</span>
         </button>
       </div>
 
@@ -96,9 +96,9 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
             <Layers className="w-6 h-6" />
           </div>
           <div>
-            <span className="text-xs text-slate-400 uppercase font-semibold block">Active Compounds</span>
+            <span className="text-xs text-slate-400 uppercase font-semibold block">Active Peptides</span>
             <span className="text-2xl font-black text-white font-mono">{activeProtocols.length}</span>
-            <span className="text-[11px] text-slate-500 block">in current research stack</span>
+            <span className="text-[11px] text-slate-500 block">in current routine</span>
           </div>
         </div>
 
@@ -107,9 +107,9 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
             <CalendarCheck2 className="w-6 h-6" />
           </div>
           <div>
-            <span className="text-xs text-slate-400 uppercase font-semibold block">Weekly Injections</span>
+            <span className="text-xs text-slate-400 uppercase font-semibold block">Doses Per Week</span>
             <span className="text-2xl font-black text-emerald-400 font-mono">{totalWeeklyInjections}</span>
-            <span className="text-[11px] text-slate-500 block">scheduled per 7-day cycle</span>
+            <span className="text-[11px] text-slate-500 block">scheduled every 7 days</span>
           </div>
         </div>
 
@@ -118,9 +118,9 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
-            <span className="text-xs text-slate-400 uppercase font-semibold block">Vials Monitored</span>
+            <span className="text-xs text-slate-400 uppercase font-semibold block">Vials in Use</span>
             <span className="text-2xl font-black text-purple-300 font-mono">{protocols.length}</span>
-            <span className="text-[11px] text-slate-500 block">with 28-day stability clocks</span>
+            <span className="text-[11px] text-slate-500 block">with freshness trackers</span>
           </div>
         </div>
       </div>
@@ -175,17 +175,17 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
           <div className="h-16 w-16 rounded-full bg-slate-900 flex items-center justify-center text-3xl">
             🧪
           </div>
-          <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-widest">No Protocols Found</h3>
+          <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-widest">No Routines Found</h3>
           <p className="text-xs text-slate-400 max-w-sm">
             {filterActive === 'active'
-              ? "You don't have any active research protocols yet. Create your first protocol to start scheduling and tracking."
-              : 'No protocols in this tab.'}
+              ? "You don't have any active routines yet. Create your first routine to start scheduling and tracking your doses."
+              : 'No routines in this tab.'}
           </p>
           <button
             onClick={handleCreateNew}
             className="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-cyan-500/20 mt-2"
           >
-            Create Your First Protocol
+            Create Your First Routine
           </button>
         </div>
       )}

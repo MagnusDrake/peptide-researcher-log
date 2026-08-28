@@ -125,7 +125,7 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
           <div className="flex items-center gap-2">
             {isBlend ? <Layers className="w-5 h-5 text-purple-400" /> : <Sparkles className="w-5 h-5 text-cyan-400" />}
             <h2 className="text-lg sm:text-[0.85rem] font-bold text-white uppercase tracking-widest">
-              {isBlend ? 'Create Custom Multi-Peptide Stack' : 'Add Custom Research Peptide'}
+              {isBlend ? 'Create Custom Peptide Blend' : 'Add Your Own Peptide'}
             </h2>
           </div>
           <button
@@ -356,7 +356,7 @@ export const CustomPeptideModal: React.FC<CustomPeptideModalProps> = ({
               className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white text-sm font-bold rounded-xl shadow-lg shadow-cyan-500/20 transition active:scale-95 flex items-center gap-1.5"
             >
               <Plus className="w-4 h-4" />
-              <span>Save Compound to Library</span>
+              <span>Save to My Library</span>
             </button>
           </div>
         </form>

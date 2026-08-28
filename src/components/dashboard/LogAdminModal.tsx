@@ -113,7 +113,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
         <div className="p-6 border-b border-slate-800 flex items-center justify-between">
           <div>
             <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">
-              Administer Research Injection
+              Log Your Dose
             </span>
             <h2 className="text-xl font-black text-white flex items-center gap-2">
               <span>{protocol.peptideName}</span>
@@ -137,7 +137,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
           <div className="mx-6 mt-4 p-3 bg-purple-950/40 border border-purple-800/60 rounded-2xl flex flex-col gap-1.5">
             <div className="text-[11px] font-bold text-purple-300 uppercase tracking-wider flex items-center gap-1.5">
               <span>🧪</span>
-              <span>Delivering {deliveredBlendList.length} Compounds Simultaneously:</span>
+              <span>{deliveredBlendList.length} Peptides in this Single Dose:</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {deliveredBlendList.map((d, i) => (
@@ -356,10 +356,10 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
 
           {/* Observation Notes */}
           <div>
-            <label className="block text-slate-400 font-semibold uppercase mb-1">Observations & Research Notes</label>
+            <label className="block text-slate-400 font-semibold uppercase mb-1">Notes <span className="text-slate-500 font-normal">(Optional)</span></label>
             <textarea
               rows={2}
-              placeholder="e.g. Administered smoothly with 31G needle. Zero PIP. Observed strong appetite suppression throughout afternoon."
+              placeholder="e.g. Injected smoothly with 31G needle. No sting or soreness. Noticeable energy boost."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:border-cyan-400 outline-none resize-none"
@@ -380,7 +380,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
               className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/20 active:scale-95"
             >
               <Check className="w-4 h-4" />
-              <span>Record Administration</span>
+              <span>Save Dose to Log</span>
             </button>
           </div>
         </form>

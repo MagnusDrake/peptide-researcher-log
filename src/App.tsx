@@ -323,7 +323,7 @@ export function App() {
                   }`}
                 >
                   <Calendar className="w-4 h-4 shrink-0" />
-                  <span>Daily Schedule</span>
+                  <span>Today's Schedule</span>
                 </button>
 
                 <button
@@ -335,7 +335,7 @@ export function App() {
                   }`}
                 >
                   <Layers className="w-4 h-4 shrink-0" />
-                  <span>My Protocols</span>
+                  <span>My Routines</span>
                 </button>
 
                 <button
@@ -347,7 +347,7 @@ export function App() {
                   }`}
                 >
                   <Activity className="w-4 h-4 shrink-0" />
-                  <span>Journal & Logs</span>
+                  <span>Dose Log & History</span>
                 </button>
               </div>
             </div>
@@ -400,7 +400,7 @@ export function App() {
                   }`}
                 >
                   <Calculator className="w-4 h-4 shrink-0" />
-                  <span>Reconstitution & Syringe</span>
+                  <span>Mixing & Syringe Guide</span>
                 </button>
 
                 <button
@@ -412,7 +412,7 @@ export function App() {
                   }`}
                 >
                   <Layers className="w-4 h-4 shrink-0" />
-                  <span>🧪 Stack & Blend (2, 3, 4+)</span>
+                  <span>🧪 Multi-Peptide Mix</span>
                 </button>
 
                 <button
@@ -424,7 +424,7 @@ export function App() {
                   }`}
                 >
                   <TrendingUp className="w-4 h-4 shrink-0" />
-                  <span>GLP-1 Titration</span>
+                  <span>GLP-1 Dose Ramp-Up</span>
                 </button>
 
                 <button
@@ -436,7 +436,7 @@ export function App() {
                   }`}
                 >
                   <ArrowRightLeft className="w-4 h-4 shrink-0" />
-                  <span>Converter</span>
+                  <span>Unit Converter</span>
                 </button>
               </div>
             </div>

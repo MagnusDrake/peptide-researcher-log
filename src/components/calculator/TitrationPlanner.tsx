@@ -81,10 +81,10 @@ export const TitrationPlanner: React.FC = () => {
       <div className="flex flex-col gap-1">
         <h2 className="text-[0.85rem] font-bold text-white uppercase tracking-widest flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-emerald-400" />
-          <span>GLP-1 Incretin Titration & Escalation Planner</span>
+          <span>GLP-1 Dose Ramp-Up Guide</span>
         </h2>
         <p className="text-xs text-slate-400">
-          Standard 4-week clinical dosage escalation ramps designed to minimize gastrointestinal adverse events while establishing therapeutic efficacy.
+          Standard 4-week step-up schedules. Starting with a low dose and slowly ramping up helps your body adjust and avoids nausea or stomach upset.
         </p>
       </div>
 
@@ -109,7 +109,7 @@ export const TitrationPlanner: React.FC = () => {
               {preset.category}
             </span>
             <span className="font-bold text-sm text-white">{preset.name}</span>
-            <span className="text-xs text-slate-400 mt-1">{preset.steps.length} Titration Stages</span>
+            <span className="text-xs text-slate-400 mt-1">{preset.steps.length} Step-Up Phases</span>
           </button>
         ))}
       </div>
@@ -117,7 +117,7 @@ export const TitrationPlanner: React.FC = () => {
       {/* Interactive Reconstitution Adjuster for this Ramp */}
       <div className="glass-panel p-5 rounded-2xl grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
         <div>
-          <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Your Vial Mass (mg)</label>
+          <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Powder in Vial (mg)</label>
           <input
             type="number"
             min="0"
@@ -129,7 +129,7 @@ export const TitrationPlanner: React.FC = () => {
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">BAC Water (mL)</label>
+          <label className="block text-xs font-semibold text-slate-300 uppercase mb-1">Mixing Water (BAC mL)</label>
           <input
             type="number"
             min="0"
@@ -207,8 +207,8 @@ export const TitrationPlanner: React.FC = () => {
       <div className="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl flex items-start gap-3 text-xs text-slate-300">
         <Info className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
         <div className="flex flex-col gap-1">
-          <strong className="text-white">Titration Golden Rule:</strong>
-          <span>Never accelerate dose increases faster than every 4 weeks. It takes 4-5 weeks for circulating incretin agonists to reach a pharmacodynamic steady-state plateau. Remaining at the lowest effective dose minimizes receptor tachyphylaxis and preserves maximum responsiveness.</span>
+          <strong className="text-white">Dose Step-Up Golden Rule:</strong>
+          <span>Give each dose at least 4 full weeks before increasing. It takes about a month for levels to build up and stabilize in your body. Staying on the lowest dose that works for you prevents nausea and stomach upset, and keeps the peptide working great long-term.</span>
         </div>
       </div>
     </div>

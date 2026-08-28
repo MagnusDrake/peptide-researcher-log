@@ -83,12 +83,12 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
             </span>
           </div>
           <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest">
-            RESEARCH DASHBOARD
+            TODAY'S SCHEDULE
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
             {scheduledToday.length === 0
-              ? 'No administrations scheduled for today. Rest day in your research cycle.'
-              : `${scheduledToday.length} administration${scheduledToday.length > 1 ? 's' : ''} scheduled for today across your active research stack.`}
+              ? 'No doses scheduled for today. Rest day in your routine!'
+              : `${scheduledToday.length} dose${scheduledToday.length > 1 ? 's' : ''} scheduled for today across your active routines.`}
           </p>
         </div>
 
@@ -140,14 +140,14 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5" />
-                <span>Today's Administrations</span>
+                <span>Today's Doses</span>
               </h2>
 
               <button
                 onClick={onNavigateToProtocols}
                 className="text-xs text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1 transition"
               >
-                <span>Manage Stack</span>
+                <span>Manage Routines</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -216,7 +216,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
                             className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-500/20 transition active:scale-95 flex items-center gap-1.5"
                           >
                             <PlusCircle className="w-4 h-4" />
-                            <span>Log Administration</span>
+                            <span>Log Dose</span>
                           </button>
                         )}
                       </div>
@@ -227,18 +227,18 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
             ) : (
               <div className="p-8 text-center flex flex-col items-center justify-center gap-2 text-slate-400">
                 <span className="text-3xl">☕</span>
-                <p className="text-sm font-bold text-slate-200">No Injections Scheduled Today</p>
+                <p className="text-sm font-bold text-slate-200">No Doses Scheduled Today</p>
                 <p className="text-xs text-slate-500 max-w-sm">
                   {activeProtocols.length === 0
-                    ? "You haven't set up any active research protocols yet."
-                    : "None of your active compounds are scheduled for today's day of the week."}
+                    ? "You haven't set up any active routines yet."
+                    : "None of your active routines are scheduled for today."}
                 </p>
                 {activeProtocols.length === 0 && (
                   <button
                     onClick={onNavigateToProtocols}
                     className="mt-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-white rounded-xl text-xs font-bold transition shadow-md shadow-cyan-500/20"
                   >
-                    Create a Research Protocol
+                    Create a New Routine
                   </button>
                 )}
               </div>
@@ -260,7 +260,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
           {/* Recent Administrations Mini Timeline */}
           <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4 border-slate-800 shadow-xl">
             <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center justify-between border-b border-slate-800 pb-3">
-              <span>Recent Research Logs</span>
+              <span>Recent Doses Logged</span>
               <span className="text-xs font-normal text-slate-400">{logs.length} Total</span>
             </h3>
 
@@ -291,7 +291,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
               </div>
             ) : (
               <div className="p-4 text-center text-xs text-slate-500">
-                No administrations logged yet.
+                No doses logged yet.
               </div>
             )}
           </div>

@@ -46,15 +46,15 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
             <Shield className="w-4 h-4" />
           </div>
           <div className="min-w-0">
-            <h3 className="text-base font-bold text-white truncate">Subcutaneous Site Rotation Map</h3>
-            <p className="text-[11px] text-slate-400 truncate">Rotate injection sites to prevent lipohypertrophy & scar tissue</p>
+            <h3 className="text-base font-bold text-white truncate">Injection Spot Rotation</h3>
+            <p className="text-[11px] text-slate-400 truncate">Rotate where you inject to prevent soreness and skin bumps</p>
           </div>
         </div>
 
         {suggestedSite && (
           <div className="flex items-center gap-1.5 text-xs bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-emerald-300 min-w-0 shrink-0 sm:shrink max-w-full">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            <span className="truncate">Suggested Next: <strong>{suggestedSite.name}</strong></span>
+            <span className="truncate">Next Recommended Spot: <strong>{suggestedSite.name}</strong></span>
           </div>
         )}
       </div>

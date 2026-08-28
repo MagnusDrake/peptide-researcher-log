@@ -40,11 +40,11 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: number }[] = [
     { id: 'dashboard', label: 'My Peptides', icon: <Calendar className="w-4 h-4" />, badge: activeProtocolsCount },
-    { id: 'calculator', label: 'Calculator', icon: <Calculator className="w-4 h-4" /> },
-    { id: 'library', label: 'Peptide DB', icon: <BookOpen className="w-4 h-4" /> },
-    { id: 'matcher', label: 'Matcher Quiz', icon: <Sparkles className="w-4 h-4" /> },
+    { id: 'calculator', label: 'Mix Calculator', icon: <Calculator className="w-4 h-4" /> },
+    { id: 'library', label: 'Peptide Guide', icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'matcher', label: 'Goal Matcher', icon: <Sparkles className="w-4 h-4" /> },
     { id: 'community', label: 'Community', icon: <Users className="w-4 h-4" /> },
-    { id: 'profile', label: 'Vault Profile', icon: <User className="w-4 h-4" /> },
+    { id: 'profile', label: 'My Profile', icon: <User className="w-4 h-4" /> },
   ];
 
   return (
@@ -68,10 +68,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="text-xl font-light text-slate-100 tracking-[0.2em] flex items-center gap-2">
               <span>AURA</span>
               <span className="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-semibold border border-cyan-500/20 tracking-wider">
-                VAULT
+                PEPTIDES
               </span>
             </div>
-            <div className="text-[9px] text-cyan-500/70 uppercase tracking-[0.2em] font-medium mt-0.5">Advanced Research</div>
+            <div className="text-[9px] text-cyan-500/70 uppercase tracking-[0.2em] font-medium mt-0.5">Daily Peptide Tracker</div>
           </div>
         </div>
 

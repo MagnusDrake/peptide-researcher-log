@@ -40,9 +40,9 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ onLogout }) =>
     <div className="max-w-4xl mx-auto pb-24">
       <div className="mb-8">
         <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
-          RESEARCHER PROFILE
+          MY PROFILE & SETTINGS
         </h1>
-        <p className="text-slate-500 mt-2 text-sm font-medium">Manage your Vault identity and security parameters.</p>
+        <p className="text-slate-500 mt-2 text-sm font-medium">Manage your display name, passcode lock, and app data.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -51,18 +51,18 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ onLogout }) =>
         <div className="glass-panel p-6 rounded-2xl border border-slate-800 shadow-2xl h-fit">
           <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2 border-b border-slate-800 pb-4 mb-6">
             <User className="w-4 h-4" />
-            <span>Identity Configuration</span>
+            <span>Your Profile</span>
           </h2>
           
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Researcher Alias</label>
+              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Display Name</label>
               <input 
                 type="text" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all font-medium"
-                placeholder="Enter alias..."
+                placeholder="Enter name..."
               />
             </div>
             
@@ -70,7 +70,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ onLogout }) =>
               onClick={handleSaveName}
               className="w-full bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500 hover:text-slate-950 border border-cyan-500/30 py-3 rounded-xl font-bold uppercase tracking-widest text-xs transition-all duration-300"
             >
-              Update Identity
+              Save Name
             </button>
           </div>
         </div>
@@ -79,7 +79,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ onLogout }) =>
         <div className="glass-panel p-6 rounded-2xl border border-slate-800 shadow-2xl h-fit">
           <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2 border-b border-slate-800 pb-4 mb-6">
             <Shield className="w-4 h-4" />
-            <span>Vault Security</span>
+            <span>Passcode Lock</span>
           </h2>
           
           <div className="space-y-4">

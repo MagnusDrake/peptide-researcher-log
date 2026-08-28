@@ -24,10 +24,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({
 }) => {
   const navItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: number }[] = [
     { id: 'dashboard', label: 'My Peptides', icon: <Calendar className="w-5 h-5" />, badge: activeProtocolsCount },
-    { id: 'calculator', label: 'Calc', icon: <Calculator className="w-5 h-5" /> },
-    { id: 'library', label: 'Library', icon: <BookOpen className="w-5 h-5" /> },
+    { id: 'calculator', label: 'Mix Calc', icon: <Calculator className="w-5 h-5" /> },
+    { id: 'library', label: 'Guide', icon: <BookOpen className="w-5 h-5" /> },
     { id: 'matcher', label: 'Matcher', icon: <Sparkles className="w-5 h-5" /> },
-    { id: 'community', label: 'Hub', icon: <Users className="w-5 h-5" /> },
+    { id: 'community', label: 'Community', icon: <Users className="w-5 h-5" /> },
     { id: 'profile', label: 'Profile', icon: <User className="w-5 h-5" /> },
   ];
 
