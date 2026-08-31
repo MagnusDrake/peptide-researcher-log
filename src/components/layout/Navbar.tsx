@@ -11,10 +11,11 @@ import {
   Sun, 
   Moon,
   Lock,
-  User 
+  User,
+  ShieldCheck
 } from 'lucide-react';
 
-export type NavTab = 'dashboard' | 'calculator' | 'library' | 'matcher' | 'community' | 'profile';
+export type NavTab = 'dashboard' | 'calculator' | 'library' | 'matcher' | 'community' | 'sources' | 'profile';
 
 interface NavbarProps {
   activeTab: NavTab;
@@ -44,6 +45,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'library', label: 'Peptide Guide', icon: <BookOpen className="w-4 h-4" /> },
     { id: 'matcher', label: 'Goal Matcher', icon: <Sparkles className="w-4 h-4" /> },
     { id: 'community', label: 'Community', icon: <Users className="w-4 h-4" /> },
+    { id: 'sources', label: 'Verified Sources', icon: <ShieldCheck className="w-4 h-4" /> },
     { id: 'profile', label: 'My Profile', icon: <User className="w-4 h-4" /> },
   ];
 

@@ -8,7 +8,8 @@ import {
   Layers, 
   Activity, 
   Users,
-  User
+  User,
+  ShieldCheck
 } from 'lucide-react';
 
 interface MobileNavProps {
@@ -28,6 +29,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     { id: 'library', label: 'Guide', icon: <BookOpen className="w-5 h-5" /> },
     { id: 'matcher', label: 'Matcher', icon: <Sparkles className="w-5 h-5" /> },
     { id: 'community', label: 'Community', icon: <Users className="w-5 h-5" /> },
+    { id: 'sources', label: 'Sources', icon: <ShieldCheck className="w-5 h-5" /> },
     { id: 'profile', label: 'Profile', icon: <User className="w-5 h-5" /> },
   ];
 

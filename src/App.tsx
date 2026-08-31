@@ -17,6 +17,7 @@ import { PeptideMatcher } from './components/matcher/PeptideMatcher';
 import { ProtocolManager } from './components/protocols/ProtocolManager';
 import { ResearchJournal } from './components/journal/ResearchJournal';
 import { CommunityHub } from './components/community/CommunityHub';
+import { VerifiedSources } from './components/vendors/VerifiedSources';
 import { ProfileSettings } from './components/profile/ProfileSettings';
 import { Calculator, Layers, TrendingUp, ArrowRightLeft, Sparkles, Plus, Calendar, Activity } from 'lucide-react';
 
@@ -515,6 +516,11 @@ export function App() {
               handleTabChange('dashboard');
             }}
           />
+        )}
+
+        {/* TAB 8: VERIFIED SOURCES & AFFILIATES */}
+        {activeTab === 'sources' && (
+          <VerifiedSources />
         )}
 
         {/* TAB 8: VAULT PROFILE SETTINGS */}
