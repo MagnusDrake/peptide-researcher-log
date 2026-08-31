@@ -15,21 +15,21 @@
     --color-amber: #f59e0b;
     --chart-grid: rgba(34, 211, 238, 0.08);
 
-    /* DARK MODE: Obsidian & Neon Ambient (Elite, pitch black with glowing glass) */
-    --color-slate-950: #02040a; /* App Background: Deepest obsidian */
-    --color-slate-900: rgba(10, 15, 26, 0.6); /* Cards / Modals: Translucent deep blue-grey */
-    --color-slate-800: rgba(34, 211, 238, 0.15); /* Borders / Hover: Cyan tinted glass */
-    --color-slate-700: rgba(34, 211, 238, 0.25);  /* Dividers */
-    --color-slate-600: #475569; 
-    --color-slate-500: #64748b; /* Muted text */
-    --color-slate-400: #94a3b8; /* Secondary text */
-    --color-slate-300: #cbd5e1; /* Normal text */
-    --color-slate-200: #f1f5f9;
-    --color-slate-100: #ffffff; /* Headings */
-    --color-slate-50:  #ffffff;
+    /* DARK MODE: Multi-Tiered Obsidian, Midnight Slate & Glowing Accents */
+    --color-slate-950: #030712; /* Canvas: Deepest pure graphite/obsidian void */
+    --color-slate-900: #0f172a; /* Primary Cards, Modals, Top Headers (+12% luminance delta) */
+    --color-slate-800: #1e293b; /* Secondary Inset Wells, Row Items, Sub-Cards (+8% from card) */
+    --color-slate-700: #334155; /* Interactive Controls, Input Fields, Active Borders */
+    --color-slate-600: #475569; /* Elevated Borders & Inactive Toggles */
+    --color-slate-500: #64748b; /* Muted Structural Text */
+    --color-slate-400: #94a3b8; /* Secondary / Caption Text */
+    --color-slate-300: #cbd5e1; /* Main Body Text */
+    --color-slate-200: #e2e8f0; /* Strong Subheadings */
+    --color-slate-100: #f8fafc; /* Headings & Badges */
+    --color-slate-50:  #ffffff; /* Glowing Highlights */
 
     /* Global Tinted Shadows for Dark Mode */
-    --tw-shadow-color: rgba(34, 211, 238, 0.05);
+    --tw-shadow-color: rgba(0, 0, 0, 0.7);
   }
 
   html.light {
@@ -186,11 +186,15 @@ html.light ::-webkit-scrollbar-thumb:hover {
 
 /* Glass panel components */
 .glass-panel {
-  background: rgba(10, 15, 26, 0.55);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-slate-800);
-  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 0 20px rgba(34, 211, 238, 0.03);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(10, 16, 30, 0.95) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(56, 85, 130, 0.45);
+  box-shadow: 
+    0 12px 36px -6px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    0 0 24px -4px rgba(34, 211, 238, 0.05);
 }
 
 html.light .glass-panel {
@@ -206,12 +210,12 @@ html.light .glass-panel {
 }
 
 .glass-panel-interactive:hover {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(10, 15, 26, 0.7));
-  border-color: rgba(34, 211, 238, 0.4);
+  background: linear-gradient(180deg, rgba(22, 33, 58, 0.94) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border-color: rgba(34, 211, 238, 0.55);
   box-shadow: 
-    0 12px 40px -8px rgba(34, 211, 238, 0.25), 
-    0 0 20px rgba(34, 211, 238, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 16px 44px -8px rgba(0, 0, 0, 0.9),
+    0 0 25px rgba(34, 211, 238, 0.22),
+    inset 0 1px 0 0 rgba(34, 211, 238, 0.35);
   transform: translateY(-3px);
 }
 
@@ -241,8 +245,22 @@ html.light .glass-panel-interactive:hover {
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: inherit;
 }
-.btn-glow-cyan:hover::after {
-  opacity: 0.75;
+/* Modal & Popup Dialog Depth Enhancements in Dark Mode */
+.fixed.inset-0.bg-slate-950\/85,
+.fixed.inset-0.bg-slate-950\/80:not(.lock-screen-container),
+.fixed.inset-0.bg-slate-950\/90 {
+  background-color: rgba(2, 6, 18, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.fixed.inset-0 .bg-slate-900.border {
+  border-color: rgba(56, 85, 130, 0.55);
+  box-shadow: 
+    0 25px 60px -15px rgba(0, 0, 0, 0.95), 
+    0 0 0 1px rgba(255, 255, 255, 0.08), 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12), 
+    0 0 40px -5px rgba(34, 211, 238, 0.12);
 }
 
 /* ==========================================================================
