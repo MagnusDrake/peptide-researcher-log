@@ -269,6 +269,18 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                             )}
                           </div>
                         )}
+
+                        {/* Attached Photo */}
+                        {log.photoDataUri && (
+                          <div className="mt-3">
+                            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden border border-slate-700 hover:border-cyan-500 transition-colors cursor-pointer group relative">
+                              <img src={log.photoDataUri} alt="Progress Note" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                              <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span className="text-[9px] font-bold uppercase tracking-widest text-cyan-400">Attached</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -301,45 +313,84 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
       {activeTab === 'trends' && (
         <div className="flex flex-col gap-6">
           {trendData.length > 1 ? (
-            <div className="glass-panel p-6 rounded-3xl flex flex-col gap-6 border-slate-800 shadow-xl">
-              <div>
-                <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-cyan-400" />
-                  <span>How You're Feeling Over Time (Energy & Recovery)</span>
-                </h3>
-                <p className="text-xs text-slate-400">Ratings you gave when logging your doses</p>
+            <>
+              <div className="glass-panel p-6 rounded-3xl flex flex-col gap-6 border-slate-800 shadow-xl">
+                <div>
+                  <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-cyan-400" />
+                    <span>How You're Feeling Over Time (Energy & Recovery)</span>
+                  </h3>
+                  <p className="text-xs text-slate-400">Ratings you gave when logging your doses</p>
+                </div>
+
+                <div className="w-full h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={trendData} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                      <XAxis dataKey="dateLabel" stroke="#64748b" fontSize={11} />
+                      <YAxis domain={[0, 10]} stroke="#64748b" fontSize={11} />
+                      <Tooltip
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length) {
+                            const data = payload[0].payload;
+                            return (
+                              <div className="bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-xl text-xs flex flex-col gap-1">
+                                <span className="font-bold text-white">{data.peptide} ({data.dateLabel} {data.time})</span>
+                                {data.recovery !== null && <span className="text-emerald-400">Recovery: {data.recovery}/10</span>}
+                                {data.energy !== null && <span className="text-cyan-400">Energy: {data.energy}/10</span>}
+                                {data.sleep !== null && <span className="text-purple-400">Sleep: {data.sleep}/10</span>}
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <Legend />
+                      <Line type="monotone" dataKey="recovery" name="Recovery Score" stroke="#10b981" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
+                      <Line type="monotone" dataKey="energy" name="Energy Level" stroke="#06b6d4" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
+                      <Line type="monotone" dataKey="sleep" name="Sleep Quality" stroke="#a855f7" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
 
-              <div className="w-full h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={trendData} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                    <XAxis dataKey="dateLabel" stroke="#64748b" fontSize={11} />
-                    <YAxis domain={[0, 10]} stroke="#64748b" fontSize={11} />
-                    <Tooltip
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length) {
-                          const data = payload[0].payload;
-                          return (
-                            <div className="bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-xl text-xs flex flex-col gap-1">
-                              <span className="font-bold text-white">{data.peptide} ({data.dateLabel} {data.time})</span>
-                              {data.recovery !== null && <span className="text-emerald-400">Recovery: {data.recovery}/10</span>}
-                              {data.energy !== null && <span className="text-cyan-400">Energy: {data.energy}/10</span>}
-                              {data.sleep !== null && <span className="text-purple-400">Sleep: {data.sleep}/10</span>}
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    <Legend />
-                    <Line type="monotone" dataKey="recovery" name="Recovery Score" stroke="#10b981" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
-                    <Line type="monotone" dataKey="energy" name="Energy Level" stroke="#06b6d4" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
-                    <Line type="monotone" dataKey="sleep" name="Sleep Quality" stroke="#a855f7" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
+              {trendData.some(d => d.weight !== null) && (
+                <div className="glass-panel p-6 rounded-3xl flex flex-col gap-6 border-slate-800 shadow-xl mt-6">
+                  <div>
+                    <h3 className="text-[0.65rem] font-bold text-amber-500 uppercase tracking-[0.2em] flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-amber-400" />
+                      <span>Body Weight Trend (lbs)</span>
+                    </h3>
+                    <p className="text-xs text-slate-400">Your tracked weight over time</p>
+                  </div>
+
+                  <div className="w-full h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={trendData.filter(d => d.weight !== null)} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                        <XAxis dataKey="dateLabel" stroke="#64748b" fontSize={11} />
+                        <YAxis domain={['auto', 'auto']} stroke="#64748b" fontSize={11} />
+                        <Tooltip
+                          content={({ active, payload }) => {
+                            if (active && payload && payload.length) {
+                              const data = payload[0].payload;
+                              return (
+                                <div className="bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-xl text-xs flex flex-col gap-1">
+                                  <span className="font-bold text-white">{data.dateLabel} {data.time}</span>
+                                  {data.weight !== null && <span className="text-amber-400 font-mono font-bold">Weight: {data.weight} lbs</span>}
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                        <Line type="monotone" dataKey="weight" name="Body Weight (lbs)" stroke="#f59e0b" strokeWidth={3} dot={{ r: 5, fill: '#f59e0b' }} activeDot={{ r: 7 }} connectNulls />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <div className="glass-panel p-12 rounded-3xl text-center text-xs text-slate-400">
               Need at least 2 recorded logs with subjective ratings to render trend lines.

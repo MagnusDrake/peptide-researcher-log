@@ -151,6 +151,7 @@ export interface DoseLogEntry {
   reactionRating?: 'none' | 'mild_redness' | 'bruise' | 'itch' | 'sore';
   notes?: string;
   subjectiveMetrics?: SubjectiveMetrics;
+  photoDataUri?: string; // Base64 encoded image
   isPublic?: boolean;
 }
 

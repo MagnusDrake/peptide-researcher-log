@@ -44,7 +44,22 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
   const [sleepQuality, setSleepQuality] = useState<number>(8);
   const [symptomPainScore, setSymptomPainScore] = useState<number>(2);
   const [bodyWeightLbs, setBodyWeightLbs] = useState<number | string>('');
+  const [photoDataUri, setPhotoDataUri] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setPhotoDataUri('');
+      setBodyWeightLbs('');
+      setNotes('');
+      setRecoveryScore(8);
+      setEnergyLevel(8);
+      setAppetiteSuppression(7);
+      setSleepQuality(8);
+      setSymptomPainScore(2);
+      setReactionRating('none');
+    }
+  }, [isOpen, protocol]);
 
   const currentUnits = Number(drawUnits) || 0;
   const deliveredBlendList = protocol.isBlend && protocol.blendComponents ? protocol.blendComponents.map(comp => {
@@ -57,6 +72,17 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
       doseUnit: (isMg ? 'mg' : 'mcg') as 'mcg' | 'mg'
     };
   }) : undefined;
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoDataUri(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,6 +109,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
         symptomPainScore,
         bodyWeightLbs: bodyWeightLbs === '' ? undefined : Number(bodyWeightLbs)
       } : undefined,
+      photoDataUri: photoDataUri || undefined,
       isPublic: protocol.isPublic
     };
 
@@ -354,16 +381,50 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
             )}
           </div>
 
-          {/* Observation Notes */}
-          <div>
-            <label className="block text-slate-400 font-semibold uppercase mb-1">Notes <span className="text-slate-500 font-normal">(Optional)</span></label>
-            <textarea
-              rows={2}
-              placeholder="e.g. Injected smoothly with 31G needle. No sting or soreness. Noticeable energy boost."
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:border-cyan-400 outline-none resize-none"
-            />
+          {/* Observation Notes & Photo */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-slate-400 font-semibold uppercase mb-1">Notes <span className="text-slate-500 font-normal">(Optional)</span></label>
+              <textarea
+                rows={3}
+                placeholder="e.g. Injected smoothly with 31G needle. No sting or soreness. Noticeable energy boost."
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                className="w-full h-[88px] bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:border-cyan-400 outline-none resize-none"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-slate-400 font-semibold uppercase mb-1">Progress Photo <span className="text-slate-500 font-normal">(Optional)</span></label>
+              <div className="w-full h-[88px] relative border-2 border-dashed border-slate-700 bg-slate-950 hover:bg-slate-900 transition-colors rounded-xl overflow-hidden flex items-center justify-center">
+                {photoDataUri ? (
+                  <>
+                    <img src={photoDataUri} alt="Progress" className="w-full h-full object-cover opacity-60" />
+                    <button 
+                      type="button" 
+                      onClick={() => setPhotoDataUri('')}
+                      className="absolute top-1 right-1 p-1 bg-rose-500/80 text-white rounded-full hover:bg-rose-500 z-10"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                    <div className="absolute bottom-1 left-0 right-0 text-center pointer-events-none">
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-cyan-400 drop-shadow-md">Photo Attached</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex flex-col items-center justify-center text-slate-500 pointer-events-none">
+                    <Sparkles className="w-5 h-5 mb-1 text-slate-600" />
+                    <span className="text-xs font-medium">Click to upload photo</span>
+                  </div>
+                )}
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Form Actions */}
