@@ -58,7 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           {/* Minimal Aura Logo SVG */}
           <div className="relative w-8 h-8 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform duration-300">
-            <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]">
+            <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_12px_rgba(34,211,238,0.7)]">
               <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="60 10" className="group-hover:animate-[spin_4s_linear_infinite]" />
               <circle cx="50" cy="50" r="22" fill="none" stroke="currentColor" strokeWidth="5" />
               <circle cx="50" cy="50" r="8" fill="currentColor" />

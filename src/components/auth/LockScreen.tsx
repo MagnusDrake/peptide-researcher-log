@@ -52,7 +52,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
         <div className="mb-10 flex flex-col items-center">
           <div className="relative w-20 h-20 flex items-center justify-center mb-6">
             <div className="absolute inset-0 rounded-full bg-cyan-500/20 animate-pulse-subtle blur-xl"></div>
-            <svg viewBox="0 0 100 100" className="w-16 h-16 text-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]">
+            <svg viewBox="0 0 100 100" className="w-16 h-16 text-cyan-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.7)]">
               <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="60 10" className="animate-[spin_20s_linear_infinite]" />
               <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="30 5" className="animate-[spin_15s_linear_infinite_reverse]" />
               <circle cx="50" cy="50" r="12" fill="currentColor" />

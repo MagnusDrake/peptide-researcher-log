@@ -26,6 +26,7 @@ export function App() {
   });
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isSubTransitioning, setIsSubTransitioning] = useState(false);
   const [calcSubTab, setCalcSubTab] = useState<'recon' | 'blend' | 'titration' | 'convert'>('recon');
   const [myPeptidesSubTab, setMyPeptidesSubTab] = useState<'schedule' | 'protocols' | 'journal'>('schedule');
 
@@ -41,6 +42,32 @@ export function App() {
         });
       });
     }, 400); // 400ms out-transition
+  };
+
+  const handleMyPeptidesSubTabChange = (newSubTab: 'schedule' | 'protocols' | 'journal') => {
+    if (newSubTab === myPeptidesSubTab) return;
+    setIsSubTransitioning(true);
+    setTimeout(() => {
+      setMyPeptidesSubTab(newSubTab);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsSubTransitioning(false);
+        });
+      });
+    }, 400);
+  };
+
+  const handleCalcSubTabChange = (newSubTab: 'recon' | 'blend' | 'titration' | 'convert') => {
+    if (newSubTab === calcSubTab) return;
+    setIsSubTransitioning(true);
+    setTimeout(() => {
+      setCalcSubTab(newSubTab);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsSubTransitioning(false);
+        });
+      });
+    }, 400);
   };
 
   const handleUnlock = () => {
@@ -315,7 +342,7 @@ export function App() {
             <div className="w-full max-w-full flex items-center justify-start sm:justify-center overflow-x-auto pb-1 scrollbar-none">
               <div className="bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 flex items-center gap-1 shadow-inner shrink-0">
                 <button
-                  onClick={() => setMyPeptidesSubTab('schedule')}
+                  onClick={() => handleMyPeptidesSubTabChange('schedule')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
                     myPeptidesSubTab === 'schedule'
                       ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/20'
@@ -327,7 +354,7 @@ export function App() {
                 </button>
 
                 <button
-                  onClick={() => setMyPeptidesSubTab('protocols')}
+                  onClick={() => handleMyPeptidesSubTabChange('protocols')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
                     myPeptidesSubTab === 'protocols'
                       ? 'bg-purple-500 text-white shadow-md shadow-purple-500/20'
@@ -339,7 +366,7 @@ export function App() {
                 </button>
 
                 <button
-                  onClick={() => setMyPeptidesSubTab('journal')}
+                  onClick={() => handleMyPeptidesSubTabChange('journal')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
                     myPeptidesSubTab === 'journal'
                       ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
@@ -352,36 +379,38 @@ export function App() {
               </div>
             </div>
 
-            {myPeptidesSubTab === 'schedule' && (
-              <DailySchedule
-                protocols={protocols}
-                logs={logs}
-                onLogSaved={refreshData}
-                onNavigateToProtocols={() => setMyPeptidesSubTab('protocols')}
-                onNavigateToCalculator={() => handleTabChange('calculator')}
-              />
-            )}
-            
-            {myPeptidesSubTab === 'protocols' && (
-              <ProtocolManager
-                protocols={protocols}
-                onProtocolsChanged={refreshData}
-                onLogDose={(proto) => {
-                  setMyPeptidesSubTab('schedule');
-                }}
-                logsCountMap={logsCountMap}
-                initialProtocolData={initialProtocolData}
-                initialModalOpen={initialProtocolData !== null}
-              />
-            )}
+            <div className={`transition-all duration-[400ms] ease-out ${isSubTransitioning ? 'opacity-0 scale-[0.98] blur-[2px]' : 'opacity-100 scale-100 blur-0'}`}>
+              {myPeptidesSubTab === 'schedule' && (
+                <DailySchedule
+                  protocols={protocols}
+                  logs={logs}
+                  onLogSaved={refreshData}
+                  onNavigateToProtocols={() => handleMyPeptidesSubTabChange('protocols')}
+                  onNavigateToCalculator={() => handleTabChange('calculator')}
+                />
+              )}
+              
+              {myPeptidesSubTab === 'protocols' && (
+                <ProtocolManager
+                  protocols={protocols}
+                  onProtocolsChanged={refreshData}
+                  onLogDose={(proto) => {
+                    handleMyPeptidesSubTabChange('schedule');
+                  }}
+                  logsCountMap={logsCountMap}
+                  initialProtocolData={initialProtocolData}
+                  initialModalOpen={initialProtocolData !== null}
+                />
+              )}
 
-            {myPeptidesSubTab === 'journal' && (
-              <ResearchJournal
-                logs={logs}
-                protocols={protocols}
-                onLogsChanged={refreshData}
-              />
-            )}
+              {myPeptidesSubTab === 'journal' && (
+                <ResearchJournal
+                  logs={logs}
+                  protocols={protocols}
+                  onLogsChanged={refreshData}
+                />
+              )}
+            </div>
           </div>
         )}
 
@@ -392,7 +421,7 @@ export function App() {
             <div className="w-full max-w-full flex items-center justify-start sm:justify-center overflow-x-auto pb-1 scrollbar-none touch-pan-x">
               <div className="bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 flex items-center gap-1 shadow-inner shrink-0">
                 <button
-                  onClick={() => setCalcSubTab('recon')}
+                  onClick={() => handleCalcSubTabChange('recon')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
                     calcSubTab === 'recon'
                       ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/20'
@@ -404,7 +433,7 @@ export function App() {
                 </button>
 
                 <button
-                  onClick={() => setCalcSubTab('blend')}
+                  onClick={() => handleCalcSubTabChange('blend')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
                     calcSubTab === 'blend'
                       ? 'bg-purple-500 text-white shadow-md shadow-purple-500/20'
@@ -416,7 +445,7 @@ export function App() {
                 </button>
 
                 <button
-                  onClick={() => setCalcSubTab('titration')}
+                  onClick={() => handleCalcSubTabChange('titration')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
                     calcSubTab === 'titration'
                       ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
@@ -428,7 +457,7 @@ export function App() {
                 </button>
 
                 <button
-                  onClick={() => setCalcSubTab('convert')}
+                  onClick={() => handleCalcSubTabChange('convert')}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
                     calcSubTab === 'convert'
                       ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20'
@@ -442,17 +471,19 @@ export function App() {
             </div>
 
             {/* Sub-tab view */}
-            {calcSubTab === 'recon' && (
-              <ReconstitutionCalc
-                initialPeptideId={selectedPeptideForCalc}
-                onSaveAsProtocol={handleSaveCalcAsProtocol}
-              />
-            )}
-            {calcSubTab === 'blend' && (
-              <BlendCalculator onSaveAsProtocol={handleSaveCalcAsProtocol} />
-            )}
-            {calcSubTab === 'titration' && <TitrationPlanner />}
-            {calcSubTab === 'convert' && <UnitConverter />}
+            <div className={`transition-all duration-[400ms] ease-out ${isSubTransitioning ? 'opacity-0 scale-[0.98] blur-[2px]' : 'opacity-100 scale-100 blur-0'}`}>
+              {calcSubTab === 'recon' && (
+                <ReconstitutionCalc
+                  initialPeptideId={selectedPeptideForCalc}
+                  onSaveAsProtocol={handleSaveCalcAsProtocol}
+                />
+              )}
+              {calcSubTab === 'blend' && (
+                <BlendCalculator onSaveAsProtocol={handleSaveCalcAsProtocol} />
+              )}
+              {calcSubTab === 'titration' && <TitrationPlanner />}
+              {calcSubTab === 'convert' && <UnitConverter />}
+            </div>
           </div>
         )}
 

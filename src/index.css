@@ -8,28 +8,28 @@
   :root {
     --color-primary: #3b82f6;
     --color-primary-hover: #2563eb;
-    --color-accent: #06b6d4;
+    --color-accent: #22d3ee; /* Brighter cyan accent */
     --color-emerald: #10b981;
     --color-violet: #8b5cf6;
     --color-rose: #f43f5e;
     --color-amber: #f59e0b;
-    --chart-grid: rgba(6, 182, 212, 0.1);
+    --chart-grid: rgba(34, 211, 238, 0.08);
 
-    /* DARK MODE: Midnight Ambient (Deep blue-blacks with cyan/indigo tinted borders) */
-    --color-slate-950: #020617; /* App Background: Deep midnight */
-    --color-slate-900: #081126; /* Cards / Modals: Slightly elevated blue-black */
-    --color-slate-800: rgba(6, 182, 212, 0.12); /* Borders / Hover: Cyan tinted glass */
-    --color-slate-700: rgba(6, 182, 212, 0.2);  /* Dividers */
+    /* DARK MODE: Obsidian & Neon Ambient (Elite, pitch black with glowing glass) */
+    --color-slate-950: #02040a; /* App Background: Deepest obsidian */
+    --color-slate-900: rgba(10, 15, 26, 0.6); /* Cards / Modals: Translucent deep blue-grey */
+    --color-slate-800: rgba(34, 211, 238, 0.15); /* Borders / Hover: Cyan tinted glass */
+    --color-slate-700: rgba(34, 211, 238, 0.25);  /* Dividers */
     --color-slate-600: #475569; 
     --color-slate-500: #64748b; /* Muted text */
     --color-slate-400: #94a3b8; /* Secondary text */
     --color-slate-300: #cbd5e1; /* Normal text */
-    --color-slate-200: #e2e8f0;
-    --color-slate-100: #f8fafc; /* Headings */
+    --color-slate-200: #f1f5f9;
+    --color-slate-100: #ffffff; /* Headings */
     --color-slate-50:  #ffffff;
 
     /* Global Tinted Shadows for Dark Mode */
-    --tw-shadow-color: rgba(6, 182, 212, 0.08);
+    --tw-shadow-color: rgba(34, 211, 238, 0.05);
   }
 
   html.light {
@@ -73,6 +73,10 @@
     position: relative;
     overflow-x: hidden;
     z-index: 0; /* Creates a stacking context so pseudo-elements render above the background */
+    background-image: 
+      linear-gradient(to right, rgba(34, 211, 238, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(34, 211, 238, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
 
   #root {
@@ -88,48 +92,49 @@
     position: fixed;
     z-index: -1;
     border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.35;
-    animation: float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    filter: blur(120px);
+    opacity: 0.25;
+    animation: float 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
   }
 
   #root::before {
+    width: 70vw;
+    height: 70vw;
+    min-width: 600px;
+    min-height: 600px;
+    max-width: 900px;
+    max-height: 900px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.4) 0%, rgba(14, 165, 233, 0.1) 40%, rgba(99, 102, 241, 0) 70%);
+    top: -25%;
+    left: -15%;
+    animation-delay: -5s;
+  }
+
+  #root::after {
     width: 60vw;
     height: 60vw;
     min-width: 500px;
     min-height: 500px;
     max-width: 800px;
     max-height: 800px;
-    background: radial-gradient(circle, rgba(14, 165, 233, 0.8) 0%, rgba(99, 102, 241, 0) 70%);
-    top: -20%;
-    left: -10%;
-    animation-delay: -5s;
-  }
-
-  #root::after {
-    width: 50vw;
-    height: 50vw;
-    min-width: 400px;
-    min-height: 400px;
-    max-width: 600px;
-    max-height: 600px;
-    background: radial-gradient(circle, rgba(16, 185, 129, 0.6) 0%, rgba(139, 92, 246, 0) 70%);
-    bottom: -10%;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.35) 0%, rgba(139, 92, 246, 0.1) 40%, rgba(76, 29, 149, 0) 70%);
+    bottom: -15%;
     right: -10%;
-    animation-duration: 25s;
+    animation-duration: 30s;
   }
 
   @keyframes float {
     0% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(5%, 5%) scale(1.1); }
-    66% { transform: translate(-5%, 8%) scale(0.9); }
+    33% { transform: translate(3%, 4%) scale(1.05); }
+    66% { transform: translate(-3%, 6%) scale(0.95); }
     100% { transform: translate(0, 0) scale(1); }
   }
 
   /* Metallic Flake Pearl Effect for Light Mode */
   html.light body {
     background-color: var(--color-slate-950);
+    background-image: none;
   }
 
   html.light #root {
@@ -181,11 +186,11 @@ html.light ::-webkit-scrollbar-thumb:hover {
 
 /* Glass panel components */
 .glass-panel {
-  background: rgba(8, 17, 38, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(10, 15, 26, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--color-slate-800);
-  box-shadow: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 0 20px rgba(34, 211, 238, 0.03);
 }
 
 html.light .glass-panel {
@@ -197,17 +202,17 @@ html.light .glass-panel {
 }
 
 .glass-panel-interactive {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-interactive:hover {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.5));
-  border-color: rgba(6, 182, 212, 0.3);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(10, 15, 26, 0.7));
+  border-color: rgba(34, 211, 238, 0.4);
   box-shadow: 
-    0 8px 30px rgba(6, 182, 212, 0.2), 
-    0 0 20px rgba(6, 182, 212, 0.15),
+    0 12px 40px -8px rgba(34, 211, 238, 0.25), 
+    0 0 20px rgba(34, 211, 238, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 html.light .glass-panel-interactive:hover {
@@ -218,7 +223,7 @@ html.light .glass-panel-interactive:hover {
 }
 
 .glass-card-glow {
-  box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.25);
+  box-shadow: 0 0 35px -5px rgba(34, 211, 238, 0.35);
 }
 
 /* Glowing primary buttons */
@@ -229,15 +234,15 @@ html.light .glass-panel-interactive:hover {
   content: '';
   position: absolute;
   inset: -2px;
-  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  background: linear-gradient(135deg, #22d3ee, #3b82f6);
   z-index: -1;
-  filter: blur(12px);
+  filter: blur(14px);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: inherit;
 }
 .btn-glow-cyan:hover::after {
-  opacity: 0.6;
+  opacity: 0.75;
 }
 
 /* ==========================================================================

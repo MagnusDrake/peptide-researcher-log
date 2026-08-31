@@ -40,7 +40,21 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
   onAdoptStack,
 }) => {
   const [activeTab, setActiveTab] = useState<'quiz' | 'stacks'>('quiz');
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [step, setStep] = useState<number>(1);
+
+  const handleTabChange = (newTab: 'quiz' | 'stacks') => {
+    if (newTab === activeTab) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveTab(newTab);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsTransitioning(false);
+        });
+      });
+    }, 400);
+  };
 
   // Quiz State
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
@@ -186,7 +200,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
         {/* Tab switch */}
         <div className="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 self-start md:self-auto">
           <button
-            onClick={() => setActiveTab('quiz')}
+            onClick={() => handleTabChange('quiz')}
             className={`px-4 py-2 rounded-lg text-xs font-bold transition ${
               activeTab === 'quiz' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
@@ -194,7 +208,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
             🎯 Goal Quiz
           </button>
           <button
-            onClick={() => setActiveTab('stacks')}
+            onClick={() => handleTabChange('stacks')}
             className={`px-4 py-2 rounded-lg text-xs font-bold transition ${
               activeTab === 'stacks' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
@@ -204,9 +218,10 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
         </div>
       </div>
 
-      {activeTab === 'stacks' ? (
-        <CuratedStacks onAdoptStack={onAdoptStack} />
-      ) : results ? (
+      <div className={`transition-all duration-[400ms] ease-out ${isTransitioning ? 'opacity-0 scale-[0.98] blur-[2px]' : 'opacity-100 scale-100 blur-0'}`}>
+        {activeTab === 'stacks' ? (
+          <CuratedStacks onAdoptStack={onAdoptStack} />
+        ) : results ? (
         /* RESULTS VIEW */
         <div className="flex flex-col gap-6 animate-in fade-in duration-300">
           <div className="flex items-center justify-between bg-slate-900/90 p-5 rounded-2xl border border-slate-800">
@@ -466,6 +481,7 @@ export const PeptideMatcher: React.FC<PeptideMatcherProps> = ({
           )}
         </div>
       )}
+      </div>
     </div>
   );
 };
