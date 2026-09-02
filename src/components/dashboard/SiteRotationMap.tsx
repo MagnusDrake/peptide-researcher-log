@@ -40,21 +40,24 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
   return (
     <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4 border-slate-800 shadow-xl">
       {/* Header & Rotation Status */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3 min-w-0">
-        <div className="flex items-center gap-2 min-w-0">
+      <div className="flex flex-col gap-3 border-b border-slate-800 pb-3">
+        <div className="flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
             <Shield className="w-4 h-4" />
           </div>
-          <div className="min-w-0">
-            <h3 className="text-base font-bold text-white truncate">Injection Spot Rotation</h3>
-            <p className="text-[11px] text-slate-400 truncate">Rotate where you inject to prevent soreness and skin bumps</p>
+          <div>
+            <h3 className="text-sm sm:text-base font-bold text-white">Injection Spot Rotation</h3>
+            <p className="text-[11px] text-slate-400">Rotate where you inject to prevent soreness and skin bumps</p>
           </div>
         </div>
 
         {suggestedSite && (
-          <div className="flex items-center gap-1.5 text-xs bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-emerald-300 min-w-0 shrink-0 sm:shrink max-w-full">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            <span className="truncate">Next Recommended Spot: <strong>{suggestedSite.name}</strong></span>
+          <div className="flex items-center gap-2 text-xs bg-emerald-950/70 border border-emerald-500/40 p-2.5 rounded-2xl text-emerald-300 w-full shadow-inner">
+            <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="flex flex-wrap items-center gap-1">
+              <span className="text-slate-300 text-[11px]">Next Recommended:</span>
+              <strong className="text-emerald-300 font-bold">{suggestedSite.name}</strong>
+            </div>
           </div>
         )}
       </div>
@@ -400,32 +403,33 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
       </div>
 
       {/* Legend & Selection Badges */}
-      <div className="flex flex-wrap items-center justify-between gap-3 text-[11px] pt-3 border-t border-slate-800">
-        <div className="flex items-center gap-4 flex-wrap">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-emerald-500/30"></span>
-            <span className="text-slate-300">Suggested Next</span>
+      <div className="flex flex-col gap-2.5 text-[11px] pt-3 border-t border-slate-800">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-emerald-500/40 shrink-0"></span>
+            <span className="text-slate-300 font-medium">Suggested Next</span>
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-            <span className="text-slate-300">Last Injected</span>
+          <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-amber-500/40 shrink-0"></span>
+            <span className="text-slate-300 font-medium">Last Injected</span>
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
-            <span className="text-slate-300">Front Sites</span>
+          <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
+            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 ring-2 ring-cyan-500/40 shrink-0"></span>
+            <span className="text-slate-300 font-medium">Available Sites</span>
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
-            <span className="text-slate-300">Glutes / Posterior</span>
+          <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
+            <span className="w-2.5 h-2.5 rounded-full bg-purple-400 ring-2 ring-purple-500/40 shrink-0"></span>
+            <span className="text-slate-300 font-medium">Selected Target</span>
           </div>
         </div>
 
         {selectedSiteName && (
-          <div className="text-purple-300 font-bold">
-            Selected: {selectedSiteName}
+          <div className="text-purple-300 font-semibold text-xs flex items-center gap-1.5 bg-purple-950/60 border border-purple-800/60 px-3 py-1.5 rounded-xl">
+            <span>Selected for dose:</span>
+            <strong className="text-white">{selectedSiteName}</strong>
           </div>
         )}
       </div>
