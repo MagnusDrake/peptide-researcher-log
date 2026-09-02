@@ -209,7 +209,7 @@ export const TitrationPlanner: React.FC = () => {
             Dose Ramp-Up & Titration Calculator
           </h2>
           <p className="text-xs text-slate-400 mt-0.5">
-            Plan multi-week step-up cycles to allow your receptors to adapt, minimize GI sensitivity, and calculate precise syringe draw units for each stage.
+            Plan multi-week step-up cycles to allow your receptors to adapt, minimize GI sensitivity, and calculate precise syringe draw units for each stage. (Dose Ramp Up recommendations below!)
           </p>
         </div>
 
