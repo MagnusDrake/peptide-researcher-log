@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Protocol } from '../../types';
 import { PEPTIDES_DATABASE } from '../../data/peptides';
 import { simulatePharmacokinetics, calculateSteadyStateTime } from '../../utils/pharmacokinetics';
@@ -25,42 +25,66 @@ export const PkDecayChart: React.FC<PkDecayChartProps> = ({
 }) => {
   const activeProtocols = protocols.filter(p => p.isActive);
   const [selectedId, setSelectedId] = useState<string>(
-    initialSelectedId || (activeProtocols.length > 0 ? activeProtocols[0].id : 'sample')
+    initialSelectedId || (activeProtocols.length > 0 ? activeProtocols[0].id : '')
   );
   const [simulationDays, setSimulationDays] = useState<number>(14);
 
-  const currentProtocol = protocols.find(p => p.id === selectedId) || activeProtocols[0];
+  // Keep selectedId in sync if protocols change
+  useEffect(() => {
+    if (activeProtocols.length > 0) {
+      if (!selectedId || !activeProtocols.some(p => p.id === selectedId)) {
+        setSelectedId(activeProtocols[0].id);
+      }
+    } else {
+      setSelectedId('');
+    }
+  }, [protocols]);
+
+  const currentProtocol = activeProtocols.find(p => p.id === selectedId) || activeProtocols[0];
+
+  // If no active protocol exists, display a clear empty state
+  if (!currentProtocol) {
+    return (
+      <div className="glass-panel p-8 sm:p-10 rounded-3xl flex flex-col items-center justify-center text-center gap-3 border-slate-800 shadow-xl">
+        <div className="h-12 w-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-1">
+          <Activity className="w-6 h-6" />
+        </div>
+        <h3 className="text-sm font-bold text-white uppercase tracking-widest">
+          No Active Protocols to Model
+        </h3>
+        <p className="text-xs text-slate-400 max-w-md leading-relaxed">
+          Once you create a routine or adopt a curated stack in <strong>"My Routines"</strong>, Aura will automatically model its real-time chemical half-life, peak/trough levels, and blood accumulation curve here.
+        </p>
+      </div>
+    );
+  }
 
   // Resolve peptide half-life
-  const peptideInfo = currentProtocol
-    ? PEPTIDES_DATABASE.find(p => p.id === currentProtocol.peptideId || p.name.toLowerCase() === currentProtocol.peptideName.toLowerCase())
-    : null;
+  const peptideInfo = PEPTIDES_DATABASE.find(
+    p => p.id === currentProtocol.peptideId || p.name.toLowerCase() === currentProtocol.peptideName.toLowerCase()
+  );
 
-  const halfLifeHours = peptideInfo ? peptideInfo.halfLifeHours : 4; // Default 4 hours
-  const doseAmount = currentProtocol ? currentProtocol.doseAmount : 250;
+  const halfLifeHours = peptideInfo ? peptideInfo.halfLifeHours : 4; // Default 4 hours if custom peptide
+  const doseAmount = currentProtocol.doseAmount || 250;
 
   // Determine interval in hours based on protocol frequency
   let dosingIntervalHours = 24; // Daily default
-  if (currentProtocol) {
-    if (currentProtocol.frequencyType === 'weekly' || currentProtocol.daysOfWeek?.length === 1) {
-      dosingIntervalHours = 168; // 7 days
-    } else if (currentProtocol.daysOfWeek?.length === 2) {
-      dosingIntervalHours = 84; // 3.5 days
-    } else if (currentProtocol.daysOfWeek?.length === 3) {
-      dosingIntervalHours = 56; // Mon/Wed/Fri avg
-    } else if (currentProtocol.daysOfWeek?.length === 5) {
-      dosingIntervalHours = 24; // 5 days on
-    }
+  if (currentProtocol.frequencyType === 'weekly' || currentProtocol.daysOfWeek?.length === 1) {
+    dosingIntervalHours = 168; // 7 days
+  } else if (currentProtocol.daysOfWeek?.length === 2) {
+    dosingIntervalHours = 84; // 3.5 days
+  } else if (currentProtocol.daysOfWeek?.length === 3) {
+    dosingIntervalHours = 56; // Mon/Wed/Fri avg
+  } else if (currentProtocol.daysOfWeek?.length === 5) {
+    dosingIntervalHours = 24; // 5 days on
   }
 
-  const chartData = useMemo(() => {
-    return simulatePharmacokinetics({
-      doseAmount,
-      halfLifeHours,
-      dosingIntervalHours,
-      totalDays: simulationDays
-    });
-  }, [doseAmount, halfLifeHours, dosingIntervalHours, simulationDays]);
+  const chartData = simulatePharmacokinetics({
+    doseAmount,
+    halfLifeHours,
+    dosingIntervalHours,
+    totalDays: simulationDays
+  });
 
   const steadyStateInfo = calculateSteadyStateTime(halfLifeHours);
 
@@ -84,13 +108,13 @@ export const PkDecayChart: React.FC<PkDecayChartProps> = ({
 
         {/* Protocol Selector Dropdown & Timeline Toggle */}
         <div className="flex items-center gap-2 flex-wrap">
-          {protocols.length > 0 && (
+          {activeProtocols.length > 1 && (
             <select
               value={selectedId}
               onChange={(e) => setSelectedId(e.target.value)}
-              className="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl p-2 focus:border-cyan-400 outline-none"
+              className="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl p-2 focus:border-cyan-400 outline-none cursor-pointer"
             >
-              {protocols.map(p => (
+              {activeProtocols.map(p => (
                 <option key={p.id} value={p.id}>{p.peptideName} ({p.doseAmount}{p.doseUnit})</option>
               ))}
             </select>
