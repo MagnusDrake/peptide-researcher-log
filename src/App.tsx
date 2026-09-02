@@ -447,14 +447,14 @@ export function App() {
 
                 <button
                   onClick={() => handleCalcSubTabChange('titration')}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
                     calcSubTab === 'titration'
                       ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   <TrendingUp className="w-4 h-4 shrink-0" />
-                  <span>GLP-1 Dose Ramp-Up</span>
+                  <span>Dose Ramp-Up</span>
                 </button>
 
                 <button
