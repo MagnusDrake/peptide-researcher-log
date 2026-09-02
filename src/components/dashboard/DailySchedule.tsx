@@ -34,6 +34,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
 }) => {
   const [selectedProtocolForLog, setSelectedProtocolForLog] = useState<Protocol | null>(null);
   const [isLogModalOpen, setIsLogModalOpen] = useState<boolean>(false);
+  const [selectedSiteName, setSelectedSiteName] = useState<string | undefined>(undefined);
 
   const today = new Date();
   const todayDayOfWeek = today.getDay(); // 0 = Sun, 1 = Mon ... 6 = Sat
@@ -254,7 +255,9 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
           {/* Site Rotation Map */}
           <SiteRotationMap
             lastUsedSiteName={lastUsedSiteName}
-            interactive={false}
+            selectedSiteName={selectedSiteName}
+            onSelectSite={(site) => setSelectedSiteName(site)}
+            interactive={true}
           />
 
           {/* Recent Administrations Mini Timeline */}
@@ -308,6 +311,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
         protocol={selectedProtocolForLog}
         onLogSaved={onLogSaved}
         lastUsedSiteName={lastUsedSiteName}
+        initialSiteName={selectedSiteName}
       />
     </div>
   );

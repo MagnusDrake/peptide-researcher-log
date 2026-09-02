@@ -13,6 +13,7 @@ interface LogAdminModalProps {
   protocol: Protocol | null;
   onLogSaved: (entry: DoseLogEntry) => void;
   lastUsedSiteName?: string;
+  initialSiteName?: string;
 }
 
 export const LogAdminModal: React.FC<LogAdminModalProps> = ({
@@ -21,12 +22,13 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
   protocol,
   onLogSaved,
   lastUsedSiteName,
+  initialSiteName,
 }) => {
   if (!isOpen || !protocol) return null;
 
   // Compute default suggested site
   const lastIndex = INJECTION_SITES.findIndex(s => s.name === lastUsedSiteName);
-  const defaultSite = lastIndex >= 0 ? INJECTION_SITES[(lastIndex + 1) % INJECTION_SITES.length].name : 'Abdomen - Upper Right';
+  const defaultSite = initialSiteName || (lastIndex >= 0 ? INJECTION_SITES[(lastIndex + 1) % INJECTION_SITES.length].name : 'Abdomen - Upper Right');
 
   const [timestamp, setTimestamp] = useState<string>(new Date().toISOString().slice(0, 16));
   const [doseAmount, setDoseAmount] = useState<number | string>(protocol.doseAmount);
@@ -34,6 +36,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
   const [drawUnits, setDrawUnits] = useState<number | string>(protocol.calculatedUnits);
   const [syringeType, setSyringeType] = useState<SyringeType>(protocol.syringeType);
   const [injectionSite, setInjectionSite] = useState<string>(defaultSite);
+  const [showBodyMap, setShowBodyMap] = useState<boolean>(false);
   const [reactionRating, setReactionRating] = useState<'none' | 'mild_redness' | 'bruise' | 'itch' | 'sore'>('none');
   
   // Subjective Research Markers
@@ -49,6 +52,9 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
 
   React.useEffect(() => {
     if (isOpen) {
+      if (initialSiteName) {
+        setInjectionSite(initialSiteName);
+      }
       setPhotoDataUri('');
       setBodyWeightLbs('');
       setNotes('');
@@ -59,7 +65,7 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
       setSymptomPainScore(2);
       setReactionRating('none');
     }
-  }, [isOpen, protocol]);
+  }, [isOpen, protocol, initialSiteName]);
 
   const currentUnits = Number(drawUnits) || 0;
   const deliveredBlendList = protocol.isBlend && protocol.blendComponents ? protocol.blendComponents.map(comp => {
@@ -208,19 +214,40 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
             </div>
           </div>
 
-          {/* Quick Site Picker Visualizer */}
-          <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800 flex flex-col gap-2">
-            <span className="text-[10px] font-bold text-slate-400 uppercase">Quick Site Selection</span>
+          {/* Site Picker with Visual Anatomical Map Toggle */}
+          <div className="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Choose Injection Site</span>
+              <button
+                type="button"
+                onClick={() => setShowBodyMap(!showBodyMap)}
+                className="text-[11px] font-bold text-cyan-400 hover:text-white transition flex items-center gap-1 cursor-pointer"
+              >
+                <span>{showBodyMap ? 'Hide Visual Map' : '🗺️ Tap on 2D Body Map'}</span>
+              </button>
+            </div>
+
+            {showBodyMap && (
+              <div className="pt-2 animate-in fade-in duration-200">
+                <SiteRotationMap
+                  lastUsedSiteName={lastUsedSiteName}
+                  selectedSiteName={injectionSite}
+                  onSelectSite={(s) => setInjectionSite(s)}
+                  interactive={true}
+                />
+              </div>
+            )}
+
             <div className="flex flex-wrap gap-1.5">
               {INJECTION_SITES.map(s => (
                 <button
                   key={s.id}
                   type="button"
                   onClick={() => setInjectionSite(s.name)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition ${
+                  className={`px-2.5 py-1.5 rounded-xl text-[11px] font-medium transition cursor-pointer ${
                     injectionSite === s.name
                       ? 'bg-cyan-500 text-white font-bold shadow-md shadow-cyan-500/20'
-                      : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
+                      : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
                   }`}
                 >
                   {s.name}
