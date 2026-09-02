@@ -3,6 +3,33 @@ import { INJECTION_SITES } from '../../data/injectionSites';
 import { InjectionSite } from '../../types';
 import { Shield, Sparkles, RotateCw, User, Eye } from 'lucide-react';
 
+const PIN_STYLES = {
+  suggested: {
+    fill: '#10b981', // Emerald Green
+    stroke: '#34d399',
+    glow: 'rgba(16, 185, 129, 0.45)',
+    label: 'Suggested Next'
+  },
+  lastUsed: {
+    fill: '#f59e0b', // Amber Orange
+    stroke: '#fbbf24',
+    glow: 'rgba(245, 158, 11, 0.45)',
+    label: 'Last Injected'
+  },
+  available: {
+    fill: '#38bdf8', // Sky Blue
+    stroke: '#0284c7',
+    glow: 'rgba(56, 189, 248, 0.45)',
+    label: 'Available Sites'
+  },
+  selected: {
+    fill: '#a855f7', // Purple
+    stroke: '#c084fc',
+    glow: 'rgba(168, 85, 247, 0.45)',
+    label: 'Selected Target'
+  }
+};
+
 interface SiteRotationMapProps {
   lastUsedSiteName?: string;
   selectedSiteName?: string;
@@ -68,7 +95,7 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
           <button
             type="button"
             onClick={() => setCurrentView('front')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
               currentView === 'front'
                 ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/25'
                 : 'text-slate-400 hover:text-white'
@@ -81,7 +108,7 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
           <button
             type="button"
             onClick={() => setCurrentView('back')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
               currentView === 'back'
                 ? 'bg-purple-500 text-white shadow-md shadow-purple-500/25'
                 : 'text-slate-400 hover:text-white'
@@ -124,8 +151,8 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
             </linearGradient>
           </defs>
 
-          {/* Background Card Grid */}
-          <rect width="300" height="440" fill="url(#bodyGrid)" rx="24" />
+          {/* Background Grid Accent */}
+          <rect width="300" height="440" fill="url(#bodyGrid)" rx="20" />
 
           {/* ------------------------------------------------------------- */}
           {/* FRONT VIEW (ANTERIOR): Realistic Human Musculature */}
@@ -341,17 +368,13 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
             const cx = (site.x / 100) * 300;
             const cy = (site.y / 100) * 440;
 
-            let fillColor = '#38bdf8';
-            let strokeColor = '#0284c7';
+            let pinStyle = PIN_STYLES.available;
             if (isSelected) {
-              fillColor = '#a855f7'; // Purple selected
-              strokeColor = '#c084fc';
+              pinStyle = PIN_STYLES.selected;
             } else if (isLastUsed) {
-              fillColor = '#f59e0b'; // Amber last used
-              strokeColor = '#fbbf24';
+              pinStyle = PIN_STYLES.lastUsed;
             } else if (isSuggested) {
-              fillColor = '#10b981'; // Emerald suggested
-              strokeColor = '#34d399';
+              pinStyle = PIN_STYLES.suggested;
             }
 
             return (
@@ -367,7 +390,7 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
                     cy={cy}
                     r="15"
                     fill="none"
-                    stroke="#10b981"
+                    stroke={PIN_STYLES.suggested.fill}
                     strokeWidth="2"
                     strokeDasharray="4,2"
                     className="animate-spin-slow"
@@ -379,9 +402,9 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
                   cx={cx}
                   cy={cy}
                   r="9.5"
-                  fill={fillColor}
+                  fill={pinStyle.fill}
                   fillOpacity={isSelected ? '0.95' : '0.8'}
-                  stroke={strokeColor}
+                  stroke={pinStyle.stroke}
                   strokeWidth="2.5"
                   className="transition transform group-hover:scale-125"
                 />
@@ -406,23 +429,35 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
       <div className="flex flex-col gap-2.5 text-[11px] pt-3 border-t border-slate-800">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-emerald-500/40 shrink-0"></span>
-            <span className="text-slate-300 font-medium">Suggested Next</span>
+            <span 
+              className="w-2.5 h-2.5 rounded-full shrink-0" 
+              style={{ backgroundColor: PIN_STYLES.suggested.fill, boxShadow: `0 0 0 2px ${PIN_STYLES.suggested.glow}` }}
+            />
+            <span className="text-slate-300 font-medium">{PIN_STYLES.suggested.label}</span>
           </div>
 
           <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-amber-500/40 shrink-0"></span>
-            <span className="text-slate-300 font-medium">Last Injected</span>
+            <span 
+              className="w-2.5 h-2.5 rounded-full shrink-0" 
+              style={{ backgroundColor: PIN_STYLES.lastUsed.fill, boxShadow: `0 0 0 2px ${PIN_STYLES.lastUsed.glow}` }}
+            />
+            <span className="text-slate-300 font-medium">{PIN_STYLES.lastUsed.label}</span>
           </div>
 
           <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 ring-2 ring-cyan-500/40 shrink-0"></span>
-            <span className="text-slate-300 font-medium">Available Sites</span>
+            <span 
+              className="w-2.5 h-2.5 rounded-full shrink-0" 
+              style={{ backgroundColor: PIN_STYLES.available.fill, boxShadow: `0 0 0 2px ${PIN_STYLES.available.glow}` }}
+            />
+            <span className="text-slate-300 font-medium">{PIN_STYLES.available.label}</span>
           </div>
 
           <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
-            <span className="w-2.5 h-2.5 rounded-full bg-purple-400 ring-2 ring-purple-500/40 shrink-0"></span>
-            <span className="text-slate-300 font-medium">Selected Target</span>
+            <span 
+              className="w-2.5 h-2.5 rounded-full shrink-0" 
+              style={{ backgroundColor: PIN_STYLES.selected.fill, boxShadow: `0 0 0 2px ${PIN_STYLES.selected.glow}` }}
+            />
+            <span className="text-slate-300 font-medium">{PIN_STYLES.selected.label}</span>
           </div>
         </div>
 
