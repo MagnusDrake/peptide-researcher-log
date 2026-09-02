@@ -90,7 +90,7 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
       </div>
 
       {/* Overview Stat Widgets */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="glass-panel p-5 rounded-2xl border-slate-800 flex items-center gap-4">
           <div className="h-12 w-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
             <Layers className="w-6 h-6" />
@@ -110,17 +110,6 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
             <span className="text-xs text-slate-400 uppercase font-semibold block">Doses Per Week</span>
             <span className="text-2xl font-black text-emerald-400 font-mono">{totalWeeklyInjections}</span>
             <span className="text-[11px] text-slate-500 block">scheduled every 7 days</span>
-          </div>
-        </div>
-
-        <div className="glass-panel p-5 rounded-2xl border-slate-800 flex items-center gap-4">
-          <div className="h-12 w-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
-            <ShieldCheck className="w-6 h-6" />
-          </div>
-          <div>
-            <span className="text-xs text-slate-400 uppercase font-semibold block">Vials in Use</span>
-            <span className="text-2xl font-black text-purple-300 font-mono">{protocols.length}</span>
-            <span className="text-[11px] text-slate-500 block">with freshness trackers</span>
           </div>
         </div>
       </div>
