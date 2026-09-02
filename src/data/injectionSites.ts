@@ -11,8 +11,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'left',
     subLocation: 'upper',
     view: 'front',
-    x: 43,
-    y: 43
+    x: 46,
+    y: 39
   },
   {
     id: 'ab-left-lower',
@@ -21,8 +21,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'left',
     subLocation: 'lower',
     view: 'front',
-    x: 43,
-    y: 49
+    x: 46,
+    y: 47
   },
   {
     id: 'ab-right-upper',
@@ -31,8 +31,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'right',
     subLocation: 'upper',
     view: 'front',
-    x: 57,
-    y: 43
+    x: 54,
+    y: 39
   },
   {
     id: 'ab-right-lower',
@@ -41,8 +41,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'right',
     subLocation: 'lower',
     view: 'front',
-    x: 57,
-    y: 49
+    x: 54,
+    y: 47
   },
   {
     id: 'thigh-left-anterior',
@@ -51,8 +51,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'left',
     subLocation: 'anterior',
     view: 'front',
-    x: 41,
-    y: 67
+    x: 45,
+    y: 68
   },
   {
     id: 'thigh-left-outer',
@@ -61,8 +61,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'left',
     subLocation: 'outer',
     view: 'front',
-    x: 33,
-    y: 67
+    x: 40,
+    y: 68
   },
   {
     id: 'thigh-right-anterior',
@@ -71,8 +71,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'right',
     subLocation: 'anterior',
     view: 'front',
-    x: 59,
-    y: 67
+    x: 55,
+    y: 68
   },
   {
     id: 'thigh-right-outer',
@@ -81,8 +81,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'right',
     subLocation: 'outer',
     view: 'front',
-    x: 67,
-    y: 67
+    x: 60,
+    y: 68
   },
   {
     id: 'deltoid-left-front',
@@ -91,8 +91,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'left',
     subLocation: 'outer',
     view: 'front',
-    x: 23,
-    y: 28
+    x: 29,
+    y: 27
   },
   {
     id: 'deltoid-right-front',
@@ -101,8 +101,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'right',
     subLocation: 'outer',
     view: 'front',
-    x: 77,
-    y: 28
+    x: 71,
+    y: 27
   },
 
   // -------------------------------------------------------------
@@ -110,23 +110,23 @@ export const INJECTION_SITES: InjectionSite[] = [
   // -------------------------------------------------------------
   {
     id: 'glute-left-ventral',
-    name: 'Glute - Left Ventrogluteal (Upper Outer)',
+    name: 'Glute - Left Ventrogluteal (Upper Outer Hip)',
     region: 'glute',
     side: 'left',
     subLocation: 'outer',
     view: 'back',
-    x: 36,
-    y: 52
+    x: 39,
+    y: 55
   },
   {
     id: 'glute-right-ventral',
-    name: 'Glute - Right Ventrogluteal (Upper Outer)',
+    name: 'Glute - Right Ventrogluteal (Upper Outer Hip)',
     region: 'glute',
     side: 'right',
     subLocation: 'outer',
     view: 'back',
-    x: 64,
-    y: 52
+    x: 61,
+    y: 55
   },
   {
     id: 'glute-left-max',
@@ -135,8 +135,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'left',
     subLocation: 'upper',
     view: 'back',
-    x: 41,
-    y: 57
+    x: 44,
+    y: 59
   },
   {
     id: 'glute-right-max',
@@ -145,8 +145,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'right',
     subLocation: 'upper',
     view: 'back',
-    x: 59,
-    y: 57
+    x: 56,
+    y: 59
   },
   {
     id: 'flank-left',
@@ -155,8 +155,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'left',
     subLocation: 'lateral',
     view: 'back',
-    x: 31,
-    y: 44
+    x: 41,
+    y: 47
   },
   {
     id: 'flank-right',
@@ -165,8 +165,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'right',
     subLocation: 'lateral',
     view: 'back',
-    x: 69,
-    y: 44
+    x: 59,
+    y: 47
   },
   {
     id: 'deltoid-left-rear',
@@ -175,8 +175,8 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'left',
     subLocation: 'posterior',
     view: 'back',
-    x: 23,
-    y: 28
+    x: 29,
+    y: 27
   },
   {
     id: 'deltoid-right-rear',
@@ -185,7 +185,7 @@ export const INJECTION_SITES: InjectionSite[] = [
     side: 'right',
     subLocation: 'posterior',
     view: 'back',
-    x: 77,
-    y: 28
+    x: 71,
+    y: 27
   }
 ];
