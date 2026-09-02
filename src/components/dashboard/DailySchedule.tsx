@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { Protocol, DoseLogEntry } from '../../types';
 import { formatTiming, formatRelativeDate } from '../../utils/formatters';
 import { SiteRotationMap } from './SiteRotationMap';
-import { PkDecayChart } from './PkDecayChart';
 import { LogAdminModal } from './LogAdminModal';
 import { 
   Calendar, 
@@ -245,9 +244,6 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
               </div>
             )}
           </div>
-
-          {/* Pharmacokinetics Curve Simulator */}
-          <PkDecayChart protocols={activeProtocols} />
         </div>
 
         {/* Right 5 Columns: Anatomical Site Rotation Map & Recent History */}

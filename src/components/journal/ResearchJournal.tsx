@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { DoseLogEntry, Protocol } from '../../types';
 import { db } from '../../db';
 import { exportLogsToCsv, exportDatabaseToJson, triggerDownload, importDatabaseFromJson } from '../../utils/exportImport';
+import { PkDecayChart } from '../dashboard/PkDecayChart';
 import { 
   ResponsiveContainer, 
   LineChart, 
@@ -121,23 +122,6 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
             Review your past doses, track how you feel over time (energy, sleep, recovery), and download your records anytime.
           </p>
-        </div>
-
-        <div className="flex items-center gap-2 flex-wrap">
-          <button
-            onClick={handleExportCsv}
-            className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 hover:text-white font-bold text-xs border border-slate-700 transition shadow-md"
-          >
-            <FileSpreadsheet className="w-4 h-4" />
-            <span>Export CSV</span>
-          </button>
-          <button
-            onClick={handleExportJson}
-            className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 hover:text-white font-bold text-xs border border-slate-700 transition shadow-md"
-          >
-            <Database className="w-4 h-4" />
-            <span>Backup JSON</span>
-          </button>
         </div>
       </div>
 
@@ -451,6 +435,11 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
           </div>
         </div>
       )}
+
+      {/* Pharmacokinetics Concentration Curve Simulator (Estimated Active Levels in Your Body) */}
+      <div className="mt-2">
+        <PkDecayChart protocols={protocols} />
+      </div>
     </div>
   );
 };
