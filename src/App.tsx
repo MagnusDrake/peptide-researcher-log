@@ -13,7 +13,6 @@ import { BlendCalculator } from './components/calculator/BlendCalculator';
 import { TitrationPlanner } from './components/calculator/TitrationPlanner';
 import { UnitConverter } from './components/calculator/UnitConverter';
 import { PeptideLibrary } from './components/library/PeptideLibrary';
-import { PeptideMatcher } from './components/matcher/PeptideMatcher';
 import { ProtocolManager } from './components/protocols/ProtocolManager';
 import { ResearchJournal } from './components/journal/ResearchJournal';
 import { CommunityHub } from './components/community/CommunityHub';
@@ -488,17 +487,9 @@ export function App() {
           </div>
         )}
 
-        {/* TAB 3: PEPTIDE KNOWLEDGE BASE */}
+        {/* TAB 3: PEPTIDE KNOWLEDGE BASE & GOAL MATCHER */}
         {activeTab === 'library' && (
           <PeptideLibrary
-            onOpenInCalculator={handleOpenInCalculator}
-            onAddToProtocol={handleAddToProtocol}
-          />
-        )}
-
-        {/* TAB 4: GOAL MATCHER & CURATED STACKS */}
-        {activeTab === 'matcher' && (
-          <PeptideMatcher
             onOpenInCalculator={handleOpenInCalculator}
             onAddToProtocol={handleAddToProtocol}
             onAdoptStack={handleAdoptStack}

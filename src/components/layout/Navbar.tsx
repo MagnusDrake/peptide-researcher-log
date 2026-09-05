@@ -17,7 +17,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-export type NavTab = 'dashboard' | 'calculator' | 'library' | 'matcher' | 'community' | 'sources' | 'profile';
+export type NavTab = 'dashboard' | 'calculator' | 'library' | 'community' | 'sources' | 'profile';
 
 interface NavbarProps {
   activeTab: NavTab;
@@ -54,7 +54,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   // Secondary Tools (Extracted into Collapsible Sidebar & Profile Dropdown)
   const secondaryNavItems: { id: NavTab; label: string; subtitle: string; icon: React.ReactNode }[] = [
-    { id: 'matcher', label: 'Goal Matcher', subtitle: 'Targeted stack recommender', icon: <Sparkles className="w-4 h-4 text-cyan-400" /> },
     { id: 'community', label: 'Community Hub', subtitle: 'Live Reddit streams & peer Q&A', icon: <Users className="w-4 h-4 text-purple-400" /> },
     { id: 'sources', label: 'Verified Sources', subtitle: '3rd-party tested suppliers', icon: <ShieldCheck className="w-4 h-4 text-emerald-400" /> },
     { id: 'profile', label: 'My Profile & Vault', subtitle: 'Security PIN & data backups', icon: <User className="w-4 h-4 text-cyan-300" /> },
