@@ -6,6 +6,7 @@ import { calculateReconstitution, calculateMultiBlend } from './utils/calculatio
 import { parseDoseString } from './utils/formatters';
 import { Navbar, NavTab } from './components/layout/Navbar';
 import { MobileNav } from './components/layout/MobileNav';
+import { Footer } from './components/layout/Footer';
 import { LockScreen } from './components/auth/LockScreen';
 import { DailySchedule } from './components/dashboard/DailySchedule';
 import { ReconstitutionCalc } from './components/calculator/ReconstitutionCalc';
@@ -519,6 +520,9 @@ export function App() {
           <ProfileSettings onLogout={handleLogout} />
         )}
       </main>
+
+      {/* Global Application Footer */}
+      <Footer activeTab={activeTab} onTabChange={handleTabChange} />
 
       {/* Mobile Bottom Nav */}
       <MobileNav
