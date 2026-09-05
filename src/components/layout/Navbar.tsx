@@ -186,12 +186,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-cyan-400' : ''}`} />
             </button>
 
-            {/* Desktop Dropdown Menu - Explicit Opaque Solid Background */}
+            {/* Desktop Dropdown Menu - Explicit 100% Solid Opaque Background */}
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-2.5 shadow-xl shadow-slate-900/15 dark:shadow-black/80 flex flex-col gap-1 z-50 opacity-100 animate-in fade-in zoom-in-95 duration-150">
-                <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Secondary Modules</span>
-                  <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono border border-emerald-500/20 font-bold">
+              <div className="vault-dropdown-menu absolute right-0 mt-2 w-72 rounded-3xl p-2.5 shadow-2xl flex flex-col gap-1 z-50 opacity-100 animate-in fade-in zoom-in-95 duration-150">
+                <div className="dropdown-header px-3 py-2 flex items-center justify-between">
+                  <span className="dropdown-header-title text-[10px] font-bold uppercase tracking-widest">Secondary Modules</span>
+                  <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 font-mono border border-emerald-500/20 font-bold">
                     Vault Encrypted
                   </span>
                 </div>
@@ -202,28 +202,22 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <button
                       key={item.id}
                       onClick={() => handleSelectTab(item.id)}
-                      className={`w-full flex items-center justify-between p-2.5 rounded-2xl transition cursor-pointer text-left ${
-                        isActive
-                          ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/20'
-                          : 'hover:bg-slate-100 dark:hover:bg-slate-700/50 text-slate-800 dark:text-slate-100'
+                      className={`dropdown-item w-full flex items-center justify-between p-2.5 rounded-2xl transition cursor-pointer text-left ${
+                        isActive ? 'active-module' : ''
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`p-2 rounded-xl border ${
-                          isActive 
-                            ? 'bg-cyan-600/40 border-cyan-400/40 text-white' 
-                            : 'bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-700'
-                        }`}>
+                        <div className="dropdown-icon-box p-2 rounded-xl border">
                           {item.icon}
                         </div>
                         <div>
-                          <div className="text-xs font-bold leading-tight">{item.label}</div>
-                          <div className={`text-[10px] ${isActive ? 'text-cyan-100' : 'text-slate-500 dark:text-slate-400'}`}>
+                          <div className="dropdown-item-title text-xs font-bold leading-tight">{item.label}</div>
+                          <div className="dropdown-item-subtitle text-[10px]">
                             {item.subtitle}
                           </div>
                         </div>
                       </div>
-                      <ArrowRight className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500'}`} />
+                      <ArrowRight className="dropdown-arrow w-3.5 h-3.5" />
                     </button>
                   );
                 })}

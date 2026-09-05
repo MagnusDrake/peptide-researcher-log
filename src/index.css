@@ -382,3 +382,136 @@ html.light .glass-panel-interactive {
   box-shadow: 0 4px 20px -2px var(--tw-shadow-color);
 }
 
+/* ==========================================================================
+   Vault Dropdown Menu: 100% Solid Non-Transparent Surface in Light & Dark Modes
+   ========================================================================== */
+
+.vault-dropdown-menu {
+  background-color: #0f172a !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85) !important;
+}
+
+.vault-dropdown-menu .dropdown-header {
+  border-bottom: 1px solid #1e293b !important;
+}
+
+.vault-dropdown-menu .dropdown-header-title {
+  color: #94a3b8 !important;
+}
+
+.vault-dropdown-menu .dropdown-item {
+  color: #e2e8f0 !important;
+  background-color: transparent !important;
+}
+
+.vault-dropdown-menu .dropdown-item:hover {
+  background-color: rgba(51, 65, 85, 0.6) !important;
+  color: #ffffff !important;
+}
+
+.vault-dropdown-menu .dropdown-icon-box {
+  background-color: #030712 !important;
+  border-color: #1e293b !important;
+}
+
+.vault-dropdown-menu .dropdown-item-title {
+  color: #f8fafc !important;
+}
+
+.vault-dropdown-menu .dropdown-item-subtitle {
+  color: #94a3b8 !important;
+}
+
+.vault-dropdown-menu .dropdown-arrow {
+  color: #64748b !important;
+}
+
+.vault-dropdown-menu .dropdown-item.active-module {
+  background-color: #06b6d4 !important;
+  color: #ffffff !important;
+}
+
+.vault-dropdown-menu .dropdown-item.active-module .dropdown-icon-box {
+  background-color: rgba(8, 145, 178, 0.5) !important;
+  border-color: rgba(34, 211, 238, 0.5) !important;
+  color: #ffffff !important;
+}
+
+.vault-dropdown-menu .dropdown-item.active-module .dropdown-item-title {
+  color: #ffffff !important;
+}
+
+.vault-dropdown-menu .dropdown-item.active-module .dropdown-item-subtitle {
+  color: #e0f2fe !important;
+}
+
+.vault-dropdown-menu .dropdown-item.active-module .dropdown-arrow {
+  color: #ffffff !important;
+}
+
+/* Light Mode Overrides for Vault Dropdown Menu: 100% Solid Opaque White Surface with High Contrast Text */
+html.light .vault-dropdown-menu {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-header {
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-header-title {
+  color: #475569 !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-item {
+  color: #0f172a !important;
+  background-color: transparent !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-item:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-icon-box {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-item-title {
+  color: #0f172a !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-item-subtitle {
+  color: #64748b !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-arrow {
+  color: #64748b !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-item.active-module {
+  background-color: #0891b2 !important;
+  color: #ffffff !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-item.active-module .dropdown-icon-box {
+  background-color: #0e7490 !important;
+  border-color: #0891b2 !important;
+  color: #ffffff !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-item.active-module .dropdown-item-title {
+  color: #ffffff !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-item.active-module .dropdown-item-subtitle {
+  color: #e0f2fe !important;
+}
+
+html.light .vault-dropdown-menu .dropdown-item.active-module .dropdown-arrow {
+  color: #ffffff !important;
+}
+
