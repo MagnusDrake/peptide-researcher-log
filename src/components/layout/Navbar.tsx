@@ -14,7 +14,6 @@ import {
   ChevronDown, 
   Menu, 
   X, 
-  Activity,
   ArrowRight
 } from 'lucide-react';
 
@@ -96,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isSecondaryActive = secondaryNavItems.some(item => item.id === activeTab);
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-slate-950/85 backdrop-blur-xl border-b border-slate-800/80 px-3 sm:px-4 lg:px-8 py-2.5 sm:py-3.5 select-none">
+    <header className="sticky top-0 z-40 w-full bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-3 sm:px-4 lg:px-8 py-2.5 sm:py-3.5 select-none">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
         
         {/* Brand & Logo */}
@@ -113,7 +112,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             }
           }}
         >
-          {/* Minimal Aura Logo SVG */}
           <div className="relative w-8 h-8 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform duration-300">
             <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_12px_rgba(34,211,238,0.7)]">
               <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="60 10" className="group-hover:animate-[spin_4s_linear_infinite]" />
@@ -132,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Primary Desktop Navigation Links (My Peptides, Mix Calculator, Peptide Guide) */}
+        {/* Primary Desktop Navigation Links */}
         <nav 
           aria-label="Primary Navigation" 
           className="hidden md:flex items-center bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 shadow-inner"
@@ -188,10 +186,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-cyan-400' : ''}`} />
             </button>
 
-            {/* Desktop Dropdown Menu */}
+            {/* Desktop Dropdown Menu - Explicit Opaque Solid Background */}
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-3xl p-2.5 shadow-2xl shadow-slate-900/25 dark:shadow-black/90 flex flex-col gap-1 z-50 opacity-100 animate-in fade-in zoom-in-95 duration-150">
-                <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+              <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-2.5 shadow-xl shadow-slate-900/15 dark:shadow-black/80 flex flex-col gap-1 z-50 opacity-100 animate-in fade-in zoom-in-95 duration-150">
+                <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Secondary Modules</span>
                   <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono border border-emerald-500/20 font-bold">
                     Vault Encrypted
@@ -207,14 +205,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                       className={`w-full flex items-center justify-between p-2.5 rounded-2xl transition cursor-pointer text-left ${
                         isActive
                           ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/20'
-                          : 'hover:bg-slate-100 dark:hover:bg-slate-800/70 text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white'
+                          : 'hover:bg-slate-100 dark:hover:bg-slate-700/50 text-slate-800 dark:text-slate-100'
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <div className={`p-2 rounded-xl border ${
                           isActive 
                             ? 'bg-cyan-600/40 border-cyan-400/40 text-white' 
-                            : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800'
+                            : 'bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-700'
                         }`}>
                           {item.icon}
                         </div>
@@ -225,7 +223,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           </div>
                         </div>
                       </div>
-                      <ArrowRight className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-slate-400 dark:text-slate-600'}`} />
+                      <ArrowRight className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500'}`} />
                     </button>
                   );
                 })}
@@ -289,7 +287,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Collapsible Sidebar / Drawer */}
       {isMobileDrawerOpen && (
-        <div className="md:hidden fixed inset-0 top-[60px] z-50 bg-slate-950/90 backdrop-blur-2xl p-4 flex flex-col gap-4 animate-in slide-in-from-top duration-200 overflow-y-auto pb-24">
+        <div className="md:hidden fixed inset-0 top-[60px] z-50 bg-slate-950/95 backdrop-blur-2xl p-4 flex flex-col gap-4 animate-in slide-in-from-top duration-200 overflow-y-auto pb-24">
           <div className="flex items-center justify-between pb-3 border-b border-slate-800">
             <span className="text-xs font-bold uppercase tracking-widest text-slate-400">Navigation & Tools</span>
             <button

@@ -152,34 +152,34 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
           </defs>
 
           {/* ------------------------------------------------------------- */}
-          {/* ANTERIOR (FRONT) BODY SILHOUETTE - REFINED PROPORTIONS */}
+          {/* ANTERIOR (FRONT) BODY SILHOUETTE - PROPORTIONAL ANATOMY */}
           {/* ------------------------------------------------------------- */}
           {currentView === 'front' ? (
             <g className="transition-opacity duration-300">
               {/* Head & Neck */}
-              <ellipse cx="150" cy="38" rx="18" ry="24" fill="url(#bodyGradient)" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 141 60 C 141 72, 136 78, 132 82 M 159 60 C 159 72, 164 78, 168 82" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <ellipse cx="150" cy="38" rx="18" ry="24" fill="url(#bodyGradient)" stroke="#475569" strokeWidth="1.5" />
+              <path d="M 141 60 C 141 72, 136 78, 132 82 M 159 60 C 159 72, 164 78, 168 82" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
 
-              {/* Natural Athletic Torso & Arms */}
+              {/* Natural Athletic Torso & Proportional Arms (Fingertips at mid-thigh y=265) */}
               <path
                 d="M 132 82
                    C 114 86, 92 98, 78 116
-                   C 72 126, 74 140, 76 160
-                   C 78 185, 78 215, 74 245
-                   C 70 275, 64 305, 62 322
-                   L 74 322
-                   C 78 285, 86 250, 92 220
-                   C 96 200, 96 175, 96 150
-                   C 96 135, 106 122, 118 120
-                   C 128 118, 142 116, 150 116
-                   C 158 116, 172 118, 182 120
-                   C 194 122, 204 135, 204 150
-                   C 204 175, 204 200, 208 220
-                   C 214 250, 222 285, 226 322
-                   L 238 322
-                   C 236 305, 230 275, 226 245
-                   C 222 215, 222 185, 224 160
-                   C 226 140, 228 126, 222 116
+                   C 72 126, 74 145, 75 175
+                   C 76 205, 72 235, 70 255
+                   C 69 262, 72 266, 75 266
+                   C 78 266, 80 258, 83 245
+                   C 87 225, 91 200, 93 175
+                   C 95 155, 96 140, 96 130
+                   C 96 122, 106 118, 118 116
+                   C 128 115, 142 114, 150 114
+                   C 158 114, 172 115, 182 116
+                   C 194 118, 204 122, 204 130
+                   C 204 140, 205 155, 207 175
+                   C 209 200, 213 225, 217 245
+                   C 220 258, 222 266, 225 266
+                   C 228 266, 231 262, 230 255
+                   C 228 235, 224 205, 225 175
+                   C 226 145, 228 126, 222 116
                    C 208 98, 186 86, 168 82
                    Z"
                 fill="url(#bodyGradient)"
@@ -212,50 +212,50 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
                 strokeWidth="1.5"
               />
 
-              {/* Clavicles & Chest Contours */}
-              <path d="M 132 88 C 140 92, 146 94, 150 95 C 154 94, 160 92, 168 88" fill="none" stroke="#475569" strokeWidth="1.5" />
-              <path d="M 112 125 C 122 138, 142 138, 148 128" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 188 125 C 178 138, 158 138, 152 128" fill="none" stroke="#334155" strokeWidth="1.5" />
+              {/* Softened Depth Cues: Clavicles & Chest Contours (15-20% Opacity) */}
+              <path d="M 132 88 C 140 92, 146 94, 150 95 C 154 94, 160 92, 168 88" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
+              <path d="M 112 125 C 122 136, 142 136, 148 126" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
+              <path d="M 188 125 C 178 136, 158 136, 152 126" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
 
-              {/* Linea Alba & Umbilicus (Navel) */}
-              <line x1="150" y1="130" x2="150" y2="215" stroke="#334155" strokeWidth="1.5" strokeDasharray="3,3" />
-              <circle cx="150" cy="180" r="3" fill="#0f172a" stroke="#64748b" strokeWidth="1.5" />
+              {/* Softened Linea Alba & Umbilicus (Navel) */}
+              <line x1="150" y1="130" x2="150" y2="215" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" strokeDasharray="3,3" />
+              <circle cx="150" cy="180" r="3" fill="#0f172a" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="1" />
               {/* 2-inch Periumbilical exclusion zone */}
-              <circle cx="150" cy="180" r="14" fill="none" stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" opacity="0.45" />
+              <circle cx="150" cy="180" r="14" fill="none" stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" opacity="0.35" />
 
               {/* Kneecaps (Patella) */}
-              <ellipse cx="130" cy="342" rx="7" ry="9" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <ellipse cx="170" cy="342" rx="7" ry="9" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <ellipse cx="130" cy="342" rx="7" ry="9" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
+              <ellipse cx="170" cy="342" rx="7" ry="9" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
             </g>
           ) : (
             /* ------------------------------------------------------------- */
-            /* POSTERIOR (BACK) BODY SILHOUETTE - REFINED PROPORTIONS */
+            /* POSTERIOR (BACK) BODY SILHOUETTE - PROPORTIONAL ANATOMY */
             /* ------------------------------------------------------------- */
             <g className="transition-opacity duration-300">
               {/* Head & Neck Posterior */}
-              <ellipse cx="150" cy="38" rx="18" ry="24" fill="url(#bodyGradient)" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 136 58 C 136 72, 132 78, 128 82 M 164 58 C 164 72, 168 78, 172 82" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <ellipse cx="150" cy="38" rx="18" ry="24" fill="url(#bodyGradient)" stroke="#475569" strokeWidth="1.5" />
+              <path d="M 136 58 C 136 72, 132 78, 128 82 M 164 58 C 164 72, 168 78, 172 82" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
 
-              {/* Upper Back & Posterior Deltoids */}
+              {/* Upper Back, Torso & Proportional Arms (Fingertips at mid-thigh y=265) */}
               <path
                 d="M 128 82
                    C 112 86, 92 98, 78 116
-                   C 72 126, 74 140, 76 160
-                   C 78 185, 78 215, 74 245
-                   C 70 275, 64 305, 62 322
-                   L 74 322
-                   C 78 285, 86 250, 92 220
-                   C 96 200, 96 175, 96 150
-                   C 96 135, 106 122, 118 120
-                   C 128 118, 142 116, 150 116
-                   C 158 116, 172 118, 182 120
-                   C 194 122, 204 135, 204 150
-                   C 204 175, 204 200, 208 220
-                   C 214 250, 222 285, 226 322
-                   L 238 322
-                   C 236 305, 230 275, 226 245
-                   C 222 215, 222 185, 224 160
-                   C 226 140, 228 126, 222 116
+                   C 72 126, 74 145, 75 175
+                   C 76 205, 72 235, 70 255
+                   C 69 262, 72 266, 75 266
+                   C 78 266, 80 258, 83 245
+                   C 87 225, 91 200, 93 175
+                   C 95 155, 96 140, 96 130
+                   C 96 122, 106 118, 118 116
+                   C 128 115, 142 114, 150 114
+                   C 158 114, 172 115, 182 116
+                   C 194 118, 204 122, 204 130
+                   C 204 140, 205 155, 207 175
+                   C 209 200, 213 225, 217 245
+                   C 220 258, 222 266, 225 266
+                   C 228 266, 231 262, 230 255
+                   C 228 235, 224 205, 225 175
+                   C 226 145, 228 126, 222 116
                    C 208 98, 188 86, 172 82
                    Z"
                 fill="url(#bodyGradient)"
@@ -288,20 +288,18 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
                 strokeWidth="1.5"
               />
 
-              {/* Spine & Scapula Contours */}
-              <line x1="150" y1="82" x2="150" y2="225" stroke="#334155" strokeWidth="1.5" strokeDasharray="4,4" />
-              <path d="M 120 115 C 128 118, 132 135, 126 146" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 180 115 C 172 118, 168 135, 174 146" fill="none" stroke="#334155" strokeWidth="1.5" />
+              {/* Softened Spine & Scapula Depth Cues (15-20% Opacity) */}
+              <line x1="150" y1="82" x2="150" y2="225" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" strokeDasharray="3,3" />
+              <path d="M 120 115 C 128 118, 132 135, 126 146" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
+              <path d="M 180 115 C 172 118, 168 135, 174 146" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
 
-              {/* Intergluteal Cleft */}
-              <line x1="150" y1="220" x2="150" y2="272" stroke="#475569" strokeWidth="2" />
-              
-              {/* Gluteal Fold (Under-butt crease) */}
-              <path d="M 118 280 C 130 286, 144 284, 150 272 C 156 284, 170 286, 182 280" fill="none" stroke="#64748b" strokeWidth="1.5" />
+              {/* Intergluteal Cleft & Gluteal Fold */}
+              <line x1="150" y1="220" x2="150" y2="272" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="1.5" />
+              <path d="M 118 280 C 130 286, 144 284, 150 272 C 156 284, 170 286, 182 280" fill="none" stroke="rgba(255, 255, 255, 0.18)" strokeWidth="1" />
 
               {/* Popliteal Fossa (Back of Knees) */}
-              <line x1="124" y1="352" x2="136" y2="352" stroke="#475569" strokeWidth="1.5" />
-              <line x1="164" y1="352" x2="176" y2="352" stroke="#475569" strokeWidth="1.5" />
+              <line x1="124" y1="352" x2="136" y2="352" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
+              <line x1="164" y1="352" x2="176" y2="352" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
             </g>
           )}
 

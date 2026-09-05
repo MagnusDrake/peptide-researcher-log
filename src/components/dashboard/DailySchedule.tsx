@@ -104,8 +104,9 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
       {/* Daily Hero Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <div className="flex items-center gap-2 text-emerald-400 font-semibold text-xs uppercase tracking-wider mb-1">
-            <Calendar className="w-4 h-4" />
+          {/* High-Contrast Crisp Date Label */}
+          <div className="flex items-center gap-2 text-slate-100 font-bold text-xs uppercase tracking-wider mb-1">
+            <Calendar className="w-4 h-4 text-cyan-400" />
             <span>
               {today.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
             </span>
@@ -120,15 +121,17 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
           </p>
         </div>
 
-        {/* Action Button & Progress */}
+        {/* Action Button & Progress - Conditionally Rendered */}
         <div className="flex items-center gap-3 flex-wrap">
-          <button
-            onClick={handleOpenQuickDose}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-900 border border-slate-700 hover:border-emerald-500/50 text-emerald-300 hover:text-white font-bold text-xs transition active:scale-95 shadow-md cursor-pointer"
-          >
-            <Zap className="w-4 h-4 text-emerald-400" />
-            <span>Log Quick Dose</span>
-          </button>
+          {scheduledToday.length > 0 && (
+            <button
+              onClick={handleOpenQuickDose}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-900 border border-slate-700 hover:border-emerald-500/50 text-emerald-300 hover:text-white font-bold text-xs transition active:scale-95 shadow-md cursor-pointer"
+            >
+              <Zap className="w-4 h-4 text-emerald-400" />
+              <span>Log Quick Dose</span>
+            </button>
+          )}
 
           {scheduledToday.length > 0 && (
             <div className="glass-panel border-emerald-500/30 p-3.5 rounded-2xl flex items-center gap-3.5 shrink-0 shadow-lg">
@@ -258,7 +261,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
                   </p>
                 </div>
 
-                {/* High Contrast Empty State Action Buttons */}
+                {/* Single Primary Action Set for Empty State */}
                 <div className="flex items-center gap-3 flex-wrap justify-center mt-2">
                   {activeProtocols.length === 0 ? (
                     <button
