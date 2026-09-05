@@ -51,19 +51,19 @@
     /* Global Tinted Shadows for Light Mode */
     --tw-shadow-color: rgba(52, 64, 69, 0.1); /* Dark slate tinted shadow */
 
-    /* Override standard utility colors for the new palette */
-    --color-cyan-300: #88393e;
-    --color-cyan-400: #6d282f; /* Burgundy replaces cyan for primary accents */
-    --color-cyan-500: #551d23;
-    --color-cyan-600: #42151b;
+    /* Harmonized brand accent colors for light mode */
+    --color-cyan-300: #06b6d4;
+    --color-cyan-400: #0891b2;
+    --color-cyan-500: #0e7490;
+    --color-cyan-600: #155e75;
     
-    --color-emerald-300: #e3b063;
-    --color-emerald-400: #cb9b52; /* Golden Mustard replaces emerald for secondary accents */
-    --color-emerald-500: #a37c42;
+    --color-emerald-300: #34d399;
+    --color-emerald-400: #10b981;
+    --color-emerald-500: #059669;
     
-    --color-violet-400: #873814; /* Burnt Sienna */
-    --color-amber-400: #cb9b52; /* Golden Mustard */
-    --color-rose-400: #6d282f; /* Burgundy */
+    --color-violet-400: #8b5cf6;
+    --color-amber-400: #f59e0b;
+    --color-rose-400: #f43f5e;
   }
 
   body {

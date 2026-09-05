@@ -5,25 +5,19 @@ import {
   CheckCircle2, 
   Clock, 
   Layers, 
-  TrendingUp, 
-  Sparkles, 
-  ArrowRight,
-  ShieldCheck,
-  Coffee
+  ArrowRight
 } from 'lucide-react';
 
 interface WeeklySummaryWidgetProps {
   protocols: Protocol[];
   logs: DoseLogEntry[];
   onNavigateToProtocols?: () => void;
-  onOpenQuickDose?: () => void;
 }
 
 export const WeeklySummaryWidget: React.FC<WeeklySummaryWidgetProps> = ({
   protocols,
   logs,
   onNavigateToProtocols,
-  onOpenQuickDose,
 }) => {
   const activeProtocols = protocols.filter(p => p.isActive);
 
@@ -82,7 +76,7 @@ export const WeeklySummaryWidget: React.FC<WeeklySummaryWidgetProps> = ({
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
         <div className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <div className="h-9 w-9 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
             <Calendar className="w-5 h-5" />
           </div>
           <div>
@@ -116,18 +110,18 @@ export const WeeklySummaryWidget: React.FC<WeeklySummaryWidgetProps> = ({
               key={day.dateStr}
               className={`p-2 sm:p-3 rounded-2xl border text-center flex flex-col items-center justify-between gap-1 transition ${
                 day.isToday
-                  ? 'bg-slate-900 border-cyan-400/80 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-400/40'
-                  : 'bg-slate-950/60 border-slate-800/80'
+                  ? 'bg-cyan-500 text-white border-cyan-300 shadow-lg shadow-cyan-500/30 ring-2 ring-cyan-300/60 scale-[1.03]'
+                  : 'bg-slate-950/60 border-slate-800/80 text-slate-300'
               }`}
             >
-              <span className={`text-[10px] font-semibold uppercase tracking-wider ${
-                day.isToday ? 'text-cyan-400 font-bold' : 'text-slate-400'
+              <span className={`text-[10px] uppercase tracking-wider font-bold ${
+                day.isToday ? 'text-white drop-shadow-sm' : 'text-slate-400'
               }`}>
                 {day.dayAbbr}
               </span>
 
-              <span className={`text-xs sm:text-sm font-bold font-mono ${
-                day.isToday ? 'text-white' : 'text-slate-300'
+              <span className={`text-xs sm:text-sm font-mono ${
+                day.isToday ? 'text-white font-black drop-shadow-sm text-sm sm:text-base' : 'text-slate-300 font-bold'
               }`}>
                 {day.dayNumber}
               </span>
@@ -135,22 +129,26 @@ export const WeeklySummaryWidget: React.FC<WeeklySummaryWidgetProps> = ({
               {/* Status Indicator Dot */}
               <div className="mt-1">
                 {day.isCompleted ? (
-                  <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center" title="Dose Completed">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                    day.isToday ? 'bg-white/25 text-white' : 'bg-emerald-500/20 text-emerald-400'
+                  }`} title="Dose Completed">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                   </div>
                 ) : day.isPartiallyCompleted ? (
-                  <div className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center" title="Partially Logged">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                    day.isToday ? 'bg-white/25 text-white' : 'bg-amber-500/20 text-amber-400'
+                  }`} title="Partially Logged">
                     <Clock className="w-3.5 h-3.5" />
                   </div>
                 ) : day.scheduledCount > 0 ? (
                   <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                    day.isPast ? 'bg-rose-500/20 text-rose-400' : 'bg-cyan-500/10 text-cyan-400'
+                    day.isToday ? 'bg-white/30 text-white' : day.isPast ? 'bg-rose-500/20 text-rose-400' : 'bg-cyan-500/10 text-cyan-400'
                   }`} title={day.isPast ? 'Missed Dose' : `${day.scheduledCount} Scheduled`}>
-                    <span className="w-2 h-2 rounded-full bg-current"></span>
+                    <span className={`w-2 h-2 rounded-full ${day.isToday ? 'bg-white' : 'bg-current'}`}></span>
                   </div>
                 ) : (
-                  <div className="w-5 h-5 rounded-full text-slate-600 flex items-center justify-center" title="Rest Day">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
+                  <div className="w-5 h-5 rounded-full flex items-center justify-center" title="Rest Day">
+                    <span className={`w-1.5 h-1.5 rounded-full ${day.isToday ? 'bg-white/40' : 'bg-slate-700'}`}></span>
                   </div>
                 )}
               </div>
@@ -202,26 +200,8 @@ export const WeeklySummaryWidget: React.FC<WeeklySummaryWidgetProps> = ({
             ))}
           </div>
         ) : (
-          <div className="bg-slate-950/40 p-4 rounded-2xl border border-slate-800/60 text-center flex flex-col items-center justify-center gap-2 text-xs text-slate-400">
-            <span>No active peptide protocols registered in this vault.</span>
-            <div className="flex items-center gap-2 mt-1">
-              {onNavigateToProtocols && (
-                <button
-                  onClick={onNavigateToProtocols}
-                  className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-md shadow-emerald-500/20 transition cursor-pointer"
-                >
-                  Create Your First Routine
-                </button>
-              )}
-              {onOpenQuickDose && (
-                <button
-                  onClick={onOpenQuickDose}
-                  className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-emerald-500/40 text-emerald-300 hover:text-white font-bold text-xs transition cursor-pointer"
-                >
-                  Log Ad-Hoc Dose
-                </button>
-              )}
-            </div>
+          <div className="bg-slate-950/40 p-4 rounded-2xl border border-slate-800/60 text-center text-xs text-slate-400 leading-relaxed">
+            No active peptide protocols registered in this vault. Create a new routine or log an ad-hoc dose above to begin tracking.
           </div>
         )}
       </div>

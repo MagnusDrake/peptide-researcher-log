@@ -294,7 +294,6 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
             protocols={protocols}
             logs={logs}
             onNavigateToProtocols={onNavigateToProtocols}
-            onOpenQuickDose={handleOpenQuickDose}
           />
 
         </div>

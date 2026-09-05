@@ -69,7 +69,7 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
       {/* Header & Rotation Status */}
       <div className="flex flex-col gap-3 border-b border-slate-800 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="h-8 w-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+          <div className="h-8 w-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
             <Shield className="w-4 h-4" />
           </div>
           <div>
@@ -152,155 +152,156 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
           </defs>
 
           {/* ------------------------------------------------------------- */}
-          {/* ANTERIOR (FRONT) BODY SILHOUETTE */}
+          {/* ANTERIOR (FRONT) BODY SILHOUETTE - REFINED PROPORTIONS */}
           {/* ------------------------------------------------------------- */}
           {currentView === 'front' ? (
             <g className="transition-opacity duration-300">
               {/* Head & Neck */}
-              <ellipse cx="150" cy="42" rx="20" ry="26" fill="url(#bodyGradient)" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 141 66 L 141 78 Q 141 82 135 84 L 125 86" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 159 66 L 159 78 Q 159 82 165 84 L 175 86" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <ellipse cx="150" cy="38" rx="18" ry="24" fill="url(#bodyGradient)" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 141 60 C 141 72, 136 78, 132 82 M 159 60 C 159 72, 164 78, 168 82" fill="none" stroke="#334155" strokeWidth="1.5" />
 
-              {/* Torso & Core */}
+              {/* Natural Athletic Torso & Arms */}
               <path
-                d="M 125 86 
-                   C 105 90, 85 105, 82 125 
-                   C 80 140, 88 165, 84 200 
-                   C 80 230, 68 280, 66 315
-                   L 78 315
-                   C 82 270, 95 230, 102 210
-                   C 105 200, 105 180, 105 160
-                   C 105 145, 115 130, 128 128
-                   C 135 127, 145 126, 150 126
-                   C 155 126, 165 127, 172 128
-                   C 185 130, 195 145, 195 160
-                   C 195 180, 195 200, 198 210
-                   C 205 230, 218 270, 222 315
-                   L 234 315
-                   C 232 280, 220 230, 216 200
-                   C 212 165, 220 140, 218 125
-                   C 215 105, 195 90, 175 86
+                d="M 132 82
+                   C 114 86, 92 98, 78 116
+                   C 72 126, 74 140, 76 160
+                   C 78 185, 78 215, 74 245
+                   C 70 275, 64 305, 62 322
+                   L 74 322
+                   C 78 285, 86 250, 92 220
+                   C 96 200, 96 175, 96 150
+                   C 96 135, 106 122, 118 120
+                   C 128 118, 142 116, 150 116
+                   C 158 116, 172 118, 182 120
+                   C 194 122, 204 135, 204 150
+                   C 204 175, 204 200, 208 220
+                   C 214 250, 222 285, 226 322
+                   L 238 322
+                   C 236 305, 230 275, 226 245
+                   C 222 215, 222 185, 224 160
+                   C 226 140, 228 126, 222 116
+                   C 208 98, 186 86, 168 82
                    Z"
                 fill="url(#bodyGradient)"
                 stroke="#475569"
                 strokeWidth="1.5"
               />
 
-              {/* Lower Body & Legs */}
+              {/* Lower Body: Hips, Quads, Knees, Calves */}
               <path
-                d="M 108 200
-                   C 108 220, 115 240, 118 270
-                   C 122 310, 120 350, 124 395
-                   C 125 408, 120 418, 120 425
-                   L 136 425
-                   C 138 415, 142 390, 142 360
-                   C 142 320, 145 280, 150 255
-                   C 155 280, 158 320, 158 360
-                   C 158 390, 162 415, 164 425
-                   L 180 425
-                   C 180 418, 175 408, 176 395
-                   C 180 350, 178 310, 182 270
-                   C 185 240, 192 220, 192 200
-                   C 178 220, 165 228, 150 228
-                   C 135 228, 122 220, 108 200
+                d="M 98 145
+                   C 98 175, 106 198, 108 218
+                   C 110 238, 104 265, 108 295
+                   C 114 335, 114 365, 118 395
+                   C 120 410, 116 418, 116 425
+                   L 134 425
+                   C 136 415, 140 390, 140 360
+                   C 140 320, 143 270, 150 245
+                   C 157 270, 160 320, 160 360
+                   C 160 390, 164 415, 166 425
+                   L 184 425
+                   C 184 418, 180 410, 182 395
+                   C 186 365, 186 335, 192 295
+                   C 196 265, 190 238, 192 218
+                   C 194 198, 202 175, 202 145
+                   C 188 152, 168 155, 150 155
+                   C 132 155, 112 152, 98 145
                    Z"
                 fill="url(#bodyGradient)"
                 stroke="#475569"
                 strokeWidth="1.5"
               />
 
-              {/* Clavicle & Pectoral Muscle Contours */}
-              <path d="M 125 96 Q 138 98 150 102 Q 162 98 175 96" fill="none" stroke="#475569" strokeWidth="1.5" />
-              <path d="M 112 135 C 122 148, 142 148, 148 140" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 188 135 C 178 148, 158 148, 152 140" fill="none" stroke="#334155" strokeWidth="1.5" />
+              {/* Clavicles & Chest Contours */}
+              <path d="M 132 88 C 140 92, 146 94, 150 95 C 154 94, 160 92, 168 88" fill="none" stroke="#475569" strokeWidth="1.5" />
+              <path d="M 112 125 C 122 138, 142 138, 148 128" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 188 125 C 178 138, 158 138, 152 128" fill="none" stroke="#334155" strokeWidth="1.5" />
 
-              {/* Abdominal Quadrant Line & Umbilicus (Navel) */}
-              <line x1="150" y1="140" x2="150" y2="215" stroke="#334155" strokeWidth="1.5" strokeDasharray="3,3" />
+              {/* Linea Alba & Umbilicus (Navel) */}
+              <line x1="150" y1="130" x2="150" y2="215" stroke="#334155" strokeWidth="1.5" strokeDasharray="3,3" />
               <circle cx="150" cy="180" r="3" fill="#0f172a" stroke="#64748b" strokeWidth="1.5" />
-              {/* Subtle 2-inch radius exclusion boundary around navel */}
-              <circle cx="150" cy="180" r="14" fill="none" stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" opacity="0.4" />
+              {/* 2-inch Periumbilical exclusion zone */}
+              <circle cx="150" cy="180" r="14" fill="none" stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" opacity="0.45" />
 
-              {/* Patella (Knee Caps) */}
-              <ellipse cx="132" cy="335" rx="7" ry="9" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <ellipse cx="168" cy="335" rx="7" ry="9" fill="none" stroke="#334155" strokeWidth="1.5" />
+              {/* Kneecaps (Patella) */}
+              <ellipse cx="130" cy="342" rx="7" ry="9" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <ellipse cx="170" cy="342" rx="7" ry="9" fill="none" stroke="#334155" strokeWidth="1.5" />
             </g>
           ) : (
             /* ------------------------------------------------------------- */
-            /* POSTERIOR (BACK) BODY SILHOUETTE */
+            /* POSTERIOR (BACK) BODY SILHOUETTE - REFINED PROPORTIONS */
             /* ------------------------------------------------------------- */
             <g className="transition-opacity duration-300">
               {/* Head & Neck Posterior */}
-              <ellipse cx="150" cy="42" rx="20" ry="26" fill="url(#bodyGradient)" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 136 62 C 136 78, 130 84, 125 86" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 164 62 C 164 78, 170 84, 175 86" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <ellipse cx="150" cy="38" rx="18" ry="24" fill="url(#bodyGradient)" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 136 58 C 136 72, 132 78, 128 82 M 164 58 C 164 72, 168 78, 172 82" fill="none" stroke="#334155" strokeWidth="1.5" />
 
-              {/* Back Torso & Gluteus Upper Silhouette */}
+              {/* Upper Back & Posterior Deltoids */}
               <path
-                d="M 125 86 
-                   C 105 90, 85 105, 82 125 
-                   C 80 140, 88 165, 84 200 
-                   C 80 230, 68 280, 66 315
-                   L 78 315
-                   C 82 270, 95 230, 102 210
-                   C 105 200, 105 180, 105 160
-                   C 105 145, 115 130, 128 128
-                   C 135 127, 145 126, 150 126
-                   C 155 126, 165 127, 172 128
-                   C 185 130, 195 145, 195 160
-                   C 195 180, 195 200, 198 210
-                   C 205 230, 218 270, 222 315
-                   L 234 315
-                   C 232 280, 220 230, 216 200
-                   C 212 165, 220 140, 218 125
-                   C 215 105, 195 90, 175 86
+                d="M 128 82
+                   C 112 86, 92 98, 78 116
+                   C 72 126, 74 140, 76 160
+                   C 78 185, 78 215, 74 245
+                   C 70 275, 64 305, 62 322
+                   L 74 322
+                   C 78 285, 86 250, 92 220
+                   C 96 200, 96 175, 96 150
+                   C 96 135, 106 122, 118 120
+                   C 128 118, 142 116, 150 116
+                   C 158 116, 172 118, 182 120
+                   C 194 122, 204 135, 204 150
+                   C 204 175, 204 200, 208 220
+                   C 214 250, 222 285, 226 322
+                   L 238 322
+                   C 236 305, 230 275, 226 245
+                   C 222 215, 222 185, 224 160
+                   C 226 140, 228 126, 222 116
+                   C 208 98, 188 86, 172 82
                    Z"
                 fill="url(#bodyGradient)"
                 stroke="#475569"
                 strokeWidth="1.5"
               />
 
-              {/* Gluteal Curvature & Legs */}
+              {/* Lower Back, Glutes & Legs Posterior */}
               <path
-                d="M 108 200
-                   C 104 225, 108 255, 116 280
-                   C 122 320, 120 355, 124 395
-                   C 125 408, 120 418, 120 425
-                   L 136 425
-                   C 138 415, 142 390, 142 360
-                   C 142 320, 146 295, 150 280
-                   C 154 295, 158 320, 158 360
-                   C 158 390, 162 415, 164 425
-                   L 180 425
-                   C 180 418, 175 408, 176 395
-                   C 180 355, 178 320, 184 280
-                   C 192 255, 196 225, 192 200
-                   C 178 210, 165 214, 150 214
-                   C 135 214, 122 210, 108 200
+                d="M 98 145
+                   C 96 175, 104 200, 108 220
+                   C 112 245, 106 270, 110 300
+                   C 116 340, 114 365, 118 395
+                   C 120 410, 116 418, 116 425
+                   L 134 425
+                   C 136 415, 140 390, 140 360
+                   C 140 320, 144 280, 150 260
+                   C 156 280, 160 320, 160 360
+                   C 160 390, 164 415, 166 425
+                   L 184 425
+                   C 184 418, 180 410, 182 395
+                   C 186 365, 184 340, 190 300
+                   C 194 270, 188 245, 192 220
+                   C 196 200, 204 175, 202 145
+                   C 188 152, 168 155, 150 155
+                   C 132 155, 112 152, 98 145
                    Z"
                 fill="url(#bodyGradient)"
                 stroke="#475569"
                 strokeWidth="1.5"
               />
 
-              {/* Spine Line & Scapula (Shoulder Blades) */}
-              <line x1="150" y1="86" x2="150" y2="235" stroke="#334155" strokeWidth="1.5" strokeDasharray="4,4" />
-              <path d="M 120 115 C 130 118, 134 135, 128 148" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 180 115 C 170 118, 166 135, 172 148" fill="none" stroke="#334155" strokeWidth="1.5" />
+              {/* Spine & Scapula Contours */}
+              <line x1="150" y1="82" x2="150" y2="225" stroke="#334155" strokeWidth="1.5" strokeDasharray="4,4" />
+              <path d="M 120 115 C 128 118, 132 135, 126 146" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 180 115 C 172 118, 168 135, 174 146" fill="none" stroke="#334155" strokeWidth="1.5" />
 
-              {/* Gluteus Maximus Intergluteal Cleft */}
-              <line x1="150" y1="230" x2="150" y2="278" stroke="#475569" strokeWidth="2" />
+              {/* Intergluteal Cleft */}
+              <line x1="150" y1="220" x2="150" y2="272" stroke="#475569" strokeWidth="2" />
               
-              {/* Gluteal Subcutaneous Fold (Under-butt crease) */}
-              <path d="M 126 288 C 135 294, 146 292, 150 278" fill="none" stroke="#64748b" strokeWidth="1.5" />
-              <path d="M 174 288 C 165 294, 154 292, 150 278" fill="none" stroke="#64748b" strokeWidth="1.5" />
-
-              {/* Hamstring Contours */}
-              <path d="M 132 300 C 130 325, 130 345, 134 358" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 168 300 C 170 325, 170 345, 166 358" fill="none" stroke="#334155" strokeWidth="1.5" />
+              {/* Gluteal Fold (Under-butt crease) */}
+              <path d="M 118 280 C 130 286, 144 284, 150 272 C 156 284, 170 286, 182 280" fill="none" stroke="#64748b" strokeWidth="1.5" />
 
               {/* Popliteal Fossa (Back of Knees) */}
-              <line x1="126" y1="358" x2="138" y2="358" stroke="#475569" strokeWidth="1.5" />
-              <line x1="162" y1="358" x2="174" y2="358" stroke="#475569" strokeWidth="1.5" />
+              <line x1="124" y1="352" x2="136" y2="352" stroke="#475569" strokeWidth="1.5" />
+              <line x1="164" y1="352" x2="176" y2="352" stroke="#475569" strokeWidth="1.5" />
             </g>
           )}
 
