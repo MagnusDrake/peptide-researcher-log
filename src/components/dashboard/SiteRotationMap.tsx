@@ -69,7 +69,7 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
       {/* Header & Rotation Status */}
       <div className="flex flex-col gap-3 border-b border-slate-800 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="h-8 w-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+          <div className="h-8 w-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
             <Shield className="w-4 h-4" />
           </div>
           <div>
@@ -91,257 +91,205 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
 
       {/* View Switcher (Front / Back Anatomy) */}
       <div className="flex items-center justify-center pt-1">
-        <div className="bg-slate-900/90 p-1 rounded-xl border border-slate-800 flex items-center gap-1 shadow-inner">
+        <div 
+          role="tablist" 
+          aria-label="Anatomical View Selection"
+          className="bg-slate-900/90 p-1 rounded-2xl border border-slate-800 flex items-center gap-1 shadow-inner"
+        >
           <button
             type="button"
+            role="tab"
+            aria-selected={currentView === 'front'}
             onClick={() => setCurrentView('front')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
               currentView === 'front'
                 ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/25'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
             <User className="w-3.5 h-3.5" />
-            <span>Front (Anterior & Abdomen)</span>
+            <span>Anterior (Front)</span>
           </button>
-
           <button
             type="button"
+            role="tab"
+            aria-selected={currentView === 'back'}
             onClick={() => setCurrentView('back')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
               currentView === 'back'
-                ? 'bg-purple-500 text-white shadow-md shadow-purple-500/25'
+                ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/25'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
             <RotateCw className="w-3.5 h-3.5" />
-            <span>Back (Posterior & Glutes)</span>
+            <span>Posterior (Back)</span>
           </button>
         </div>
       </div>
 
-      {/* Realistic Human Anatomical Silhouette SVG & Target Markers */}
-      <div className="relative w-full max-w-sm mx-auto flex items-center justify-center py-2 select-none">
+      {/* Interactive 2D Anatomical Vector Map */}
+      <div className="relative w-full aspect-[3/4] max-h-[420px] mx-auto bg-slate-950/80 rounded-2xl border border-slate-800/80 overflow-hidden flex items-center justify-center p-2 shadow-inner">
         <svg
           viewBox="0 0 300 440"
-          className="w-full max-h-[390px] drop-shadow-2xl"
+          className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(15,23,42,0.6)]"
+          aria-label={`Human body diagram (${currentView === 'front' ? 'Anterior / Front' : 'Posterior / Back'} view)`}
+          role="region"
         >
           <defs>
-            {/* Blueprint Grid */}
-            <pattern id="bodyGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
-            </pattern>
-
-            {/* Shading Gradients for 3D Muscle Depth */}
-            <linearGradient id="skinGradFront" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#1e293b" />
-              <stop offset="45%" stopColor="#172233" />
-              <stop offset="100%" stopColor="#0f172a" />
+            <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#1e293b" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#0f172a" stopOpacity="0.95" />
             </linearGradient>
-
-            <linearGradient id="skinGradBack" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#1e293b" />
-              <stop offset="50%" stopColor="#1a2538" />
-              <stop offset="100%" stopColor="#0f172a" />
-            </linearGradient>
-
-            <linearGradient id="gluteHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#334155" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#1e293b" stopOpacity="0.2" />
-            </linearGradient>
+            <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#38bdf8" floodOpacity="0.3" />
+            </filter>
+            <filter id="emeraldGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#10b981" floodOpacity="0.5" />
+            </filter>
+            <filter id="purpleGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#a855f7" floodOpacity="0.5" />
+            </filter>
           </defs>
 
-          {/* Background Grid Accent */}
-          <rect width="300" height="440" fill="url(#bodyGrid)" rx="20" />
+          {/* ------------------------------------------------------------- */}
+          {/* ANTERIOR (FRONT) BODY SILHOUETTE */}
+          {/* ------------------------------------------------------------- */}
+          {currentView === 'front' ? (
+            <g className="transition-opacity duration-300">
+              {/* Head & Neck */}
+              <ellipse cx="150" cy="42" rx="20" ry="26" fill="url(#bodyGradient)" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 141 66 L 141 78 Q 141 82 135 84 L 125 86" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 159 66 L 159 78 Q 159 82 165 84 L 175 86" fill="none" stroke="#334155" strokeWidth="1.5" />
 
-          {/* ------------------------------------------------------------- */}
-          {/* FRONT VIEW (ANTERIOR): Realistic Human Musculature */}
-          {/* ------------------------------------------------------------- */}
-          {currentView === 'front' && (
-            <g id="front-anatomy">
-              {/* Outer Body Silhouette */}
+              {/* Torso & Core */}
               <path
-                d="
-                  M 150 20
-                  C 162 20, 170 30, 170 45
-                  C 170 60, 162 70, 158 74
-                  C 165 77, 182 82, 198 90
-                  C 214 98, 222 108, 224 125
-                  C 226 142, 222 170, 220 200
-                  C 218 220, 214 235, 208 238
-                  C 204 237, 200 220, 198 198
-                  C 195 165, 192 145, 190 135
-                  C 188 155, 185 180, 182 205
-                  C 180 225, 182 245, 185 260
-                  C 188 275, 190 295, 186 325
-                  C 182 355, 176 385, 172 415
-                  C 170 422, 162 422, 160 415
-                  C 156 385, 152 350, 151 315
-                  C 150 295, 150 270, 150 262
-                  C 150 270, 150 295, 149 315
-                  C 148 350, 144 385, 140 415
-                  C 138 422, 130 422, 128 415
-                  C 124 385, 118 355, 114 325
-                  C 110 295, 112 275, 115 260
-                  C 118 245, 120 225, 118 205
-                  C 115 180, 112 155, 110 135
-                  C 108 145, 105 165, 102 198
-                  C 100 220, 96 237, 92 238
-                  C 86 235, 82 220, 80 200
-                  C 78 170, 74 142, 76 125
-                  C 78 108, 86 98, 102 90
-                  C 118 82, 135 77, 142 74
-                  C 138 70, 130 60, 130 45
-                  C 130 30, 138 20, 150 20
-                  Z
-                "
-                fill="url(#skinGradFront)"
-                stroke="#38bdf8"
-                strokeOpacity="0.4"
-                strokeWidth="2"
-                strokeLinejoin="round"
+                d="M 125 86 
+                   C 105 90, 85 105, 82 125 
+                   C 80 140, 88 165, 84 200 
+                   C 80 230, 68 280, 66 315
+                   L 78 315
+                   C 82 270, 95 230, 102 210
+                   C 105 200, 105 180, 105 160
+                   C 105 145, 115 130, 128 128
+                   C 135 127, 145 126, 150 126
+                   C 155 126, 165 127, 172 128
+                   C 185 130, 195 145, 195 160
+                   C 195 180, 195 200, 198 210
+                   C 205 230, 218 270, 222 315
+                   L 234 315
+                   C 232 280, 220 230, 216 200
+                   C 212 165, 220 140, 218 125
+                   C 215 105, 195 90, 175 86
+                   Z"
+                fill="url(#bodyGradient)"
+                stroke="#475569"
+                strokeWidth="1.5"
               />
 
-              {/* Clavicles (Collarbones) */}
-              <path d="M 150 78 C 165 78, 185 84, 198 90" fill="none" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M 150 78 C 135 78, 115 84, 102 90" fill="none" stroke="#475569" strokeWidth="1.5" strokeLinecap="round" />
+              {/* Lower Body & Legs */}
+              <path
+                d="M 108 200
+                   C 108 220, 115 240, 118 270
+                   C 122 310, 120 350, 124 395
+                   C 125 408, 120 418, 120 425
+                   L 136 425
+                   C 138 415, 142 390, 142 360
+                   C 142 320, 145 280, 150 255
+                   C 155 280, 158 320, 158 360
+                   C 158 390, 162 415, 164 425
+                   L 180 425
+                   C 180 418, 175 408, 176 395
+                   C 180 350, 178 310, 182 270
+                   C 185 240, 192 220, 192 200
+                   C 178 220, 165 228, 150 228
+                   C 135 228, 122 220, 108 200
+                   Z"
+                fill="url(#bodyGradient)"
+                stroke="#475569"
+                strokeWidth="1.5"
+              />
 
-              {/* Pectoral Chest Contours */}
-              <path d="M 150 102 C 165 102, 186 108, 190 125 C 185 142, 165 145, 150 144" fill="none" stroke="#334155" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M 150 102 C 135 102, 114 108, 110 125 C 115 142, 135 145, 150 144" fill="none" stroke="#334155" strokeWidth="1.5" strokeLinecap="round" />
+              {/* Clavicle & Pectoral Muscle Contours */}
+              <path d="M 125 96 Q 138 98 150 102 Q 162 98 175 96" fill="none" stroke="#475569" strokeWidth="1.5" />
+              <path d="M 112 135 C 122 148, 142 148, 148 140" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 188 135 C 178 148, 158 148, 152 140" fill="none" stroke="#334155" strokeWidth="1.5" />
 
-              {/* Sternum / Midline */}
-              <line x1="150" y1="80" x2="150" y2="150" stroke="#334155" strokeWidth="1.5" strokeDasharray="3,3" />
+              {/* Abdominal Quadrant Line & Umbilicus (Navel) */}
+              <line x1="150" y1="140" x2="150" y2="215" stroke="#334155" strokeWidth="1.5" strokeDasharray="3,3" />
+              <circle cx="150" cy="180" r="3" fill="#0f172a" stroke="#64748b" strokeWidth="1.5" />
+              {/* Subtle 2-inch radius exclusion boundary around navel */}
+              <circle cx="150" cy="180" r="14" fill="none" stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" opacity="0.4" />
 
-              {/* Abdominal Core Contours (4 SubQ Quadrants Surrounding Navel) */}
-              <rect x="132" y="160" width="36" height="52" rx="10" fill="none" stroke="#334155" strokeWidth="1" strokeDasharray="2,2" />
-              {/* Vertical Linea Alba */}
-              <line x1="150" y1="150" x2="150" y2="235" stroke="#38bdf8" strokeOpacity="0.3" strokeWidth="1.5" />
-              {/* Horizontal Transverse Abdominal Division */}
-              <line x1="130" y1="188" x2="170" y2="188" stroke="#38bdf8" strokeOpacity="0.2" strokeWidth="1" />
-
-              {/* Umbilicus (Navel) */}
-              <circle cx="150" cy="188" r="3.5" fill="#38bdf8" fillOpacity="0.6" stroke="#0284c7" strokeWidth="1" />
-              <circle cx="150" cy="188" r="1.5" fill="#0f172a" />
-
-              {/* Inguinal Crease (V-Lines) */}
-              <path d="M 125 220 C 135 235, 145 248, 150 252" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 175 220 C 165 235, 155 248, 150 252" fill="none" stroke="#334155" strokeWidth="1.5" />
-
-              {/* Quadriceps (Thigh) Muscle Contours */}
-              <path d="M 124 270 C 122 300, 126 335, 134 350" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 176 270 C 178 300, 174 335, 166 350" fill="none" stroke="#334155" strokeWidth="1.5" />
-
-              {/* Knee Caps */}
-              <ellipse cx="132" cy="355" rx="6" ry="7" fill="none" stroke="#475569" strokeWidth="1" />
-              <ellipse cx="168" cy="355" rx="6" ry="7" fill="none" stroke="#475569" strokeWidth="1" />
+              {/* Patella (Knee Caps) */}
+              <ellipse cx="132" cy="335" rx="7" ry="9" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <ellipse cx="168" cy="335" rx="7" ry="9" fill="none" stroke="#334155" strokeWidth="1.5" />
             </g>
-          )}
+          ) : (
+            /* ------------------------------------------------------------- */
+            /* POSTERIOR (BACK) BODY SILHOUETTE */
+            /* ------------------------------------------------------------- */
+            <g className="transition-opacity duration-300">
+              {/* Head & Neck Posterior */}
+              <ellipse cx="150" cy="42" rx="20" ry="26" fill="url(#bodyGradient)" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 136 62 C 136 78, 130 84, 125 86" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 164 62 C 164 78, 170 84, 175 86" fill="none" stroke="#334155" strokeWidth="1.5" />
 
-          {/* ------------------------------------------------------------- */}
-          {/* BACK VIEW (POSTERIOR): Human Gluteal & Latissimus Musculature */}
-          {/* ------------------------------------------------------------- */}
-          {currentView === 'back' && (
-            <g id="back-anatomy">
-              {/* Outer Body Silhouette (Back View with defined Gluteal Curvature) */}
+              {/* Back Torso & Gluteus Upper Silhouette */}
               <path
-                d="
-                  M 150 20
-                  C 162 20, 170 30, 170 45
-                  C 170 60, 162 70, 158 74
-                  C 165 77, 182 82, 198 90
-                  C 214 98, 222 108, 224 125
-                  C 226 142, 222 170, 220 200
-                  C 218 220, 214 235, 208 238
-                  C 204 237, 200 220, 198 198
-                  C 195 165, 192 145, 190 135
-                  C 188 155, 184 175, 180 195
-                  C 178 210, 185 220, 190 235
-                  C 195 250, 194 275, 188 295
-                  C 184 315, 188 335, 184 365
-                  C 180 395, 175 415, 172 418
-                  C 170 422, 162 422, 160 415
-                  C 156 385, 153 350, 152 315
-                  C 151 295, 150 275, 150 262
-                  C 150 275, 149 295, 148 315
-                  C 147 350, 144 385, 140 415
-                  C 138 422, 130 422, 128 418
-                  C 124 385, 116 365, 112 335
-                  C 116 315, 112 295, 106 275
-                  C 105 250, 110 235, 115 220
-                  C 120 210, 116 195, 112 175
-                  C 110 155, 108 145, 110 135
-                  C 108 145, 105 165, 102 198
-                  C 100 220, 96 237, 92 238
-                  C 86 235, 82 220, 80 200
-                  C 78 170, 74 142, 76 125
-                  C 78 108, 86 98, 102 90
-                  C 118 82, 135 77, 142 74
-                  C 138 70, 130 60, 130 45
-                  C 130 30, 138 20, 150 20
-                  Z
-                "
-                fill="url(#skinGradBack)"
-                stroke="#a855f7"
-                strokeOpacity="0.45"
-                strokeWidth="2"
-                strokeLinejoin="round"
+                d="M 125 86 
+                   C 105 90, 85 105, 82 125 
+                   C 80 140, 88 165, 84 200 
+                   C 80 230, 68 280, 66 315
+                   L 78 315
+                   C 82 270, 95 230, 102 210
+                   C 105 200, 105 180, 105 160
+                   C 105 145, 115 130, 128 128
+                   C 135 127, 145 126, 150 126
+                   C 155 126, 165 127, 172 128
+                   C 185 130, 195 145, 195 160
+                   C 195 180, 195 200, 198 210
+                   C 205 230, 218 270, 222 315
+                   L 234 315
+                   C 232 280, 220 230, 216 200
+                   C 212 165, 220 140, 218 125
+                   C 215 105, 195 90, 175 86
+                   Z"
+                fill="url(#bodyGradient)"
+                stroke="#475569"
+                strokeWidth="1.5"
               />
 
-              {/* Trapezius & Upper Back Diamond */}
-              <path d="M 150 68 L 168 95 L 150 130 L 132 95 Z" fill="none" stroke="#334155" strokeWidth="1.5" />
-
-              {/* Scapular Shoulder Blades */}
-              <path d="M 175 105 C 185 115, 185 135, 175 145" fill="none" stroke="#334155" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M 125 105 C 115 115, 115 135, 125 145" fill="none" stroke="#334155" strokeWidth="1.5" strokeLinecap="round" />
-
-              {/* Spine / Vertebral Furrow */}
-              <line x1="150" y1="70" x2="150" y2="230" stroke="#475569" strokeWidth="1.5" strokeDasharray="3,3" />
-
-              {/* Latissimus Dorsi (V-Taper) Contours */}
-              <path d="M 188 135 C 175 155, 162 175, 150 190" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 112 135 C 125 155, 138 175, 150 190" fill="none" stroke="#334155" strokeWidth="1.5" />
-
-              {/* Lower Back Lumbar & Flanks (Love Handle SubQ Regions) */}
-              <path d="M 120 195 C 125 210, 135 220, 142 225" fill="none" stroke="#334155" strokeWidth="1.5" />
-              <path d="M 180 195 C 175 210, 165 220, 158 225" fill="none" stroke="#334155" strokeWidth="1.5" />
-
-              {/* ============================================================== */}
-              {/* 🍑 GLUTEAL REGION (Anatomical Gluteus Maximus & Ventrogluteal) */}
-              {/* ============================================================== */}
-              {/* Left Gluteus Maximus Cheek */}
+              {/* Gluteal Curvature & Legs */}
               <path
-                d="
-                  M 150 230
-                  C 138 225, 118 232, 114 248
-                  C 110 265, 118 285, 135 292
-                  C 144 295, 150 285, 150 270
-                  Z
-                "
-                fill="url(#gluteHighlight)"
-                stroke="#c084fc"
-                strokeOpacity="0.6"
-                strokeWidth="1.75"
+                d="M 108 200
+                   C 104 225, 108 255, 116 280
+                   C 122 320, 120 355, 124 395
+                   C 125 408, 120 418, 120 425
+                   L 136 425
+                   C 138 415, 142 390, 142 360
+                   C 142 320, 146 295, 150 280
+                   C 154 295, 158 320, 158 360
+                   C 158 390, 162 415, 164 425
+                   L 180 425
+                   C 180 418, 175 408, 176 395
+                   C 180 355, 178 320, 184 280
+                   C 192 255, 196 225, 192 200
+                   C 178 210, 165 214, 150 214
+                   C 135 214, 122 210, 108 200
+                   Z"
+                fill="url(#bodyGradient)"
+                stroke="#475569"
+                strokeWidth="1.5"
               />
 
-              {/* Right Gluteus Maximus Cheek */}
-              <path
-                d="
-                  M 150 230
-                  C 162 225, 182 232, 186 248
-                  C 190 265, 182 285, 165 292
-                  C 156 295, 150 285, 150 270
-                  Z
-                "
-                fill="url(#gluteHighlight)"
-                stroke="#c084fc"
-                strokeOpacity="0.6"
-                strokeWidth="1.75"
-              />
+              {/* Spine Line & Scapula (Shoulder Blades) */}
+              <line x1="150" y1="86" x2="150" y2="235" stroke="#334155" strokeWidth="1.5" strokeDasharray="4,4" />
+              <path d="M 120 115 C 130 118, 134 135, 128 148" fill="none" stroke="#334155" strokeWidth="1.5" />
+              <path d="M 180 115 C 170 118, 166 135, 172 148" fill="none" stroke="#334155" strokeWidth="1.5" />
 
-              {/* Intergluteal Cleft (Center crease) */}
-              <path d="M 150 230 L 150 278" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" />
-
+              {/* Gluteus Maximus Intergluteal Cleft */}
+              <line x1="150" y1="230" x2="150" y2="278" stroke="#475569" strokeWidth="2" />
+              
               {/* Gluteal Subcutaneous Fold (Under-butt crease) */}
               <path d="M 126 288 C 135 294, 146 292, 150 278" fill="none" stroke="#64748b" strokeWidth="1.5" />
               <path d="M 174 288 C 165 294, 154 292, 150 278" fill="none" stroke="#64748b" strokeWidth="1.5" />
@@ -357,7 +305,7 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
           )}
 
           {/* ------------------------------------------------------------- */}
-          {/* INJECTION SITE HOTSPOTS & INTERACTIVE TARGET PINS */}
+          {/* INJECTION SITE HOTSPOTS & KEYBOARD-ACCESSIBLE TARGET PINS */}
           {/* ------------------------------------------------------------- */}
           {visibleSites.map(site => {
             const isLastUsed = site.name === lastUsedSiteName;
@@ -377,12 +325,41 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
               pinStyle = PIN_STYLES.suggested;
             }
 
+            const statusDescription = isSuggested 
+              ? 'Suggested Next Spot' 
+              : isLastUsed 
+              ? 'Last Injected Spot' 
+              : isSelected 
+              ? 'Currently Selected' 
+              : 'Available Spot';
+
             return (
               <g
                 key={site.id}
-                className={interactive ? 'cursor-pointer group' : ''}
+                tabIndex={interactive ? 0 : -1}
+                role={interactive ? 'button' : undefined}
+                aria-label={`${site.name} injection site - ${statusDescription}`}
+                aria-pressed={isSelected}
+                className={interactive ? 'cursor-pointer group outline-none' : ''}
                 onClick={() => interactive && onSelectSite && onSelectSite(site.name)}
+                onKeyDown={(e) => {
+                  if (interactive && onSelectSite && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    onSelectSite(site.name);
+                  }
+                }}
               >
+                {/* Keyboard Focus Ring */}
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r="16"
+                  fill="none"
+                  stroke="#22d3ee"
+                  strokeWidth="2"
+                  className="opacity-0 group-focus-visible:opacity-100 transition-opacity"
+                />
+
                 {/* Glowing pulsating ring for suggested next site */}
                 {isSuggested && (
                   <circle
@@ -406,7 +383,7 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
                   fillOpacity={isSelected ? '0.95' : '0.8'}
                   stroke={pinStyle.stroke}
                   strokeWidth="2.5"
-                  className="transition transform group-hover:scale-125"
+                  className="transition transform group-hover:scale-125 group-focus-visible:scale-125"
                 />
 
                 {/* Inner White Bullseye */}
@@ -418,53 +395,61 @@ export const SiteRotationMap: React.FC<SiteRotationMapProps> = ({
                 />
 
                 {/* Hover Tooltip Label */}
-                <title>{site.name}</title>
+                <title>{site.name} ({statusDescription})</title>
               </g>
             );
           })}
         </svg>
       </div>
 
-      {/* Legend & Selection Badges */}
+      {/* Accessible Interactive Legend & Selection Badges */}
       <div className="flex flex-col gap-2.5 text-[11px] pt-3 border-t border-slate-800">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
-            <span 
-              className="w-2.5 h-2.5 rounded-full shrink-0" 
-              style={{ backgroundColor: PIN_STYLES.suggested.fill, boxShadow: `0 0 0 2px ${PIN_STYLES.suggested.glow}` }}
-            />
-            <span className="text-slate-300 font-medium">{PIN_STYLES.suggested.label}</span>
+          
+          {/* Suggested Next: Green ring with dashed aura and inner bullseye */}
+          <div className="flex items-center gap-2 bg-slate-900/80 border border-slate-800/80 px-2.5 py-2 rounded-xl">
+            <svg className="w-4 h-4 shrink-0" viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="10" cy="10" r="8" fill="none" stroke="#10b981" strokeWidth="1.5" strokeDasharray="3,1.5" />
+              <circle cx="10" cy="10" r="5" fill="#10b981" stroke="#34d399" strokeWidth="1.5" />
+              <circle cx="10" cy="10" r="2" fill="#ffffff" />
+            </svg>
+            <span className="text-slate-200 font-semibold">{PIN_STYLES.suggested.label}</span>
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
-            <span 
-              className="w-2.5 h-2.5 rounded-full shrink-0" 
-              style={{ backgroundColor: PIN_STYLES.lastUsed.fill, boxShadow: `0 0 0 2px ${PIN_STYLES.lastUsed.glow}` }}
-            />
-            <span className="text-slate-300 font-medium">{PIN_STYLES.lastUsed.label}</span>
+          {/* Last Injected: Solid amber circle with inner white dot */}
+          <div className="flex items-center gap-2 bg-slate-900/80 border border-slate-800/80 px-2.5 py-2 rounded-xl">
+            <svg className="w-4 h-4 shrink-0" viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="10" cy="10" r="5.5" fill="#f59e0b" stroke="#fbbf24" strokeWidth="1.5" />
+              <circle cx="10" cy="10" r="2" fill="#ffffff" />
+            </svg>
+            <span className="text-slate-200 font-semibold">{PIN_STYLES.lastUsed.label}</span>
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
-            <span 
-              className="w-2.5 h-2.5 rounded-full shrink-0" 
-              style={{ backgroundColor: PIN_STYLES.available.fill, boxShadow: `0 0 0 2px ${PIN_STYLES.available.glow}` }}
-            />
-            <span className="text-slate-300 font-medium">{PIN_STYLES.available.label}</span>
+          {/* Available Sites: Solid sky blue circle with inner white dot */}
+          <div className="flex items-center gap-2 bg-slate-900/80 border border-slate-800/80 px-2.5 py-2 rounded-xl">
+            <svg className="w-4 h-4 shrink-0" viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="10" cy="10" r="5.5" fill="#38bdf8" stroke="#0284c7" strokeWidth="1.5" />
+              <circle cx="10" cy="10" r="2" fill="#ffffff" />
+            </svg>
+            <span className="text-slate-200 font-semibold">{PIN_STYLES.available.label}</span>
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 px-2.5 py-1.5 rounded-xl">
-            <span 
-              className="w-2.5 h-2.5 rounded-full shrink-0" 
-              style={{ backgroundColor: PIN_STYLES.selected.fill, boxShadow: `0 0 0 2px ${PIN_STYLES.selected.glow}` }}
-            />
-            <span className="text-slate-300 font-medium">{PIN_STYLES.selected.label}</span>
+          {/* Selected Target: Solid purple circle with outer glowing ring */}
+          <div className="flex items-center gap-2 bg-slate-900/80 border border-slate-800/80 px-2.5 py-2 rounded-xl">
+            <svg className="w-4 h-4 shrink-0" viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="10" cy="10" r="8" fill="none" stroke="#c084fc" strokeWidth="1.5" />
+              <circle cx="10" cy="10" r="5.5" fill="#a855f7" stroke="#c084fc" strokeWidth="1.5" />
+              <circle cx="10" cy="10" r="2" fill="#ffffff" />
+            </svg>
+            <span className="text-slate-200 font-semibold">{PIN_STYLES.selected.label}</span>
           </div>
+
         </div>
 
         {selectedSiteName && (
-          <div className="text-purple-300 font-semibold text-xs flex items-center gap-1.5 bg-purple-950/60 border border-purple-800/60 px-3 py-1.5 rounded-xl">
+          <div className="text-purple-300 font-semibold text-xs flex items-center gap-1.5 bg-purple-950/60 border border-purple-800/60 px-3 py-2 rounded-2xl shadow-sm">
             <span>Selected for dose:</span>
-            <strong className="text-white">{selectedSiteName}</strong>
+            <strong className="text-white font-bold">{selectedSiteName}</strong>
           </div>
         )}
       </div>

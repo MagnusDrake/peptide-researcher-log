@@ -4,12 +4,9 @@ import {
   Calendar, 
   Calculator, 
   BookOpen, 
-  Sparkles, 
-  Layers, 
-  Activity, 
-  Users,
   User,
-  ShieldCheck
+  Sparkles,
+  Users
 } from 'lucide-react';
 
 interface MobileNavProps {
@@ -23,38 +20,46 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   onTabChange,
   activeProtocolsCount,
 }) => {
-  const navItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: number }[] = [
+  const primaryMobileItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: number }[] = [
     { id: 'dashboard', label: 'My Peptides', icon: <Calendar className="w-5 h-5" />, badge: activeProtocolsCount },
     { id: 'calculator', label: 'Mix Calc', icon: <Calculator className="w-5 h-5" /> },
     { id: 'library', label: 'Guide', icon: <BookOpen className="w-5 h-5" /> },
-    { id: 'matcher', label: 'Matcher', icon: <Sparkles className="w-5 h-5" /> },
     { id: 'community', label: 'Community', icon: <Users className="w-5 h-5" /> },
-    { id: 'sources', label: 'Sources', icon: <ShieldCheck className="w-5 h-5" /> },
-    { id: 'profile', label: 'Profile', icon: <User className="w-5 h-5" /> },
+    { id: 'profile', label: 'Vault', icon: <User className="w-5 h-5" /> },
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/90 backdrop-blur-xl border-t border-slate-800/80 px-2 py-1.5 shadow-2xl">
-      <div className="flex items-center justify-start sm:justify-around overflow-x-auto scrollbar-none gap-2 pb-1 pt-1">
-        {navItems.map(item => {
+    <nav 
+      aria-label="Mobile Navigation Bar" 
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-2xl border-t border-slate-800/80 px-2 py-1.5 shadow-2xl safe-area-bottom"
+    >
+      <div className="flex items-center justify-around gap-1">
+        {primaryMobileItems.map(item => {
           const isActive = activeTab === item.id;
           return (
             <button
               key={item.id}
               onClick={() => onTabChange(item.id)}
-              className={`flex flex-col items-center justify-center p-1.5 min-w-[72px] shrink-0 rounded-xl transition relative ${
-                isActive ? 'text-cyan-400 font-semibold' : 'text-slate-500 hover:text-slate-300'
+              aria-current={isActive ? 'page' : undefined}
+              className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-2xl transition relative min-w-[58px] cursor-pointer ${
+                isActive 
+                  ? 'text-cyan-400 bg-cyan-500/10 font-bold' 
+                  : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              {item.icon}
-              <span className="text-[9px] font-semibold uppercase tracking-widest mt-1 whitespace-nowrap">{item.label}</span>
-              {item.badge !== undefined && item.badge > 0 && (
-                <span className="absolute top-0 right-1 w-2 h-2 rounded-full bg-cyan-400"></span>
-              )}
+              <div className="relative">
+                {item.icon}
+                {item.badge !== undefined && item.badge > 0 && (
+                  <span className="absolute -top-1 -right-1.5 w-2 h-2 rounded-full bg-cyan-400 ring-2 ring-slate-950"></span>
+                )}
+              </div>
+              <span className="text-[9px] font-semibold uppercase tracking-wider mt-1 whitespace-nowrap">
+                {item.label}
+              </span>
             </button>
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 };
