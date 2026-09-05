@@ -14,7 +14,6 @@ import { BlendCalculator } from './components/calculator/BlendCalculator';
 import { TitrationPlanner } from './components/calculator/TitrationPlanner';
 import { UnitConverter } from './components/calculator/UnitConverter';
 import { PeptideLibrary } from './components/library/PeptideLibrary';
-import { ProtocolManager } from './components/protocols/ProtocolManager';
 import { ResearchJournal } from './components/journal/ResearchJournal';
 import { CommunityHub } from './components/community/CommunityHub';
 import { VerifiedSources } from './components/vendors/VerifiedSources';
@@ -29,7 +28,7 @@ export function App() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isSubTransitioning, setIsSubTransitioning] = useState(false);
   const [calcSubTab, setCalcSubTab] = useState<'recon' | 'blend' | 'titration' | 'convert'>('recon');
-  const [myPeptidesSubTab, setMyPeptidesSubTab] = useState<'schedule' | 'protocols' | 'journal'>('schedule');
+  const [myPeptidesSubTab, setMyPeptidesSubTab] = useState<'schedule' | 'journal'>('schedule');
 
   const handleTabChange = (newTab: NavTab) => {
     if (newTab === activeTab) return;
@@ -45,7 +44,7 @@ export function App() {
     }, 400); // 400ms out-transition
   };
 
-  const handleMyPeptidesSubTabChange = (newSubTab: 'schedule' | 'protocols' | 'journal') => {
+  const handleMyPeptidesSubTabChange = (newSubTab: 'schedule' | 'journal') => {
     if (newSubTab === myPeptidesSubTab) return;
     setIsSubTransitioning(true);
     setTimeout(() => {
@@ -178,12 +177,12 @@ export function App() {
       bacWaterMl: peptide.typicalBacWaterMl[0] || 2.0,
       syringeType: 'U-100'
     });
-    setMyPeptidesSubTab('protocols'); handleTabChange('dashboard');
+    setMyPeptidesSubTab('schedule'); handleTabChange('dashboard');
   };
 
   const handleSaveCalcAsProtocol = (data: Partial<Protocol>) => {
     setInitialProtocolData(data);
-    setMyPeptidesSubTab('protocols'); handleTabChange('dashboard');
+    setMyPeptidesSubTab('schedule'); handleTabChange('dashboard');
   };
 
   const handleAdoptStack = async (stack: CuratedStack, asSingleBlend: boolean = true) => {
@@ -258,7 +257,7 @@ export function App() {
 
       await db.protocols.put(protocol);
       await refreshData();
-      setMyPeptidesSubTab('protocols');
+      setMyPeptidesSubTab('schedule');
       handleTabChange('dashboard');
     } else {
       // Add each compound as an individual protocol with accurate reconstitution math
@@ -307,7 +306,7 @@ export function App() {
       }
 
       await refreshData();
-      setMyPeptidesSubTab('protocols');
+      setMyPeptidesSubTab('schedule');
       handleTabChange('dashboard');
     }
   };
@@ -336,7 +335,7 @@ export function App() {
 
       {/* Main Content Area */}
       <main className={`flex-1 px-4 lg:px-8 pt-6 pb-20 md:pb-12 w-full min-w-0 max-w-full overflow-x-hidden transition-all duration-[400ms] ease-out ${isTransitioning ? 'opacity-0 scale-[0.98] blur-[2px]' : 'opacity-100 scale-100 blur-0'}`}>
-        {/* TAB 1: MY PEPTIDES (Merged Dashboard, Protocols, Journal) */}
+        {/* TAB 1: MY PEPTIDES (Merged Dashboard: Routines & Schedule + Dose History) */}
         {activeTab === 'dashboard' && (
           <div className="flex flex-col gap-6 max-w-5xl mx-auto w-full min-w-0">
             {/* Sub-Tabs Switcher */}
@@ -351,19 +350,7 @@ export function App() {
                   }`}
                 >
                   <Calendar className="w-4 h-4 shrink-0" />
-                  <span>Today's Schedule</span>
-                </button>
-
-                <button
-                  onClick={() => handleMyPeptidesSubTabChange('protocols')}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
-                    myPeptidesSubTab === 'protocols'
-                      ? 'bg-purple-500 text-white shadow-md shadow-purple-500/20'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <Layers className="w-4 h-4 shrink-0" />
-                  <span>My Routines</span>
+                  <span>Routines & Today's Schedule</span>
                 </button>
 
                 <button
@@ -386,21 +373,12 @@ export function App() {
                   protocols={protocols}
                   logs={logs}
                   onLogSaved={refreshData}
-                  onNavigateToProtocols={() => handleMyPeptidesSubTabChange('protocols')}
-                  onNavigateToCalculator={() => handleTabChange('calculator')}
-                />
-              )}
-              
-              {myPeptidesSubTab === 'protocols' && (
-                <ProtocolManager
-                  protocols={protocols}
                   onProtocolsChanged={refreshData}
-                  onLogDose={(proto) => {
-                    handleMyPeptidesSubTabChange('schedule');
-                  }}
+                  onNavigateToCalculator={() => handleTabChange('calculator')}
                   logsCountMap={logsCountMap}
                   initialProtocolData={initialProtocolData}
                   initialModalOpen={initialProtocolData !== null}
+                  onClearInitialProtocolData={() => setInitialProtocolData(null)}
                 />
               )}
 
@@ -504,7 +482,7 @@ export function App() {
             logs={logs}
             onAdoptProtocol={(proto) => {
               setInitialProtocolData(proto);
-              setMyPeptidesSubTab('protocols');
+              setMyPeptidesSubTab('schedule');
               handleTabChange('dashboard');
             }}
           />
