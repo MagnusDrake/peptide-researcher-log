@@ -450,56 +450,56 @@ html.light .glass-panel-interactive {
   color: #ffffff !important;
 }
 
-/* Light Mode Overrides for Vault Dropdown Menu: 100% Solid Opaque White Surface with High Contrast Text */
+/* Light Mode Overrides for Vault Dropdown Menu: 100% Solid Opaque Slate Matching Main Card Palette */
 html.light .vault-dropdown-menu {
-  background-color: #ffffff !important;
-  border: 1px solid #cbd5e1 !important;
-  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.08) !important;
+  background-color: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-header {
-  border-bottom: 1px solid #e2e8f0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-header-title {
-  color: #475569 !important;
+  color: #94a3b8 !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item {
-  color: #0f172a !important;
+  color: #f1f5f9 !important;
   background-color: transparent !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item:hover {
-  background-color: #f1f5f9 !important;
-  color: #0f172a !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-icon-box {
-  background-color: #f8fafc !important;
-  border-color: #cbd5e1 !important;
+  background-color: #0f172a !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item-title {
-  color: #0f172a !important;
+  color: #ffffff !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item-subtitle {
-  color: #64748b !important;
+  color: #cbd5e1 !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-arrow {
-  color: #64748b !important;
+  color: #94a3b8 !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item.active-module {
-  background-color: #0891b2 !important;
+  background-color: #06b6d4 !important;
   color: #ffffff !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item.active-module .dropdown-icon-box {
-  background-color: #0e7490 !important;
-  border-color: #0891b2 !important;
+  background-color: rgba(8, 145, 178, 0.6) !important;
+  border-color: rgba(34, 211, 238, 0.5) !important;
   color: #ffffff !important;
 }
 
