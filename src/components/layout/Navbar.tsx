@@ -29,6 +29,8 @@ interface NavbarProps {
   theme: 'dark' | 'light';
   onToggleTheme: () => void;
   onLogout?: () => void;
+  isStudioUnlocked?: boolean;
+  onToggleStudioUnlock?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -40,9 +42,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   theme,
   onToggleTheme,
   onLogout,
+  isStudioUnlocked = false,
+  onToggleStudioUnlock,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
+  const [logoTapCount, setLogoTapCount] = useState(0);
+  const lastLogoTapRef = useRef<number>(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -54,12 +60,33 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   // Secondary Tools (Extracted into Collapsible Sidebar & Profile Dropdown)
+  // Aura Studio is ONLY included when isStudioUnlocked is true
   const secondaryNavItems: { id: NavTab; label: string; subtitle: string; icon: React.ReactNode }[] = [
-    { id: 'studio', label: 'Aura Studio', subtitle: 'Drag & drop customizer & theme builder', icon: <Wand2 className="w-4 h-4 text-pink-400" /> },
+    ...(isStudioUnlocked ? [
+      { id: 'studio' as NavTab, label: 'Aura Studio', subtitle: 'Drag & drop customizer & theme builder', icon: <Wand2 className="w-4 h-4 text-pink-400" /> }
+    ] : []),
     { id: 'community', label: 'Community Hub', subtitle: 'Live Reddit streams & peer Q&A', icon: <Users className="w-4 h-4 text-purple-400" /> },
     { id: 'sources', label: 'Verified Sources', subtitle: '3rd-party tested suppliers', icon: <ShieldCheck className="w-4 h-4 text-emerald-400" /> },
     { id: 'profile', label: 'My Profile & Vault', subtitle: 'Security PIN & data backups', icon: <User className="w-4 h-4 text-cyan-300" /> },
   ];
+
+  // Secret 5-tap logo handler for developer/owner unlock
+  const handleLogoClick = () => {
+    const now = Date.now();
+    if (now - lastLogoTapRef.current < 800) {
+      const nextCount = logoTapCount + 1;
+      if (nextCount >= 5) {
+        onToggleStudioUnlock?.();
+        setLogoTapCount(0);
+      } else {
+        setLogoTapCount(nextCount);
+      }
+    } else {
+      setLogoTapCount(1);
+    }
+    lastLogoTapRef.current = now;
+    handleSelectTab('dashboard');
+  };
 
   // Close dropdown on outside click or Escape key
   useEffect(() => {
@@ -99,17 +126,18 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="sticky top-0 z-40 w-full bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-3 sm:px-4 lg:px-8 py-2.5 sm:py-3.5 select-none">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
         
-        {/* Brand & Logo */}
+        {/* Brand & Logo (Click 5x rapidly to toggle Developer Studio Unlock) */}
         <div 
-          onClick={() => handleSelectTab('dashboard')}
+          onClick={handleLogoClick}
           className="flex items-center gap-3 cursor-pointer select-none group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-2xl p-1"
           tabIndex={0}
           role="button"
           aria-label="Aura Peptides Home"
+          title="Aura Peptides (Tap 5x for Developer Mode)"
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-              handleSelectTab('dashboard');
+              handleLogoClick();
             }
           }}
         >
@@ -166,20 +194,22 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Secondary Navigation (Profile & More Tools Dropdown) + Controls */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0" ref={dropdownRef}>
           
-          {/* Quick Studio Trigger Button */}
-          <button
-            type="button"
-            onClick={() => handleSelectTab('studio')}
-            className={`hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-2xl border transition cursor-pointer text-xs font-semibold ${
-              activeTab === 'studio'
-                ? 'bg-gradient-to-r from-pink-500/20 to-purple-500/20 border-pink-500/50 text-pink-300 shadow-lg shadow-pink-500/10'
-                : 'bg-slate-900/90 border-slate-800 text-slate-300 hover:text-pink-300 hover:border-pink-500/30'
-            }`}
-            title="Aura Studio: Drag & Drop Page Customizer"
-          >
-            <Wand2 className="w-3.5 h-3.5 text-pink-400" />
-            <span className="text-[0.65rem] uppercase tracking-wider font-bold">Studio</span>
-          </button>
+          {/* Quick Studio Trigger Button (Only Visible when Developer / Studio is Unlocked) */}
+          {isStudioUnlocked && (
+            <button
+              type="button"
+              onClick={() => handleSelectTab('studio')}
+              className={`hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-2xl border transition cursor-pointer text-xs font-semibold ${
+                activeTab === 'studio'
+                  ? 'bg-gradient-to-r from-pink-500/20 to-purple-500/20 border-pink-500/50 text-pink-300 shadow-lg shadow-pink-500/10'
+                  : 'bg-slate-900/90 border-slate-800 text-slate-300 hover:text-pink-300 hover:border-pink-500/30'
+              }`}
+              title="Aura Studio: Drag & Drop Page Customizer (Admin)"
+            >
+              <Wand2 className="w-3.5 h-3.5 text-pink-400" />
+              <span className="text-[0.65rem] uppercase tracking-wider font-bold">Studio</span>
+            </button>
+          )}
 
           {/* User Profile & Secondary Tools Dropdown Button (Desktop) */}
           <div className="relative hidden md:block">

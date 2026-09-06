@@ -119,6 +119,54 @@ export function App() {
   // Layout Studio state
   const [layoutConfig, setLayoutConfig] = useState<AppLayoutConfig>(() => loadLayoutConfig());
 
+  // Secret Developer / Owner Studio access gate
+  const [isStudioUnlocked, setIsStudioUnlocked] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    const urlParams = new URLSearchParams(window.location.search);
+    const hash = window.location.hash;
+    const isSecretTrigger = 
+      urlParams.get('studio') === 'true' ||
+      urlParams.get('admin') === 'aura' ||
+      urlParams.get('dev') === 'true' ||
+      urlParams.get('studio_key') === 'aura' ||
+      hash === '#studio' ||
+      hash === '#studio-unlock';
+
+    if (isSecretTrigger) {
+      localStorage.setItem('aura_studio_unlocked', 'true');
+      return true;
+    }
+    return localStorage.getItem('aura_studio_unlocked') === 'true';
+  });
+
+  const [studioToastMessage, setStudioToastMessage] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('studio') === 'true' || urlParams.get('admin') === 'aura') {
+        return '✨ Developer Mode: Aura Studio Unlocked';
+      }
+    }
+    return null;
+  });
+
+  const handleToggleStudioUnlock = () => {
+    setIsStudioUnlocked(prev => {
+      const next = !prev;
+      if (next) {
+        localStorage.setItem('aura_studio_unlocked', 'true');
+        setStudioToastMessage('✨ Developer Mode: Aura Studio Unlocked');
+      } else {
+        localStorage.removeItem('aura_studio_unlocked');
+        setStudioToastMessage('🔒 Aura Studio Hidden');
+        if (activeTab === 'studio') {
+          setActiveTab('dashboard');
+        }
+      }
+      setTimeout(() => setStudioToastMessage(null), 3500);
+      return next;
+    });
+  };
+
   const handleSaveLayout = (newConfig: AppLayoutConfig) => {
     saveLayoutConfig(newConfig);
     setLayoutConfig(newConfig);
@@ -128,6 +176,13 @@ export function App() {
     const def = resetLayoutConfig();
     setLayoutConfig(def);
   };
+
+  // Ensure unauthenticated / locked users cannot stay on studio route
+  useEffect(() => {
+    if (activeTab === 'studio' && !isStudioUnlocked) {
+      setActiveTab('dashboard');
+    }
+  }, [activeTab, isStudioUnlocked]);
 
   // Pre-filled data for cross-tab workflows
   const [selectedPeptideForCalc, setSelectedPeptideForCalc] = useState<string>('bpc-157');
@@ -347,7 +402,18 @@ export function App() {
         theme={theme}
         onToggleTheme={handleToggleTheme}
         onLogout={handleLogout}
+        isStudioUnlocked={isStudioUnlocked}
+        onToggleStudioUnlock={handleToggleStudioUnlock}
       />
+
+      {/* Developer Unlock Toast Notification */}
+      {studioToastMessage && (
+        <div className="fixed top-18 left-1/2 transform -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+          <div className="bg-slate-900/95 border border-pink-500/40 text-pink-300 px-5 py-2.5 rounded-2xl text-xs font-bold shadow-2xl backdrop-blur-xl flex items-center gap-2">
+            <span>{studioToastMessage}</span>
+          </div>
+        </div>
+      )}
 
       {/* Main Content Area */}
       <main className={`flex-1 px-4 lg:px-8 pt-6 pb-20 md:pb-12 w-full min-w-0 max-w-full overflow-x-hidden transition-all duration-[400ms] ease-out ${isTransitioning ? 'opacity-0 scale-[0.98] blur-[2px]' : 'opacity-100 scale-100 blur-0'}`}>
@@ -512,11 +578,15 @@ export function App() {
 
         {/* TAB 8: VAULT PROFILE SETTINGS */}
         {activeTab === 'profile' && (
-          <ProfileSettings onLogout={handleLogout} />
+          <ProfileSettings 
+            onLogout={handleLogout} 
+            isStudioUnlocked={isStudioUnlocked}
+            onToggleStudioUnlock={handleToggleStudioUnlock}
+          />
         )}
 
-        {/* TAB 9: AURA STUDIO (VISUAL DRAG-AND-DROP CUSTOMIZER) */}
-        {activeTab === 'studio' && (
+        {/* TAB 9: AURA STUDIO (VISUAL DRAG-AND-DROP CUSTOMIZER) - OWNER ONLY */}
+        {activeTab === 'studio' && isStudioUnlocked && (
           <AuraStudio
             currentConfig={layoutConfig}
             onSaveConfig={handleSaveLayout}
