@@ -18,6 +18,9 @@ import { ResearchJournal } from './components/journal/ResearchJournal';
 import { CommunityHub } from './components/community/CommunityHub';
 import { VerifiedSources } from './components/vendors/VerifiedSources';
 import { ProfileSettings } from './components/profile/ProfileSettings';
+import { AuraStudio } from './components/studio/AuraStudio';
+import { AppLayoutConfig } from './types/layout';
+import { loadLayoutConfig, saveLayoutConfig, resetLayoutConfig } from './utils/layoutStorage';
 import { Calculator, Layers, TrendingUp, ArrowRightLeft, Sparkles, Plus, Calendar, Activity } from 'lucide-react';
 
 export function App() {
@@ -111,6 +114,19 @@ export function App() {
 
   const handleToggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
+  // Layout Studio state
+  const [layoutConfig, setLayoutConfig] = useState<AppLayoutConfig>(() => loadLayoutConfig());
+
+  const handleSaveLayout = (newConfig: AppLayoutConfig) => {
+    saveLayoutConfig(newConfig);
+    setLayoutConfig(newConfig);
+  };
+
+  const handleResetLayout = () => {
+    const def = resetLayoutConfig();
+    setLayoutConfig(def);
   };
 
   // Pre-filled data for cross-tab workflows
@@ -379,6 +395,7 @@ export function App() {
                   initialProtocolData={initialProtocolData}
                   initialModalOpen={initialProtocolData !== null}
                   onClearInitialProtocolData={() => setInitialProtocolData(null)}
+                  customLayoutConfig={layoutConfig}
                 />
               )}
 
@@ -496,6 +513,18 @@ export function App() {
         {/* TAB 8: VAULT PROFILE SETTINGS */}
         {activeTab === 'profile' && (
           <ProfileSettings onLogout={handleLogout} />
+        )}
+
+        {/* TAB 9: AURA STUDIO (VISUAL DRAG-AND-DROP CUSTOMIZER) */}
+        {activeTab === 'studio' && (
+          <AuraStudio
+            currentConfig={layoutConfig}
+            onSaveConfig={handleSaveLayout}
+            onResetConfig={handleResetLayout}
+            protocols={protocols}
+            logs={logs}
+            onNavigateToDashboard={() => handleTabChange('dashboard')}
+          />
         )}
       </main>
 

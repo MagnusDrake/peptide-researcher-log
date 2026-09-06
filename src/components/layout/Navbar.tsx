@@ -14,10 +14,11 @@ import {
   ChevronDown, 
   Menu, 
   X, 
-  ArrowRight
+  ArrowRight,
+  Wand2
 } from 'lucide-react';
 
-export type NavTab = 'dashboard' | 'calculator' | 'library' | 'community' | 'sources' | 'profile';
+export type NavTab = 'dashboard' | 'calculator' | 'library' | 'community' | 'sources' | 'profile' | 'studio';
 
 interface NavbarProps {
   activeTab: NavTab;
@@ -54,6 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   // Secondary Tools (Extracted into Collapsible Sidebar & Profile Dropdown)
   const secondaryNavItems: { id: NavTab; label: string; subtitle: string; icon: React.ReactNode }[] = [
+    { id: 'studio', label: 'Aura Studio', subtitle: 'Drag & drop customizer & theme builder', icon: <Wand2 className="w-4 h-4 text-pink-400" /> },
     { id: 'community', label: 'Community Hub', subtitle: 'Live Reddit streams & peer Q&A', icon: <Users className="w-4 h-4 text-purple-400" /> },
     { id: 'sources', label: 'Verified Sources', subtitle: '3rd-party tested suppliers', icon: <ShieldCheck className="w-4 h-4 text-emerald-400" /> },
     { id: 'profile', label: 'My Profile & Vault', subtitle: 'Security PIN & data backups', icon: <User className="w-4 h-4 text-cyan-300" /> },
@@ -164,6 +166,21 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Secondary Navigation (Profile & More Tools Dropdown) + Controls */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0" ref={dropdownRef}>
           
+          {/* Quick Studio Trigger Button */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('studio')}
+            className={`hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-2xl border transition cursor-pointer text-xs font-semibold ${
+              activeTab === 'studio'
+                ? 'bg-gradient-to-r from-pink-500/20 to-purple-500/20 border-pink-500/50 text-pink-300 shadow-lg shadow-pink-500/10'
+                : 'bg-slate-900/90 border-slate-800 text-slate-300 hover:text-pink-300 hover:border-pink-500/30'
+            }`}
+            title="Aura Studio: Drag & Drop Page Customizer"
+          >
+            <Wand2 className="w-3.5 h-3.5 text-pink-400" />
+            <span className="text-[0.65rem] uppercase tracking-wider font-bold">Studio</span>
+          </button>
+
           {/* User Profile & Secondary Tools Dropdown Button (Desktop) */}
           <div className="relative hidden md:block">
             <button
