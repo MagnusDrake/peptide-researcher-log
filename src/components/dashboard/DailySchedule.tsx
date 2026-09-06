@@ -371,33 +371,15 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
           })}
         </div>
       ) : (
-        <div className="p-8 text-center flex flex-col items-center justify-center gap-3 text-slate-400">
+        <div className="p-8 text-center flex flex-col items-center justify-center gap-2 text-slate-400">
           <span className="text-3xl">☕</span>
           <div>
             <p className="text-sm font-bold text-slate-100">No Doses Scheduled Today</p>
             <p className="text-xs text-slate-400 max-w-sm mt-0.5">
               {activeProtocols.length === 0
-                ? "You haven't set up any active routines yet. Click below to create your first routine."
+                ? "You haven't set up any active routines yet. Use the buttons above to create your first routine or log a dose."
                 : 'Rest day! None of your active routines have administrations scheduled for today.'}
             </p>
-          </div>
-
-          <div className="flex items-center gap-3 flex-wrap justify-center mt-2">
-            <button
-              onClick={handleCreateNewRoutine}
-              className={`px-5 py-2.5 ${radiusClass} ${primaryBtnClass} font-bold text-xs shadow-lg transition active:scale-95 flex items-center gap-2 cursor-pointer`}
-            >
-              <Plus className="w-4 h-4" />
-              <span>Create a Routine</span>
-            </button>
-
-            <button
-              onClick={handleOpenQuickDose}
-              className={`px-4 py-2.5 ${radiusClass} bg-slate-900 border border-slate-700 hover:border-emerald-500/50 text-emerald-300 hover:text-white font-bold rounded-2xl text-xs transition active:scale-95 flex items-center gap-2 cursor-pointer`}
-            >
-              <Zap className="w-4 h-4 text-emerald-400" />
-              <span>Log Quick Dose</span>
-            </button>
           </div>
         </div>
       )}
@@ -557,51 +539,12 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
     </div>
   );
 
-  const renderSupplierBanner = () => (
-    <div key="supplier_banner" className={`relative group ${radiusClass} overflow-hidden p-[1px] bg-gradient-to-r from-emerald-500/30 via-cyan-500/30 to-teal-500/30 shadow-xl`}>
-      <div className={`bg-slate-900/90 ${radiusClass} p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-6`}>
-        <div className="flex items-center gap-4">
-          <div className={`w-12 h-12 ${radiusClass} bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.15)]`}>
-            <ShieldCheck className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-[0.65rem] font-bold uppercase tracking-widest text-emerald-400">
-                Verified Peptide Supplier
-              </span>
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/30">
-                99%+ Purity Tested
-              </span>
-            </div>
-            <h4 className="text-sm font-bold text-white">
-              Amino Club • Partner Discount Active
-            </h4>
-            <p className="text-xs text-slate-400">
-              Use code <span className="text-cyan-300 font-mono font-bold bg-cyan-950/60 px-1.5 py-0.5 rounded border border-cyan-500/30">AURAPEPTIDES</span> for exclusive discount on batch-certified research compounds.
-            </p>
-          </div>
-        </div>
-
-        <a
-          href="https://aminoclub.com?utm_source=affiliate_marketing&code=AURAPEPTIDES"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`flex items-center gap-2 px-5 py-2.5 ${radiusClass} bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition shrink-0`}
-        >
-          <span>Visit Amino Club</span>
-          <ExternalLink className="w-3.5 h-3.5" />
-        </a>
-      </div>
-    </div>
-  );
-
   const sectionMap: Record<DashboardSectionId, () => React.ReactNode> = {
     hero_header: renderHeroHeader,
     today_schedule: renderTodaySchedule,
     weekly_adherence: renderWeeklyAdherence,
     recent_history: renderRecentHistory,
     routines_manager: renderRoutinesManager,
-    supplier_banner: renderSupplierBanner,
   };
 
   return (

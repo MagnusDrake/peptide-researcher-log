@@ -3,8 +3,7 @@ export type DashboardSectionId =
   | 'today_schedule'
   | 'weekly_adherence'
   | 'recent_history'
-  | 'routines_manager'
-  | 'supplier_banner';
+  | 'routines_manager';
 
 export interface DashboardSectionConfig {
   id: DashboardSectionId;
@@ -12,7 +11,7 @@ export interface DashboardSectionConfig {
   description: string;
   iconName: string;
   isVisible: boolean;
-  category: 'core' | 'routines' | 'analytics' | 'sourcing';
+  category: 'core' | 'routines' | 'analytics';
 }
 
 export type AccentTheme = 'cyan' | 'emerald' | 'violet' | 'amber' | 'rose' | 'slate';

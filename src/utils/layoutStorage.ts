@@ -40,14 +40,6 @@ export const DEFAULT_DASHBOARD_SECTIONS: DashboardSectionConfig[] = [
     iconName: 'Layers',
     isVisible: true,
     category: 'routines'
-  },
-  {
-    id: 'supplier_banner',
-    label: "Verified Supplier Spotlight",
-    description: "3rd-party tested peptide supplier discount codes and purity credentials",
-    iconName: 'ShieldCheck',
-    isVisible: true,
-    category: 'sourcing'
   }
 ];
 
@@ -93,8 +85,7 @@ export const PRESET_TEMPLATES: LayoutPreset[] = [
         { ...DEFAULT_DASHBOARD_SECTIONS[1], isVisible: true },
         { ...DEFAULT_DASHBOARD_SECTIONS[4], isVisible: true },
         { ...DEFAULT_DASHBOARD_SECTIONS[2], isVisible: false },
-        { ...DEFAULT_DASHBOARD_SECTIONS[3], isVisible: false },
-        { ...DEFAULT_DASHBOARD_SECTIONS[5], isVisible: false }
+        { ...DEFAULT_DASHBOARD_SECTIONS[3], isVisible: false }
       ],
       styles: {
         accentTheme: 'emerald',
@@ -120,8 +111,7 @@ export const PRESET_TEMPLATES: LayoutPreset[] = [
         { ...DEFAULT_DASHBOARD_SECTIONS[4], isVisible: true },
         { ...DEFAULT_DASHBOARD_SECTIONS[1], isVisible: true },
         { ...DEFAULT_DASHBOARD_SECTIONS[2], isVisible: true },
-        { ...DEFAULT_DASHBOARD_SECTIONS[3], isVisible: true },
-        { ...DEFAULT_DASHBOARD_SECTIONS[5], isVisible: true }
+        { ...DEFAULT_DASHBOARD_SECTIONS[3], isVisible: true }
       ],
       styles: {
         accentTheme: 'violet',
@@ -147,8 +137,7 @@ export const PRESET_TEMPLATES: LayoutPreset[] = [
         { ...DEFAULT_DASHBOARD_SECTIONS[2], isVisible: true },
         { ...DEFAULT_DASHBOARD_SECTIONS[3], isVisible: true },
         { ...DEFAULT_DASHBOARD_SECTIONS[1], isVisible: true },
-        { ...DEFAULT_DASHBOARD_SECTIONS[4], isVisible: true },
-        { ...DEFAULT_DASHBOARD_SECTIONS[5], isVisible: true }
+        { ...DEFAULT_DASHBOARD_SECTIONS[4], isVisible: true }
       ],
       styles: {
         accentTheme: 'cyan',
@@ -171,14 +160,25 @@ export function loadLayoutConfig(): AppLayoutConfig {
     if (!raw) return DEFAULT_APP_LAYOUT_CONFIG;
     const parsed = JSON.parse(raw) as AppLayoutConfig;
     
-    // Ensure all default sections exist even if user loaded an older config
-    const existingIds = new Set(parsed.dashboardSections.map(s => s.id));
+    // Filter out obsolete/removed sections and ensure valid sections
+    const validDefaultMap = new Map(DEFAULT_DASHBOARD_SECTIONS.map(s => [s.id, s]));
+    const filteredSections = (parsed.dashboardSections || [])
+      .filter(s => validDefaultMap.has(s.id as any))
+      .map(s => {
+        const def = validDefaultMap.get(s.id as any)!;
+        return {
+          ...def,
+          ...s
+        };
+      });
+
+    const existingIds = new Set(filteredSections.map(s => s.id));
     const missingSections = DEFAULT_DASHBOARD_SECTIONS.filter(s => !existingIds.has(s.id));
     
     return {
       ...DEFAULT_APP_LAYOUT_CONFIG,
       ...parsed,
-      dashboardSections: [...parsed.dashboardSections, ...missingSections],
+      dashboardSections: [...filteredSections, ...missingSections],
       styles: {
         ...DEFAULT_LAYOUT_STYLES,
         ...(parsed.styles || {})

@@ -25,56 +25,54 @@ export const Footer: React.FC<FooterProps> = ({ activeTab, onTabChange }) => {
       <div className="max-w-7xl mx-auto flex flex-col gap-8">
         
         {/* Featured Verified Supplier Banner */}
-        <div className="relative group rounded-3xl overflow-hidden p-[1px] bg-gradient-to-r from-emerald-500/30 via-cyan-500/30 to-teal-500/30 shadow-xl shadow-emerald-500/5">
-          <div className="bg-slate-900/90 backdrop-blur-md rounded-[23px] p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            
-            {/* Left: Supplier Info & Trust Badges */}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <div>
-                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                  <span className="text-[0.65rem] font-bold uppercase tracking-widest text-emerald-400">
-                    Verified Peptide Supplier
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 font-semibold border border-emerald-500/30">
-                    <CheckCircle2 className="w-3 h-3" />
-                    3rd-Party HPLC Tested
-                  </span>
-                </div>
-                <h4 className="text-sm sm:text-base font-bold text-white tracking-wide">
-                  Looking for trusted, high-purity research compounds?
-                </h4>
-                <p className="text-xs text-slate-400 mt-0.5 max-w-xl">
-                  Amino Club provides batch-specific COAs with 99%+ purity verification. Use partner code <span className="text-cyan-300 font-mono font-bold bg-cyan-950/60 px-1.5 py-0.5 rounded border border-cyan-500/30">AURAPEPTIDES</span> at checkout.
-                </p>
-              </div>
+        <div className="rounded-3xl bg-slate-900/40 border border-slate-800/80 p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-6 transition hover:border-slate-700/80">
+          
+          {/* Left: Supplier Info & Trust Badges */}
+          <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4">
+            <div className="w-11 h-11 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400 shrink-0">
+              <ShieldCheck className="w-5 h-5" />
             </div>
-
-            {/* Right: Actions */}
-            <div className="flex flex-wrap items-center justify-center gap-3 w-full md:w-auto shrink-0">
-              <button
-                type="button"
-                onClick={() => onTabChange('sources')}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold border border-slate-700 transition active:scale-95 cursor-pointer"
-              >
-                <Beaker className="w-3.5 h-3.5 text-cyan-400" />
-                <span>All Verified Sources</span>
-              </button>
-
-              <a
-                href="https://aminoclub.com?utm_source=affiliate_marketing&code=AURAPEPTIDES"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition active:scale-95 cursor-pointer"
-              >
-                <span>Visit Amino Club</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
+            <div>
+              <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                <span className="text-[0.65rem] font-bold uppercase tracking-widest text-emerald-400">
+                  Verified Peptide Supplier
+                </span>
+                <span className="inline-flex items-center gap-1 text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">
+                  <CheckCircle2 className="w-3 h-3" />
+                  3rd-Party HPLC Tested
+                </span>
+              </div>
+              <h4 className="text-sm sm:text-base font-bold text-slate-100 tracking-wide">
+                Looking for trusted, high-purity research compounds?
+              </h4>
+              <p className="text-xs text-slate-400 mt-0.5 max-w-xl">
+                Amino Club provides batch-specific COAs with 99%+ purity verification. Use partner code <span className="text-cyan-300 font-mono font-bold bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800">AURAPEPTIDES</span> at checkout.
+              </p>
             </div>
-
           </div>
+
+          {/* Right: Actions */}
+          <div className="flex flex-wrap items-center justify-center gap-3 w-full md:w-auto shrink-0">
+            <button
+              type="button"
+              onClick={() => onTabChange('sources')}
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-semibold border border-slate-800 transition active:scale-95 cursor-pointer"
+            >
+              <Beaker className="w-3.5 h-3.5 text-cyan-400" />
+              <span>All Verified Sources</span>
+            </button>
+
+            <a
+              href="https://aminoclub.com?utm_source=affiliate_marketing&code=AURAPEPTIDES"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold text-xs shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20 transition active:scale-95 cursor-pointer"
+            >
+              <span>Visit Amino Club</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
         </div>
 
         {/* Secondary Links & Navigation Grid */}
