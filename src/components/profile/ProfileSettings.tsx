@@ -248,53 +248,36 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
             </div>
           )}
 
-          {/* Developer & Studio Privileges Toggle */}
-          <div className="mt-6 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 shrink-0">
-                <Wand2 className="w-4 h-4" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-slate-100">Aura Studio (Visual Page Builder)</span>
-                  <span className={`text-[9px] px-2 py-0.2 rounded-full font-mono font-bold uppercase tracking-wider ${
-                    isStudioUnlocked 
-                      ? 'bg-pink-500/20 text-pink-300 border border-pink-500/30' 
-                      : 'bg-slate-800 text-slate-400 border border-slate-700'
-                  }`}>
-                    {isStudioUnlocked ? 'Enabled (Owner Mode)' : 'Hidden from Public'}
-                  </span>
+          {/* Developer & Studio Privileges Toggle - STRICTLY HIDDEN UNLESS UNLOCKED VIA 5-TAP CORNER */}
+          {isStudioUnlocked && (
+            <div className="mt-6 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 animate-in fade-in duration-200">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 shrink-0">
+                  <Wand2 className="w-4 h-4" />
                 </div>
-                <p className="text-[10px] text-slate-400 mt-0.5">
-                  {isStudioUnlocked
-                    ? 'Studio is visible in the top header and menus for this device only.'
-                    : 'Hidden for all public visitors. Can also be unlocked via URL (?studio=true) or tapping the logo 5 times.'}
-                </p>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-slate-100">Aura Studio (Visual Page Builder)</span>
+                    <span className="text-[9px] px-2 py-0.2 rounded-full font-mono font-bold uppercase tracking-wider bg-pink-500/20 text-pink-300 border border-pink-500/30">
+                      Developer Mode Active
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-slate-400 mt-0.5">
+                    Studio is currently active for this device. Click "Hide Studio" or tap the top-left corner 5 times to lock and hide it.
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <button
-              type="button"
-              onClick={onToggleStudioUnlock}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0 cursor-pointer ${
-                isStudioUnlocked
-                  ? 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
-                  : 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg shadow-pink-500/20 hover:from-pink-400 hover:to-purple-400'
-              }`}
-            >
-              {isStudioUnlocked ? (
-                <>
-                  <EyeOff className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Hide Studio</span>
-                </>
-              ) : (
-                <>
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>Unlock Studio</span>
-                </>
-              )}
-            </button>
-          </div>
+              <button
+                type="button"
+                onClick={onToggleStudioUnlock}
+                className="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0 cursor-pointer bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700"
+              >
+                <EyeOff className="w-3.5 h-3.5 text-slate-400" />
+                <span>Hide & Lock Studio</span>
+              </button>
+            </div>
+          )}
 
           <div className="mt-8 pt-6 border-t border-slate-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
             <button 

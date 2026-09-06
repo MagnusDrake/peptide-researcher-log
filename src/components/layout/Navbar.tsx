@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   // Secret 5-tap logo handler for developer/owner unlock
   const handleLogoClick = () => {
     const now = Date.now();
-    if (now - lastLogoTapRef.current < 800) {
+    if (now - lastLogoTapRef.current < 1200) {
       const nextCount = logoTapCount + 1;
       if (nextCount >= 5) {
         onToggleStudioUnlock?.();
