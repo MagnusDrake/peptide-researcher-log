@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { User, Lock, Download, Upload, Shield, Settings, AlertTriangle, CheckCircle2, Wand2, Eye, EyeOff, Sun, Moon, Palette, Check, Sparkles, ArrowRightLeft, X, Volume2, VolumeX, Vibrate, Play, Radio } from 'lucide-react';
+import { User, Lock, Download, Upload, Shield, Settings, AlertTriangle, CheckCircle2, Wand2, Eye, EyeOff, Sun, Moon, Palette, Check, Sparkles, ArrowRightLeft, X, Volume2, VolumeX, Vibrate, Play, Radio, FileSpreadsheet } from 'lucide-react';
 import { db } from '../../db';
-import { exportDatabaseToJson, triggerDownload, importDatabaseFromJson } from '../../utils/exportImport';
+import { exportDatabaseToJson, exportLogsToCsv, triggerDownload, importDatabaseFromJson } from '../../utils/exportImport';
 import { LightPalette, LIGHT_PALETTES, DarkPalette, DARK_PALETTES } from '../../types/theme';
 import { sensory } from '../../utils/soundHaptics';
 
@@ -126,7 +126,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
       const json = await exportDatabaseToJson();
       const filename = `aura_vault_backup_${new Date().toISOString().split('T')[0]}.json`;
       triggerDownload(json, filename, 'application/json');
-      setDataMessage('Vault data exported successfully.');
+      setDataMessage('Vault database exported successfully (JSON).');
       setTimeout(() => setDataMessage(''), 3000);
     } catch (err) {
       console.error('Export error:', err);
@@ -135,6 +135,35 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
         badge: 'Export Failed',
         title: 'Vault Backup Error',
         message: 'Unable to export vault data. Please ensure browser storage is accessible.',
+        isError: true,
+      });
+    }
+  };
+
+  const handleExportCsv = async () => {
+    try {
+      const csv = await exportLogsToCsv();
+      if (!csv) {
+        setFeedbackModal({
+          isOpen: true,
+          badge: 'No Logs Available',
+          title: 'Export Notice',
+          message: 'No dose administration logs were found to export.',
+          isError: false,
+        });
+        return;
+      }
+      const filename = `aura_dose_logs_${new Date().toISOString().split('T')[0]}.csv`;
+      triggerDownload(csv, filename, 'text/csv');
+      setDataMessage('Dose administration logs exported successfully (CSV).');
+      setTimeout(() => setDataMessage(''), 3000);
+    } catch (err) {
+      console.error('CSV Export error:', err);
+      setFeedbackModal({
+        isOpen: true,
+        badge: 'Export Failed',
+        title: 'CSV Export Error',
+        message: 'Unable to export CSV logs. Please try again.',
         isError: true,
       });
     }
@@ -721,15 +750,26 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
             className="hidden" 
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <button 
               onClick={handleExportData}
               className="bg-slate-900/50 hover:bg-slate-800 border border-slate-700 p-4 rounded-xl flex items-center justify-center gap-3 transition-all group cursor-pointer"
             >
-              <Download className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform" />
+              <Download className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform shrink-0" />
               <div className="text-left">
                 <span className="block text-sm font-semibold tracking-wider text-slate-200">Export Vault Data</span>
                 <span className="block text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">Download JSON Backup</span>
+              </div>
+            </button>
+
+            <button 
+              onClick={handleExportCsv}
+              className="bg-slate-900/50 hover:bg-slate-800 border border-slate-700 p-4 rounded-xl flex items-center justify-center gap-3 transition-all group cursor-pointer"
+            >
+              <FileSpreadsheet className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
+              <div className="text-left">
+                <span className="block text-sm font-semibold tracking-wider text-slate-200">Export Dose Logs</span>
+                <span className="block text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">Spreadsheet CSV</span>
               </div>
             </button>
             
@@ -737,7 +777,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
               onClick={() => fileInputRef.current?.click()}
               className="bg-slate-900/50 hover:bg-slate-800 border border-slate-700 p-4 rounded-xl flex items-center justify-center gap-3 transition-all group cursor-pointer"
             >
-              <Upload className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
+              <Upload className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform shrink-0" />
               <div className="text-left">
                 <span className="block text-sm font-semibold tracking-wider text-slate-200">Import Vault Data</span>
                 <span className="block text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">Restore from Backup</span>

@@ -2,14 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { DoseLogEntry, Protocol } from '../../types';
 import { db } from '../../db';
-import { exportLogsToCsv, exportDatabaseToJson, triggerDownload, importDatabaseFromJson } from '../../utils/exportImport';
 import { PkDecayChart } from '../dashboard/PkDecayChart';
 import { 
   ResponsiveContainer, 
   LineChart, 
   Line, 
-  AreaChart,
-  Area,
+  AreaChart, 
+  Area, 
   XAxis, 
   YAxis, 
   Tooltip, 
@@ -18,8 +17,6 @@ import {
 } from 'recharts';
 import { 
   BookOpen, 
-  Download, 
-  Upload, 
   Trash2, 
   Filter, 
   Activity, 
@@ -28,8 +25,6 @@ import {
   Sparkles,
   Utensils,
   Scale,
-  FileSpreadsheet,
-  Database,
   FileText,
   Image as ImageIcon,
   Search,
@@ -51,7 +46,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
   onLogsChanged,
 }) => {
   const [selectedPeptideFilter, setSelectedPeptideFilter] = useState<string>('all');
-  const [activeTab, setActiveTab] = useState<'timeline' | 'trends' | 'backup'>('timeline');
+  const [activeTab, setActiveTab] = useState<'timeline' | 'trends'>('timeline');
   const [filterMode, setFilterMode] = useState<'all' | 'notes' | 'photos'>('all');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -109,36 +104,6 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
       await db.doseLogs.delete(logId);
       onLogsChanged();
     }
-  };
-
-  const handleExportCsv = async () => {
-    const csv = await exportLogsToCsv();
-    if (!csv) {
-      alert('No logs available to export.');
-      return;
-    }
-    triggerDownload(csv, `peptide_research_logs_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
-  };
-
-  const handleExportJson = async () => {
-    const json = await exportDatabaseToJson();
-    triggerDownload(json, `peptide_research_backup_${new Date().toISOString().split('T')[0]}.json`, 'application/json');
-  };
-
-  const handleImportJson = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      const content = event.target?.result as string;
-      if (content) {
-        const res = await importDatabaseFromJson(content);
-        alert(res.message);
-        if (res.success) onLogsChanged();
-      }
-    };
-    reader.readAsText(file);
   };
 
   // Prepare trend data for charts (Chronological order)
@@ -206,7 +171,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
             Dose Log & Progress Trends
           </h1>
           <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-            Review your past doses, track how you feel over time (energy, sleep, recovery), and download your records anytime.
+            Review your past doses, chronological administration notes, progress photos, and physical biometric charts over time.
           </p>
         </div>
       </div>
@@ -230,14 +195,6 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
             }`}
           >
             📈 Progress Charts
-          </button>
-          <button
-            onClick={() => setActiveTab('backup')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition ${
-              activeTab === 'backup' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            💾 Backup & Export
           </button>
         </div>
 
@@ -734,59 +691,6 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                 Need at least 2 recorded doses with subjective ratings (recovery, energy, or sleep) to render subjective trend lines.
               </div>
             )}
-          </div>
-        </div>
-      )}
-
-      {/* TAB 3: BACKUP & RESTORE */}
-      {activeTab === 'backup' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4 border-slate-800 shadow-xl">
-            <div className="flex items-center gap-2 text-cyan-400">
-              <Download className="w-5 h-5" />
-              <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-widest">Export & Backup Research</h3>
-            </div>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Export all your active protocols, custom peptide profiles, administration logs, and settings to a JSON backup file or CSV spreadsheet.
-            </p>
-            <div className="flex flex-col gap-3 mt-2">
-              <button
-                onClick={handleExportJson}
-                className="w-full py-3 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 transition flex items-center justify-center gap-2"
-              >
-                <Database className="w-4 h-4" />
-                <span>Download Full Database Backup (.json)</span>
-              </button>
-              <button
-                onClick={handleExportCsv}
-                className="w-full py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center justify-center gap-2"
-              >
-                <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
-                <span>Export Administration Logs (.csv)</span>
-              </button>
-            </div>
-          </div>
-
-          <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4 border-slate-800 shadow-xl">
-            <div className="flex items-center gap-2 text-emerald-400">
-              <Upload className="w-5 h-5" />
-              <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-widest">Restore / Import Data</h3>
-            </div>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Restore protocols and logs from a previously exported JSON backup file on another device or browser.
-            </p>
-            <div className="mt-2">
-              <label className="w-full py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-dashed border-slate-600 transition flex items-center justify-center gap-2 cursor-pointer">
-                <Upload className="w-4 h-4 text-emerald-400" />
-                <span>Select JSON File to Restore</span>
-                <input
-                  type="file"
-                  accept=".json"
-                  onChange={handleImportJson}
-                  className="hidden"
-                />
-              </label>
-            </div>
           </div>
         </div>
       )}
