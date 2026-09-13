@@ -24,7 +24,8 @@ import {
   TrendingUp, 
   Sparkles,
   FileSpreadsheet,
-  Database
+  Database,
+  Utensils
 } from 'lucide-react';
 
 interface ResearchJournalProps {
@@ -101,6 +102,8 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
         recovery: l.subjectiveMetrics?.recoveryScore ?? null,
         energy: l.subjectiveMetrics?.energyLevel ?? null,
         sleep: l.subjectiveMetrics?.sleepQuality ?? null,
+        hairSkinNails: l.subjectiveMetrics?.hairSkinNailsQuality ?? null,
+        foodHabit: l.subjectiveMetrics?.foodHabit ?? null,
         pain: l.subjectiveMetrics?.symptomPainScore ?? null,
         weight: l.subjectiveMetrics?.bodyWeightLbs ?? null,
       };
@@ -206,6 +209,19 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                           <span className="text-xs text-slate-400">
                             • Site: <strong className="text-slate-200">{log.injectionSite}</strong>
                           </span>
+
+                          {/* Subcutaneous Reaction Badge */}
+                          {log.reactionRating && log.reactionRating !== 'none' && (
+                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium border ${
+                              log.reactionRating === 'other'
+                                ? 'bg-amber-950/70 text-amber-300 border-amber-800/80'
+                                : 'bg-rose-950/70 text-rose-300 border-rose-800/80'
+                            }`}>
+                              ⚠️ Reaction: {log.reactionRating === 'other' 
+                                ? (log.customReactionText || 'Other custom reaction') 
+                                : log.reactionRating.replace('_', ' ')}
+                            </span>
+                          )}
                         </div>
 
                         {log.isBlend && log.blendDelivered && log.blendDelivered.length > 0 && (
@@ -244,6 +260,18 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                             {log.subjectiveMetrics.sleepQuality !== undefined && (
                               <span className="text-[10px] px-2 py-0.5 rounded-md bg-purple-950 text-purple-300 border border-purple-800/80">
                                 Sleep: {log.subjectiveMetrics.sleepQuality}/10
+                              </span>
+                            )}
+                            {log.subjectiveMetrics.hairSkinNailsQuality !== undefined && (
+                              <span className="text-[10px] px-2 py-0.5 rounded-md bg-pink-950 text-pink-300 border border-pink-800/80 flex items-center gap-1">
+                                <Sparkles className="w-2.5 h-2.5" />
+                                Hair, Nails & Skin: {log.subjectiveMetrics.hairSkinNailsQuality}/10
+                              </span>
+                            )}
+                            {log.subjectiveMetrics.foodHabit && (
+                              <span className="text-[10px] px-2 py-0.5 rounded-md bg-amber-950 text-amber-300 border border-amber-800/80 flex items-center gap-1">
+                                <Utensils className="w-2.5 h-2.5" />
+                                Food: {log.subjectiveMetrics.foodHabit}
                               </span>
                             )}
                             {log.subjectiveMetrics.bodyWeightLbs !== undefined && (
@@ -323,6 +351,8 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                                 {data.recovery !== null && <span className="text-emerald-400">Recovery: {data.recovery}/10</span>}
                                 {data.energy !== null && <span className="text-cyan-400">Energy: {data.energy}/10</span>}
                                 {data.sleep !== null && <span className="text-purple-400">Sleep: {data.sleep}/10</span>}
+                                {data.hairSkinNails !== null && <span className="text-pink-400">Hair, Nails & Skin: {data.hairSkinNails}/10</span>}
+                                {data.foodHabit && <span className="text-amber-300">Food: {data.foodHabit}</span>}
                               </div>
                             );
                           }
@@ -333,6 +363,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                       <Line type="monotone" dataKey="recovery" name="Recovery Score" stroke="#10b981" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
                       <Line type="monotone" dataKey="energy" name="Energy Level" stroke="#06b6d4" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
                       <Line type="monotone" dataKey="sleep" name="Sleep Quality" stroke="#a855f7" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
+                      <Line type="monotone" dataKey="hairSkinNails" name="Hair, Nails & Skin" stroke="#f472b6" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>

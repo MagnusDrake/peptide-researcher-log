@@ -5,7 +5,7 @@ import { INJECTION_SITES } from '../../data/injectionSites';
 import { SiteRotationMap } from './SiteRotationMap';
 import { db } from '../../db';
 import confetti from 'canvas-confetti';
-import { X, Check, Activity, Sparkles, Shield, Heart, Moon, Zap, Scale, Plus } from 'lucide-react';
+import { X, Check, Activity, Sparkles, Shield, Heart, Moon, Zap, Scale, Plus, Utensils, Feather } from 'lucide-react';
 import { sensory } from '../../utils/soundHaptics';
 
 interface LogAdminModalProps {
@@ -38,7 +38,8 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
   const [syringeType, setSyringeType] = useState<SyringeType>(protocol.syringeType);
   const [injectionSite, setInjectionSite] = useState<string>(defaultSite);
   const [showBodyMap, setShowBodyMap] = useState<boolean>(false);
-  const [reactionRating, setReactionRating] = useState<'none' | 'mild_redness' | 'bruise' | 'itch' | 'sore'>('none');
+  const [reactionRating, setReactionRating] = useState<'none' | 'mild_redness' | 'bruise' | 'itch' | 'sore' | 'other'>('none');
+  const [customReactionText, setCustomReactionText] = useState<string>('');
   
   // Subjective Research Markers
   const [showSubjective, setShowSubjective] = useState<boolean>(true);
@@ -46,6 +47,8 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
   const [energyLevel, setEnergyLevel] = useState<number>(8);
   const [appetiteSuppression, setAppetiteSuppression] = useState<number>(7);
   const [sleepQuality, setSleepQuality] = useState<number>(8);
+  const [hairSkinNailsQuality, setHairSkinNailsQuality] = useState<number>(8);
+  const [foodHabit, setFoodHabit] = useState<string>('');
   const [symptomPainScore, setSymptomPainScore] = useState<number>(2);
   const [bodyWeightLbs, setBodyWeightLbs] = useState<number | string>('');
   const [photoDataUri, setPhotoDataUri] = useState<string>('');
@@ -63,8 +66,11 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
       setEnergyLevel(8);
       setAppetiteSuppression(7);
       setSleepQuality(8);
+      setHairSkinNailsQuality(8);
+      setFoodHabit('');
       setSymptomPainScore(2);
       setReactionRating('none');
+      setCustomReactionText('');
     }
   }, [isOpen, protocol, initialSiteName]);
 
@@ -107,12 +113,15 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
       syringeType,
       injectionSite,
       reactionRating,
+      customReactionText: reactionRating === 'other' ? customReactionText.trim() : undefined,
       notes: notes.trim(),
       subjectiveMetrics: showSubjective ? {
         recoveryScore,
         energyLevel,
         appetiteSuppression,
         sleepQuality,
+        hairSkinNailsQuality,
+        foodHabit: foodHabit.trim() || undefined,
         symptomPainScore,
         bodyWeightLbs: bodyWeightLbs === '' ? undefined : Number(bodyWeightLbs)
       } : undefined,
@@ -302,28 +311,47 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
             <label className="block text-slate-400 font-semibold uppercase mb-1.5">
               Localized Subcutaneous Reaction
             </label>
-            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
               {[
                 { id: 'none', label: 'None / Normal' },
                 { id: 'mild_redness', label: 'Mild Redness' },
                 { id: 'bruise', label: 'Small Bruise' },
                 { id: 'itch', label: 'Transient Itch' },
-                { id: 'sore', label: 'Post-Inj Soreness' }
+                { id: 'sore', label: 'Post-Inj Sore' },
+                { id: 'other', label: 'Other...' }
               ].map(rx => (
                 <button
                   key={rx.id}
                   type="button"
-                  onClick={() => setReactionRating(rx.id as any)}
-                  className={`py-2 px-1 rounded-xl border text-[11px] font-semibold text-center transition ${
+                  onClick={() => {
+                    sensory.triggerTap();
+                    setReactionRating(rx.id as any);
+                  }}
+                  className={`py-2 px-1 rounded-xl border text-[11px] font-semibold text-center transition cursor-pointer ${
                     reactionRating === rx.id
-                      ? 'bg-cyan-950 border-cyan-400 text-cyan-200 shadow-sm'
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                      ? 'bg-cyan-950 border-cyan-400 text-cyan-200 shadow-sm ring-1 ring-cyan-400/40'
+                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
                   }`}
                 >
                   {rx.label}
                 </button>
               ))}
             </div>
+
+            {/* If "other" reaction is selected, show an editable description input */}
+            {reactionRating === 'other' && (
+              <div className="mt-2.5 animate-in fade-in duration-200">
+                <input
+                  type="text"
+                  required
+                  placeholder="Describe subcutaneous reaction (e.g. slight swelling, warmth, wheal, firmness)..."
+                  value={customReactionText}
+                  onChange={(e) => setCustomReactionText(e.target.value)}
+                  className="w-full bg-slate-950 border border-cyan-500/50 rounded-xl px-3.5 py-2 text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
+                  autoFocus
+                />
+              </div>
+            )}
           </div>
 
           {/* Subjective Research Markers (Collapsible / Toggle) */}
@@ -394,8 +422,80 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
                   />
                 </div>
 
+                {/* Hair, Nails & Skin Quality Slider */}
+                <div>
+                  <div className="flex justify-between text-[11px] mb-1">
+                    <span className="text-slate-400 flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-pink-400" />
+                      <span>Hair, Nails & Skin Quality:</span>
+                    </span>
+                    <span className="text-pink-400 font-bold font-mono">{hairSkinNailsQuality} / 10</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1"
+                    max="10"
+                    value={hairSkinNailsQuality}
+                    onChange={(e) => setHairSkinNailsQuality(parseInt(e.target.value))}
+                    className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-pink-400"
+                  />
+                  <div className="flex justify-between text-[9px] text-slate-500 font-mono mt-0.5">
+                    <span>Brittle / Dry</span>
+                    <span>Radiant & Healthy</span>
+                  </div>
+                </div>
+
+                {/* Food Habit Section */}
+                <div className="pt-2 border-t border-slate-800/60 flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-slate-400 font-semibold uppercase text-[10px] flex items-center gap-1.5">
+                      <Utensils className="w-3 h-3 text-amber-400" />
+                      <span>Food Habit & Nutrition</span>
+                      <span className="text-slate-500 font-normal lowercase">(optional)</span>
+                    </label>
+                  </div>
+
+                  {/* Quick preset chips */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      'Fasted',
+                      'High Protein',
+                      'Clean / Whole Foods',
+                      'Caloric Deficit',
+                      'Low Carb / Keto',
+                      'Post-Meal Dose',
+                      'Overate / Cheat Meal'
+                    ].map(habit => (
+                      <button
+                        key={habit}
+                        type="button"
+                        onClick={() => {
+                          sensory.triggerTap();
+                          setFoodHabit(prev => prev === habit ? '' : habit);
+                        }}
+                        className={`px-2 py-1 rounded-lg text-[10px] font-medium transition cursor-pointer border ${
+                          foodHabit === habit
+                            ? 'bg-amber-950/80 border-amber-400/80 text-amber-200 shadow-sm'
+                            : 'bg-slate-900/90 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                        }`}
+                      >
+                        {habit}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Custom food habit input */}
+                  <input
+                    type="text"
+                    placeholder="Or enter custom food habit / meal status (e.g. 16h fast, 2500 kcal, meal with fats)..."
+                    value={foodHabit}
+                    onChange={(e) => setFoodHabit(e.target.value)}
+                    className="w-full bg-slate-900 border border-slate-700 text-white text-xs rounded-xl px-3 py-2 focus:border-amber-400 focus:outline-none placeholder:text-slate-500 transition"
+                  />
+                </div>
+
                 {/* Body weight optional */}
-                <div className="pt-2">
+                <div className="pt-2 border-t border-slate-800/60">
                   <label className="block text-slate-400 font-semibold uppercase mb-1">Body Weight (lbs) <span className="text-slate-500 font-normal">(Optional)</span></label>
                   <input
                     type="number"

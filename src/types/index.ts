@@ -128,6 +128,8 @@ export interface SubjectiveMetrics {
   sleepQuality?: number; // 1-10
   symptomPainScore?: number; // 1-10
   bodyWeightLbs?: number;
+  hairSkinNailsQuality?: number; // 1-10 (Hair, nails and skin wellness)
+  foodHabit?: string; // Qualitative or scale notes on nutrition / food intake habits
 }
 
 export interface DeliveredBlendDose {
@@ -148,7 +150,8 @@ export interface DoseLogEntry {
   drawUnits: number;
   syringeType: SyringeType;
   injectionSite: string;
-  reactionRating?: 'none' | 'mild_redness' | 'bruise' | 'itch' | 'sore';
+  reactionRating?: 'none' | 'mild_redness' | 'bruise' | 'itch' | 'sore' | 'other';
+  customReactionText?: string; // Specific description when reaction is "other"
   notes?: string;
   subjectiveMetrics?: SubjectiveMetrics;
   photoDataUri?: string; // Base64 encoded image
