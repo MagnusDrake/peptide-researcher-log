@@ -1,18 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { User, Lock, Download, Upload, Shield, Settings, AlertTriangle, CheckCircle2, Wand2, Eye, EyeOff } from 'lucide-react';
+import { User, Lock, Download, Upload, Shield, Settings, AlertTriangle, CheckCircle2, Wand2, Eye, EyeOff, Sun, Moon, Palette, Check, Sparkles } from 'lucide-react';
 import { db } from '../../db';
 import { exportDatabaseToJson, triggerDownload, importDatabaseFromJson } from '../../utils/exportImport';
+import { LightPalette, LIGHT_PALETTES } from '../../types/theme';
 
 interface ProfileSettingsProps { 
   onLogout: () => void; 
   isStudioUnlocked?: boolean;
   onToggleStudioUnlock?: () => void;
+  lightPalette?: LightPalette;
+  onSelectLightPalette?: (palette: LightPalette) => void;
+  theme?: 'dark' | 'light';
+  onToggleTheme?: () => void;
 }
 
 export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ 
   onLogout,
   isStudioUnlocked = false,
   onToggleStudioUnlock,
+  lightPalette = 'alabaster',
+  onSelectLightPalette,
+  theme = 'dark',
+  onToggleTheme,
 }) => {
   const [name, setName] = useState('');
   const [currentPin, setCurrentPin] = useState('');
@@ -126,6 +135,126 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        {/* Atmosphere & Light Mode Palette Panel */}
+        <div className="glass-panel p-6 rounded-2xl border border-slate-800 shadow-2xl md:col-span-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4 mb-6 gap-3">
+            <h2 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
+              <Palette className="w-4 h-4" />
+              <span>Atmosphere & Light Mode Palette</span>
+            </h2>
+
+            <div className="flex items-center gap-3">
+              {onToggleTheme && (
+                <button
+                  onClick={onToggleTheme}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold uppercase tracking-wider bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 transition cursor-pointer"
+                  title="Toggle Light / Dark Mode"
+                >
+                  {theme === 'dark' ? (
+                    <>
+                      <Moon className="w-3.5 h-3.5 text-cyan-400" />
+                      <span>Dark Mode (Active)</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sun className="w-3.5 h-3.5 text-amber-500" />
+                      <span>Light Mode (Active)</span>
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
+          </div>
+
+          <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+            Aura never blinds you with harsh, sterile white. Select your bespoke light atmosphere below — each handcrafted with organic mineral tones, non-glare surfaces, and comfortable contrast.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {(Object.values(LIGHT_PALETTES)).map((palette) => {
+              const isSelected = lightPalette === palette.id;
+              return (
+                <div
+                  key={palette.id}
+                  onClick={() => {
+                    onSelectLightPalette?.(palette.id);
+                    if (theme === 'dark' && onToggleTheme) {
+                      onToggleTheme();
+                    }
+                  }}
+                  className={`p-4 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col justify-between group ${
+                    isSelected
+                      ? 'border-cyan-500 bg-cyan-500/10 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/40'
+                      : 'border-slate-800 hover:border-slate-700 bg-slate-900/40 hover:bg-slate-900/70'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base">{palette.icon}</span>
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-100">
+                          {palette.name}
+                        </span>
+                      </div>
+                      {isSelected && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6rem] font-bold uppercase tracking-wider bg-cyan-500 text-slate-950">
+                          <Check className="w-3 h-3" />
+                          Active
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-[0.68rem] font-semibold text-cyan-400 mb-3 tracking-wide">
+                      {palette.tagline}
+                    </p>
+
+                    {/* Color Swatches Strip */}
+                    <div className="p-2 rounded-lg bg-slate-950/40 border border-slate-800/80 mb-3 flex items-center justify-between gap-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <div 
+                          className="w-5 h-5 rounded-md border border-slate-600/30 shadow-xs" 
+                          style={{ backgroundColor: palette.canvasHex }}
+                          title={`Canvas: ${palette.canvasHex}`}
+                        />
+                        <div 
+                          className="w-5 h-5 rounded-md border border-slate-600/30 shadow-xs" 
+                          style={{ backgroundColor: palette.cardHex }}
+                          title={`Card: ${palette.cardHex}`}
+                        />
+                        <div 
+                          className="w-5 h-5 rounded-md border border-slate-600/30 shadow-xs" 
+                          style={{ backgroundColor: palette.borderHex }}
+                          title={`Border: ${palette.borderHex}`}
+                        />
+                      </div>
+                      <div 
+                        className="w-5 h-5 rounded-md border border-slate-600/30 shadow-xs" 
+                        style={{ backgroundColor: palette.accentHex }}
+                        title={`Accent: ${palette.accentHex}`}
+                      />
+                    </div>
+
+                    <p className="text-[0.72rem] text-slate-400 leading-relaxed">
+                      {palette.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between">
+                    <span className="text-[0.65rem] font-mono uppercase tracking-widest text-slate-500">
+                      {palette.canvasHex}
+                    </span>
+                    <span className={`text-[0.65rem] font-semibold uppercase tracking-wider transition ${
+                      isSelected ? 'text-cyan-400' : 'text-slate-500 group-hover:text-slate-300'
+                    }`}>
+                      {isSelected ? (theme === 'light' ? 'Selected' : 'Tap to apply') : 'Apply Atmosphere'}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
         
         {/* Identity Panel */}
         <div className="glass-panel p-6 rounded-2xl border border-slate-800 shadow-2xl h-fit">

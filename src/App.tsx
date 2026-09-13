@@ -21,6 +21,7 @@ import { ProfileSettings } from './components/profile/ProfileSettings';
 import { AuraStudio } from './components/studio/AuraStudio';
 import { AppLayoutConfig } from './types/layout';
 import { loadLayoutConfig, saveLayoutConfig, resetLayoutConfig } from './utils/layoutStorage';
+import { LightPalette, LIGHT_PALETTES } from './types/theme';
 import { Calculator, Layers, TrendingUp, ArrowRightLeft, Sparkles, Plus, Calendar, Activity } from 'lucide-react';
 
 export function App() {
@@ -96,13 +97,33 @@ export function App() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   });
 
+  const [lightPalette, setLightPalette] = useState<LightPalette>(() => {
+    const saved = localStorage.getItem('aura_light_palette');
+    if (saved === 'alabaster' || saved === 'platinum' || saved === 'ceramic' || saved === 'glacier') {
+      return saved as LightPalette;
+    }
+    return 'alabaster';
+  });
 
   useEffect(() => {
+    // Remove previous palette classes to avoid clashes
+    document.documentElement.classList.remove(
+      'theme-alabaster',
+      'theme-platinum',
+      'theme-ceramic',
+      'theme-glacier'
+    );
+
     if (theme === 'light') {
       document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light');
+      document.documentElement.classList.add(`theme-${lightPalette}`);
+
+      const paletteConfig = LIGHT_PALETTES[lightPalette];
       const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', '#fcfbf9');
+      if (meta && paletteConfig) {
+        meta.setAttribute('content', paletteConfig.canvasHex);
+      }
     } else {
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');
@@ -110,10 +131,15 @@ export function App() {
       if (meta) meta.setAttribute('content', '#090d16');
     }
     localStorage.setItem('theme', theme);
-  }, [theme]);
+  }, [theme, lightPalette]);
 
   const handleToggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
+  const handleSelectLightPalette = (palette: LightPalette) => {
+    setLightPalette(palette);
+    localStorage.setItem('aura_light_palette', palette);
   };
 
   // Layout Studio state
@@ -582,6 +608,10 @@ export function App() {
             onLogout={handleLogout} 
             isStudioUnlocked={isStudioUnlocked}
             onToggleStudioUnlock={handleToggleStudioUnlock}
+            lightPalette={lightPalette}
+            onSelectLightPalette={handleSelectLightPalette}
+            theme={theme}
+            onToggleTheme={handleToggleTheme}
           />
         )}
 

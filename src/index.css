@@ -32,38 +32,137 @@
     --tw-shadow-color: rgba(0, 0, 0, 0.7);
   }
 
-  html.light {
-    --chart-grid: rgba(255, 255, 255, 0.1); /* Light grid for dark cards */
+  /* ==========================================================================
+     LIGHT MODE PALETTES (No harsh white • Organic, refined luxury)
+     ========================================================================== */
 
-    /* LIGHT MODE: Steel Blue Canvas with Obsidian Glass */
-    --color-slate-950: #81999e; /* App Background: Steel Blue */
-    --color-slate-900: rgba(28, 40, 51, 0.45); /* Cards / Modals: Lighter Obsidian Glass */
-    --color-slate-800: rgba(28, 40, 51, 0.6); /* Borders / Hover */
-    --color-slate-700: rgba(255, 255, 255, 0.15); /* Dividers */
-    --color-slate-600: rgba(255, 255, 255, 0.3); /* Muted elements */
-    --color-slate-500: rgba(255, 255, 255, 0.5); /* Muted text */
-    --color-slate-400: rgba(255, 255, 255, 0.7); /* Secondary text */
-    --color-slate-300: rgba(255, 255, 255, 0.85); /* Normal text */
-    --color-slate-200: rgba(255, 255, 255, 0.95); 
-    --color-slate-100: #ffffff; /* Headings */
-    --color-slate-50:  #ffffff;
+  /* Palette 1 (Default): Warm Alabaster (Nordic Stone & Espresso) */
+  html.light,
+  html.light.theme-alabaster {
+    --chart-grid: rgba(28, 25, 23, 0.08);
 
-    /* Global Tinted Shadows for Light Mode */
-    --tw-shadow-color: rgba(52, 64, 69, 0.1); /* Dark slate tinted shadow */
+    --color-slate-950: #EFECE6; /* Canvas Background: Soft Warm Alabaster */
+    --color-slate-900: #F8F6F0; /* Primary Cards & Modals: Cream Pearl */
+    --color-slate-800: #E7E3DA; /* Sub-cards, Insets, Hover surfaces */
+    --color-slate-700: #DDD6CA; /* Borders, Dividers, Card Outlines */
+    --color-slate-600: #8C827A; /* Muted badges & inactive controls */
+    --color-slate-500: #78716C; /* Muted caption text */
+    --color-slate-400: #57534E; /* Secondary text */
+    --color-slate-300: #44403C; /* Body text */
+    --color-slate-200: #292524; /* Subheadings */
+    --color-slate-100: #1C1917; /* Deep Espresso Ink Headings */
+    --color-slate-50:  #0C0A09;
 
-    /* Harmonized brand accent colors for light mode */
-    --color-cyan-300: #06b6d4;
-    --color-cyan-400: #0891b2;
-    --color-cyan-500: #0e7490;
-    --color-cyan-600: #155e75;
+    --tw-shadow-color: rgba(78, 68, 56, 0.09);
+
+    --color-cyan-300: #0891b2;
+    --color-cyan-400: #0e7490;
+    --color-cyan-500: #155e75;
+    --color-cyan-600: #164e63;
     
-    --color-emerald-300: #34d399;
-    --color-emerald-400: #10b981;
-    --color-emerald-500: #059669;
+    --color-emerald-300: #059669;
+    --color-emerald-400: #047857;
+    --color-emerald-500: #065f46;
+    
+    --color-violet-400: #7c3aed;
+    --color-amber-400: #d97706;
+    --color-rose-400: #e11d48;
+  }
+
+  /* Palette 2: Platinum Slate (Precision High-Tech Alloy & Midnight Slate Ink) */
+  html.light.theme-platinum {
+    --chart-grid: rgba(15, 23, 42, 0.08);
+
+    --color-slate-950: #E4E7EC; /* Canvas Background: Matte Platinum Slate */
+    --color-slate-900: #F2F4F7; /* Primary Cards: Frosted Platinum */
+    --color-slate-800: #DDE2E8; /* Sub-cards & Insets */
+    --color-slate-700: #CDD3DC; /* Clean Platinum Borders */
+    --color-slate-600: #94A3B8; /* Muted badges */
+    --color-slate-500: #64748B; /* Muted text */
+    --color-slate-400: #475569; /* Secondary text */
+    --color-slate-300: #334155; /* Body text */
+    --color-slate-200: #1E293B; /* Subheadings */
+    --color-slate-100: #0F172A; /* Midnight Slate Headings */
+    --color-slate-50:  #020617;
+
+    --tw-shadow-color: rgba(15, 23, 42, 0.08);
+
+    --color-cyan-300: #0284c7;
+    --color-cyan-400: #0369a1;
+    --color-cyan-500: #075985;
+    --color-cyan-600: #0c4a6e;
+    
+    --color-emerald-300: #10b981;
+    --color-emerald-400: #059669;
+    --color-emerald-500: #047857;
     
     --color-violet-400: #8b5cf6;
-    --color-amber-400: #f59e0b;
-    --color-rose-400: #f43f5e;
+    --color-amber-400: #d97706;
+    --color-rose-400: #e11d48;
+  }
+
+  /* Palette 3: Oatmeal Ceramic (Earthy Bio-Apothecary Clay) */
+  html.light.theme-ceramic {
+    --chart-grid: rgba(24, 24, 27, 0.08);
+
+    --color-slate-950: #E9E6DF; /* Canvas Background: Oatmeal Clay */
+    --color-slate-900: #F4F2EC; /* Primary Cards: Unglazed Ceramic */
+    --color-slate-800: #DDD9CE; /* Sub-cards & Insets */
+    --color-slate-700: #D4CFC4; /* Raw Ceramic Line Borders */
+    --color-slate-600: #8C877D; /* Muted tags */
+    --color-slate-500: #78716C; /* Muted text */
+    --color-slate-400: #57534E; /* Secondary text */
+    --color-slate-300: #3F3F46; /* Body text */
+    --color-slate-200: #27272A; /* Subheadings */
+    --color-slate-100: #18181B; /* Obsidian Ink Headings */
+    --color-slate-50:  #09090B;
+
+    --tw-shadow-color: rgba(68, 64, 60, 0.08);
+
+    --color-cyan-300: #0d9488;
+    --color-cyan-400: #0f766e;
+    --color-cyan-500: #115e59;
+    --color-cyan-600: #134e4a;
+    
+    --color-emerald-300: #16a34a;
+    --color-emerald-400: #15803d;
+    --color-emerald-500: #166534;
+    
+    --color-violet-400: #9333ea;
+    --color-amber-400: #b45309;
+    --color-rose-400: #be123c;
+  }
+
+  /* Palette 4: Glacier Mist (Cryo Lab & Frosted Ice) */
+  html.light.theme-glacier {
+    --chart-grid: rgba(10, 17, 32, 0.08);
+
+    --color-slate-950: #DEE5ED; /* Canvas Background: Glacier Mist */
+    --color-slate-900: #EDF3F9; /* Primary Cards: Ice Crystal */
+    --color-slate-800: #D8E2EC; /* Sub-cards & Insets */
+    --color-slate-700: #C4D1DE; /* Frosted Contour Borders */
+    --color-slate-600: #829BB5; /* Muted tags */
+    --color-slate-500: #5A738E; /* Muted text */
+    --color-slate-400: #3E5671; /* Secondary text */
+    --color-slate-300: #24384D; /* Body text */
+    --color-slate-200: #162638; /* Subheadings */
+    --color-slate-100: #0A1120; /* Deep Marine Headings */
+    --color-slate-50:  #030712;
+
+    --tw-shadow-color: rgba(10, 25, 47, 0.08);
+
+    --color-cyan-300: #0891b2;
+    --color-cyan-400: #0e7490;
+    --color-cyan-500: #155e75;
+    --color-cyan-600: #164e63;
+    
+    --color-emerald-300: #0d9488;
+    --color-emerald-400: #0f766e;
+    --color-emerald-500: #115e59;
+    
+    --color-violet-400: #7c3aed;
+    --color-amber-400: #d97706;
+    --color-rose-400: #e11d48;
   }
 
   body {
@@ -141,15 +240,17 @@
     /* Noise is now injected via React for dynamic control */
   }
 
-  /* More visible blobs for light mode */
+  /* Subtle ambient lighting for Light Mode */
   html.light #root::before {
-    opacity: 0.80;
-    background: radial-gradient(circle, rgba(203, 155, 82, 0.6) 0%, rgba(129, 153, 158, 0) 70%); /* Golden Mustard fading to Steel Blue */
+    opacity: 0.18;
+    filter: blur(140px);
+    background: radial-gradient(circle, var(--color-cyan-500) 0%, transparent 70%);
   }
   
   html.light #root::after {
-    opacity: 0.80;
-    background: radial-gradient(circle, rgba(135, 56, 20, 0.5) 0%, rgba(129, 153, 158, 0) 70%); /* Burnt Sienna fading to Steel Blue */
+    opacity: 0.14;
+    filter: blur(140px);
+    background: radial-gradient(circle, var(--color-violet-400) 0%, transparent 70%);
   }
 }
 
@@ -164,7 +265,7 @@
 }
 
 html.light ::-webkit-scrollbar-track {
-  background: rgba(129, 153, 158, 0.05); /* Steel blue track */
+  background: var(--color-slate-950);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -173,7 +274,8 @@ html.light ::-webkit-scrollbar-track {
 }
 
 html.light ::-webkit-scrollbar-thumb {
-  background: rgba(129, 153, 158, 0.2); /* Steel blue thumb */
+  background: var(--color-slate-700);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -181,7 +283,7 @@ html.light ::-webkit-scrollbar-thumb {
 }
 
 html.light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(129, 153, 158, 0.4); /* Steel blue thumb hover */
+  background: var(--color-slate-600);
 }
 
 /* Glass panel components */
@@ -201,8 +303,8 @@ html.light .glass-panel {
   background: var(--color-slate-900);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--color-slate-800);
-  box-shadow: 0 10px 30px -5px var(--tw-shadow-color);
+  border: 1px solid var(--color-slate-700);
+  box-shadow: 0 10px 25px -5px var(--tw-shadow-color), 0 0 0 1px rgba(0, 0, 0, 0.03);
 }
 
 .glass-panel-interactive {
@@ -220,9 +322,9 @@ html.light .glass-panel {
 }
 
 html.light .glass-panel-interactive:hover {
-  background: rgba(255, 255, 255, 0.45);
-  border-color: rgba(109, 40, 47, 0.6); /* Burgundy border on hover */
-  box-shadow: 0 10px 30px -4px rgba(109, 40, 47, 0.3), 0 0 15px rgba(109, 40, 47, 0.25);
+  background: var(--color-slate-800);
+  border-color: var(--color-cyan-400);
+  box-shadow: 0 12px 28px -4px var(--tw-shadow-color);
   transform: translateY(-2px);
 }
 
@@ -450,56 +552,56 @@ html.light .glass-panel-interactive {
   color: #ffffff !important;
 }
 
-/* Light Mode Overrides for Vault Dropdown Menu: 100% Solid Opaque Slate Matching Main Card Palette */
+/* Light Mode Overrides for Vault Dropdown Menu: Uses Dynamic Palette Theme Surfaces */
 html.light .vault-dropdown-menu {
-  background-color: #1e293b !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+  background-color: var(--color-slate-900) !important;
+  border: 1px solid var(--color-slate-700) !important;
+  box-shadow: 0 25px 50px -12px var(--tw-shadow-color), 0 0 0 1px var(--color-slate-700) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-bottom: 1px solid var(--color-slate-700) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-header-title {
-  color: #94a3b8 !important;
+  color: var(--color-slate-500) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item {
-  color: #f1f5f9 !important;
+  color: var(--color-slate-200) !important;
   background-color: transparent !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
+  background-color: var(--color-slate-800) !important;
+  color: var(--color-slate-100) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-icon-box {
-  background-color: #0f172a !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
+  background-color: var(--color-slate-800) !important;
+  border-color: var(--color-slate-700) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item-title {
-  color: #ffffff !important;
+  color: var(--color-slate-100) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item-subtitle {
-  color: #cbd5e1 !important;
+  color: var(--color-slate-500) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-arrow {
-  color: #94a3b8 !important;
+  color: var(--color-slate-500) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item.active-module {
-  background-color: #06b6d4 !important;
+  background-color: var(--color-cyan-500) !important;
   color: #ffffff !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item.active-module .dropdown-icon-box {
-  background-color: rgba(8, 145, 178, 0.6) !important;
-  border-color: rgba(34, 211, 238, 0.5) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
   color: #ffffff !important;
 }
 
@@ -508,7 +610,7 @@ html.light .vault-dropdown-menu .dropdown-item.active-module .dropdown-item-titl
 }
 
 html.light .vault-dropdown-menu .dropdown-item.active-module .dropdown-item-subtitle {
-  color: #e0f2fe !important;
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
 html.light .vault-dropdown-menu .dropdown-item.active-module .dropdown-arrow {
