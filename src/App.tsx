@@ -21,7 +21,7 @@ import { ProfileSettings } from './components/profile/ProfileSettings';
 import { AuraStudio } from './components/studio/AuraStudio';
 import { AppLayoutConfig } from './types/layout';
 import { loadLayoutConfig, saveLayoutConfig, resetLayoutConfig } from './utils/layoutStorage';
-import { LightPalette, LIGHT_PALETTES } from './types/theme';
+import { LightPalette, LIGHT_PALETTES, DarkPalette, DARK_PALETTES } from './types/theme';
 import { Calculator, Layers, TrendingUp, ArrowRightLeft, Sparkles, Plus, Calendar, Activity } from 'lucide-react';
 
 export function App() {
@@ -105,13 +105,25 @@ export function App() {
     return 'alabaster';
   });
 
+  const [darkPalette, setDarkPalette] = useState<DarkPalette>(() => {
+    const saved = localStorage.getItem('aura_dark_palette');
+    if (saved === 'obsidian' || saved === 'stealth' || saved === 'emerald' || saved === 'nebula') {
+      return saved as DarkPalette;
+    }
+    return 'obsidian';
+  });
+
   useEffect(() => {
-    // Remove previous palette classes to avoid clashes
+    // Remove all previous palette classes to avoid clashes
     document.documentElement.classList.remove(
       'theme-alabaster',
       'theme-platinum',
       'theme-ceramic',
-      'theme-glacier'
+      'theme-glacier',
+      'theme-dark-obsidian',
+      'theme-dark-stealth',
+      'theme-dark-emerald',
+      'theme-dark-nebula'
     );
 
     if (theme === 'light') {
@@ -127,11 +139,16 @@ export function App() {
     } else {
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.add(`theme-dark-${darkPalette}`);
+
+      const paletteConfig = DARK_PALETTES[darkPalette];
       const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', '#090d16');
+      if (meta && paletteConfig) {
+        meta.setAttribute('content', paletteConfig.canvasHex);
+      }
     }
     localStorage.setItem('theme', theme);
-  }, [theme, lightPalette]);
+  }, [theme, lightPalette, darkPalette]);
 
   const handleToggleTheme = () => {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
@@ -140,6 +157,11 @@ export function App() {
   const handleSelectLightPalette = (palette: LightPalette) => {
     setLightPalette(palette);
     localStorage.setItem('aura_light_palette', palette);
+  };
+
+  const handleSelectDarkPalette = (palette: DarkPalette) => {
+    setDarkPalette(palette);
+    localStorage.setItem('aura_dark_palette', palette);
   };
 
   // Layout Studio state
@@ -610,6 +632,8 @@ export function App() {
             onToggleStudioUnlock={handleToggleStudioUnlock}
             lightPalette={lightPalette}
             onSelectLightPalette={handleSelectLightPalette}
+            darkPalette={darkPalette}
+            onSelectDarkPalette={handleSelectDarkPalette}
             theme={theme}
             onToggleTheme={handleToggleTheme}
           />

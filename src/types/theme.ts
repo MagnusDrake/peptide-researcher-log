@@ -1,7 +1,8 @@
 export type LightPalette = 'alabaster' | 'platinum' | 'ceramic' | 'glacier';
+export type DarkPalette = 'obsidian' | 'stealth' | 'emerald' | 'nebula';
 
-export interface LightPaletteConfig {
-  id: LightPalette;
+export interface ThemePaletteConfig {
+  id: string;
   name: string;
   tagline: string;
   description: string;
@@ -12,6 +13,9 @@ export interface LightPaletteConfig {
   accentHex: string;
   icon: string;
 }
+
+export type LightPaletteConfig = ThemePaletteConfig;
+export type DarkPaletteConfig = ThemePaletteConfig;
 
 export const LIGHT_PALETTES: Record<LightPalette, LightPaletteConfig> = {
   alabaster: {
@@ -61,5 +65,56 @@ export const LIGHT_PALETTES: Record<LightPalette, LightPaletteConfig> = {
     textHex: '#0A1120',
     accentHex: '#0891B2',
     icon: '🧊',
+  },
+};
+
+export const DARK_PALETTES: Record<DarkPalette, DarkPaletteConfig> = {
+  obsidian: {
+    id: 'obsidian',
+    name: 'Obsidian Cyan',
+    tagline: 'Iconic Aura Bioluminescence',
+    description: 'Deep space navy-obsidian with electric cyan highlights and glowing bioluminescent readouts.',
+    canvasHex: '#090D16',
+    cardHex: '#0F172A',
+    borderHex: '#1E293B',
+    textHex: '#F8FAFC',
+    accentHex: '#06B6D4',
+    icon: '🌌',
+  },
+  stealth: {
+    id: 'stealth',
+    name: 'Onyx Stealth',
+    tagline: 'Pure Carbon & Arctic Ice',
+    description: 'Pitch-black aerospace carbon with razor-sharp arctic ice highlights. Ultra-minimalist and tactical.',
+    canvasHex: '#09090B',
+    cardHex: '#121216',
+    borderHex: '#27272A',
+    textHex: '#FAFAFA',
+    accentHex: '#38BDF8',
+    icon: '🗡️',
+  },
+  emerald: {
+    id: 'emerald',
+    name: 'Bio-Emerald',
+    tagline: 'Subterranean Botanical Nocturne',
+    description: 'Deep forest mineral black with glowing peptides, jade gradients, and vibrant emerald cellular accents.',
+    canvasHex: '#060F0B',
+    cardHex: '#0B1A13',
+    borderHex: '#143325',
+    textHex: '#ECFDF5',
+    accentHex: '#10B981',
+    icon: '🌿',
+  },
+  nebula: {
+    id: 'nebula',
+    name: 'Velvet Nebula',
+    tagline: 'Deep Cosmic Royal Violet',
+    description: 'Midnight galactic amethyst with neon purple and ultraviolet telemetry. Luxurious, moody, and futuristic.',
+    canvasHex: '#0C0A17',
+    cardHex: '#151128',
+    borderHex: '#2A2048',
+    textHex: '#FAF5FF',
+    accentHex: '#A855F7',
+    icon: '🔮',
   },
 };

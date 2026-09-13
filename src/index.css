@@ -165,6 +165,139 @@
     --color-rose-400: #e11d48;
   }
 
+  /* ==========================================================================
+     DARK MODE PALETTES (Multi-Tiered Luxury Dark Atmospheres)
+     ========================================================================== */
+
+  /* Dark Palette 1 (Default): Obsidian Cyan (Iconic Aura Bioluminescence) */
+  html.dark,
+  html.dark.theme-dark-obsidian {
+    --chart-grid: rgba(34, 211, 238, 0.08);
+
+    --color-slate-950: #090D16; /* Canvas: Deepest navy-obsidian void */
+    --color-slate-900: #0F172A; /* Primary Cards, Modals */
+    --color-slate-800: #1E293B; /* Secondary Inset Wells, Row Items */
+    --color-slate-700: #334155; /* Interactive Controls, Active Borders */
+    --color-slate-600: #475569; /* Elevated Borders & Inactive Toggles */
+    --color-slate-500: #64748B; /* Muted Structural Text */
+    --color-slate-400: #94A3B8; /* Secondary / Caption Text */
+    --color-slate-300: #CBD5E1; /* Main Body Text */
+    --color-slate-200: #E2E8F0; /* Strong Subheadings */
+    --color-slate-100: #F8FAFC; /* Headings & Badges */
+    --color-slate-50:  #FFFFFF; /* Glowing Highlights */
+
+    --tw-shadow-color: rgba(0, 0, 0, 0.7);
+
+    --color-cyan-300: #67e8f9;
+    --color-cyan-400: #22d3ee;
+    --color-cyan-500: #06b6d4;
+    --color-cyan-600: #0891b2;
+
+    --color-emerald-300: #6ee7b7;
+    --color-emerald-400: #34d399;
+    --color-emerald-500: #10b981;
+    
+    --color-violet-400: #a78bfa;
+    --color-amber-400: #fbbf24;
+    --color-rose-400: #f43f5e;
+  }
+
+  /* Dark Palette 2: Onyx Stealth (Pure Carbon & Arctic Ice) */
+  html.dark.theme-dark-stealth {
+    --chart-grid: rgba(56, 189, 248, 0.08);
+
+    --color-slate-950: #09090B; /* Canvas: Pitch carbon */
+    --color-slate-900: #121216; /* Cards: Deep charcoal-zinc */
+    --color-slate-800: #1C1C22; /* Insets & Sub-cards */
+    --color-slate-700: #27272A; /* Borders & dividers */
+    --color-slate-600: #3F3F46; /* Toggles & badges */
+    --color-slate-500: #71717A; /* Muted text */
+    --color-slate-400: #A1A1AA; /* Secondary text */
+    --color-slate-300: #D4D4D8; /* Body text */
+    --color-slate-200: #E4E4E7; /* Subheadings */
+    --color-slate-100: #FAFAFA; /* Headings */
+    --color-slate-50:  #FFFFFF;
+
+    --tw-shadow-color: rgba(0, 0, 0, 0.85);
+
+    --color-cyan-300: #7dd3fc;
+    --color-cyan-400: #38bdf8;
+    --color-cyan-500: #0ea5e9;
+    --color-cyan-600: #0284c7;
+
+    --color-emerald-300: #86efac;
+    --color-emerald-400: #4ade80;
+    --color-emerald-500: #22c55e;
+
+    --color-violet-400: #a78bfa;
+    --color-amber-400: #f59e0b;
+    --color-rose-400: #f43f5e;
+  }
+
+  /* Dark Palette 3: Bio-Emerald (Subterranean Botanical Nocturne) */
+  html.dark.theme-dark-emerald {
+    --chart-grid: rgba(16, 185, 129, 0.08);
+
+    --color-slate-950: #060F0B; /* Canvas: Subterranean deep forest moss */
+    --color-slate-900: #0B1A13; /* Cards: Dark jade stone */
+    --color-slate-800: #12281D; /* Insets & Sub-cards */
+    --color-slate-700: #1B3829; /* Deep emerald borders */
+    --color-slate-600: #284F3B; /* Subtle green borders */
+    --color-slate-500: #52796F; /* Muted sage text */
+    --color-slate-400: #84A98C; /* Secondary sage */
+    --color-slate-300: #CAD2C5; /* Body text */
+    --color-slate-200: #D8F3DC; /* Subheadings */
+    --color-slate-100: #ECFDF5; /* Headings */
+    --color-slate-50:  #FFFFFF;
+
+    --tw-shadow-color: rgba(2, 20, 10, 0.85);
+
+    --color-cyan-300: #5eead4;
+    --color-cyan-400: #2dd4bf;
+    --color-cyan-500: #14b8a6;
+    --color-cyan-600: #0d9488;
+
+    --color-emerald-300: #6ee7b7;
+    --color-emerald-400: #34d399;
+    --color-emerald-500: #10b981;
+
+    --color-violet-400: #86efac;
+    --color-amber-400: #eab308;
+    --color-rose-400: #fb7185;
+  }
+
+  /* Dark Palette 4: Velvet Nebula (Deep Cosmic Royal Violet) */
+  html.dark.theme-dark-nebula {
+    --chart-grid: rgba(168, 85, 247, 0.08);
+
+    --color-slate-950: #0C0A17; /* Canvas: Deep interstellar violet black */
+    --color-slate-900: #141026; /* Cards: Midnight amethyst */
+    --color-slate-800: #1F193A; /* Insets & Sub-cards */
+    --color-slate-700: #2E2554; /* Royal borders */
+    --color-slate-600: #433675; /* Accented borders */
+    --color-slate-500: #786C9C; /* Muted lavender */
+    --color-slate-400: #A294C7; /* Secondary lavender */
+    --color-slate-300: #D8CEF0; /* Body text */
+    --color-slate-200: #EDE6F9; /* Subheadings */
+    --color-slate-100: #FAF5FF; /* Glowing crystal headings */
+    --color-slate-50:  #FFFFFF;
+
+    --tw-shadow-color: rgba(10, 5, 24, 0.85);
+
+    --color-cyan-300: #c084fc;
+    --color-cyan-400: #a855f7;
+    --color-cyan-500: #9333ea;
+    --color-cyan-600: #7e22ce;
+
+    --color-emerald-300: #6ee7b7;
+    --color-emerald-400: #34d399;
+    --color-emerald-500: #10b981;
+
+    --color-violet-400: #c084fc;
+    --color-amber-400: #f59e0b;
+    --color-rose-400: #f43f5e;
+  }
+
   body {
     @apply bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-cyan-500 selection:text-white;
     font-family: 'Inter', system-ui, sans-serif;
@@ -252,6 +385,34 @@
     filter: blur(140px);
     background: radial-gradient(circle, var(--color-violet-400) 0%, transparent 70%);
   }
+
+  /* Ambient lighting variations for Dark Palettes */
+  html.dark.theme-dark-stealth #root::before {
+    opacity: 0.15;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
+  }
+  html.dark.theme-dark-stealth #root::after {
+    opacity: 0.12;
+    background: radial-gradient(circle, rgba(148, 163, 184, 0.2) 0%, transparent 70%);
+  }
+
+  html.dark.theme-dark-emerald #root::before {
+    opacity: 0.22;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
+  }
+  html.dark.theme-dark-emerald #root::after {
+    opacity: 0.18;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.25) 0%, transparent 70%);
+  }
+
+  html.dark.theme-dark-nebula #root::before {
+    opacity: 0.22;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+  }
+  html.dark.theme-dark-nebula #root::after {
+    opacity: 0.18;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+  }
 }
 
 /* Custom modern scrollbar */
@@ -305,6 +466,24 @@ html.light .glass-panel {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--color-slate-700);
   box-shadow: 0 10px 25px -5px var(--tw-shadow-color), 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+html.dark.theme-dark-stealth .glass-panel {
+  background: linear-gradient(180deg, rgba(18, 18, 22, 0.92) 0%, rgba(9, 9, 11, 0.98) 100%);
+  border: 1px solid rgba(63, 63, 70, 0.45);
+  box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+html.dark.theme-dark-emerald .glass-panel {
+  background: linear-gradient(180deg, rgba(11, 26, 19, 0.92) 0%, rgba(6, 15, 11, 0.98) 100%);
+  border: 1px solid rgba(27, 56, 41, 0.55);
+  box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.9), 0 0 20px -5px rgba(16, 185, 129, 0.08);
+}
+
+html.dark.theme-dark-nebula .glass-panel {
+  background: linear-gradient(180deg, rgba(20, 16, 38, 0.92) 0%, rgba(12, 10, 23, 0.98) 100%);
+  border: 1px solid rgba(46, 37, 84, 0.55);
+  box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.9), 0 0 20px -5px rgba(168, 85, 247, 0.08);
 }
 
 .glass-panel-interactive {
