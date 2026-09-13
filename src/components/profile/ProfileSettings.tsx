@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { User, Lock, Download, Upload, Shield, Settings, AlertTriangle, CheckCircle2, Wand2, Eye, EyeOff, Sun, Moon, Palette, Check, Sparkles, ArrowRightLeft } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { User, Lock, Download, Upload, Shield, Settings, AlertTriangle, CheckCircle2, Wand2, Eye, EyeOff, Sun, Moon, Palette, Check, Sparkles, ArrowRightLeft, X } from 'lucide-react';
 import { db } from '../../db';
 import { exportDatabaseToJson, triggerDownload, importDatabaseFromJson } from '../../utils/exportImport';
 import { LightPalette, LIGHT_PALETTES, DarkPalette, DARK_PALETTES } from '../../types/theme';
@@ -14,6 +15,15 @@ interface ProfileSettingsProps {
   onSelectDarkPalette?: (palette: DarkPalette) => void;
   theme?: 'dark' | 'light';
   onToggleTheme?: () => void;
+}
+
+interface FeedbackModalData {
+  isOpen: boolean;
+  badge: string;
+  title: string;
+  message: string;
+  subMessage?: string;
+  isError?: boolean;
 }
 
 export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ 
@@ -32,6 +42,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
   const [newPin, setNewPin] = useState('');
   const [pinMessage, setPinMessage] = useState('');
   const [dataMessage, setDataMessage] = useState('');
+  const [feedbackModal, setFeedbackModal] = useState<FeedbackModalData | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   useEffect(() => {
@@ -39,9 +50,29 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
     setName(savedName);
   }, []);
 
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setFeedbackModal(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const handleSaveName = () => {
-    localStorage.setItem('aura_researcher_name', name);
-    alert('Profile name updated successfully.');
+    const trimmed = name.trim() || 'Lead Researcher';
+    setName(trimmed);
+    localStorage.setItem('aura_researcher_name', trimmed);
+    setFeedbackModal({
+      isOpen: true,
+      badge: 'Identity Saved',
+      title: 'Profile Updated',
+      message: 'Your researcher display name has been saved and will appear across your daily schedules, protocols, and dose logs.',
+      subMessage: trimmed,
+      isError: false,
+    });
   };
 
   const handleUpdatePin = () => {
@@ -70,7 +101,13 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
       setTimeout(() => setDataMessage(''), 3000);
     } catch (err) {
       console.error('Export error:', err);
-      alert('Failed to export vault data.');
+      setFeedbackModal({
+        isOpen: true,
+        badge: 'Export Failed',
+        title: 'Vault Backup Error',
+        message: 'Unable to export vault data. Please ensure browser storage is accessible.',
+        isError: true,
+      });
     }
   };
 
@@ -89,7 +126,13 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
             window.location.reload();
           }, 1200);
         } else {
-          alert(res.message);
+          setFeedbackModal({
+            isOpen: true,
+            badge: 'Import Failed',
+            title: 'Restore Error',
+            message: res.message,
+            isError: true,
+          });
         }
       }
     };
@@ -358,6 +401,11 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
                 type="text" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSaveName();
+                  }
+                }}
                 className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all font-medium"
                 placeholder="Enter name..."
               />
@@ -516,6 +564,78 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({
         </div>
 
       </div>
+
+      {/* Aura Luxury Feedback Confirmation Modal */}
+      {feedbackModal && feedbackModal.isOpen && createPortal(
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-300"
+          onClick={() => setFeedbackModal(null)}
+        >
+          <div 
+            className="glass-panel relative w-full max-w-sm rounded-3xl border border-cyan-500/30 p-6 sm:p-7 shadow-2xl shadow-cyan-500/10 flex flex-col items-center text-center animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Close Button */}
+            <button
+              onClick={() => setFeedbackModal(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-200 transition p-1.5 rounded-xl hover:bg-slate-800/60 cursor-pointer"
+              title="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Glowing Icon with Halo */}
+            <div className="relative mb-4 mt-1">
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg ${
+                feedbackModal.isError 
+                  ? 'bg-rose-500/10 border border-rose-500/30 text-rose-400 shadow-rose-500/10' 
+                  : 'bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 shadow-cyan-500/10'
+              }`}>
+                {feedbackModal.isError ? (
+                  <AlertTriangle className="w-7 h-7 text-rose-400" />
+                ) : (
+                  <CheckCircle2 className="w-7 h-7 text-cyan-400" />
+                )}
+              </div>
+              <div className={`absolute -inset-1 rounded-2xl blur-md -z-10 animate-pulse ${
+                feedbackModal.isError ? 'bg-rose-500/20' : 'bg-cyan-500/20'
+              }`} />
+            </div>
+
+            {/* Micro-Label Badge */}
+            <span className="text-[0.65rem] font-bold text-cyan-400 uppercase tracking-[0.2em] mb-1.5">
+              {feedbackModal.badge}
+            </span>
+
+            {/* Title */}
+            <h3 className="text-base font-bold text-slate-100 uppercase tracking-wider mb-2">
+              {feedbackModal.title}
+            </h3>
+
+            {/* Message Body */}
+            <p className="text-xs text-slate-400 leading-relaxed mb-4">
+              {feedbackModal.message}
+            </p>
+
+            {/* Sub-message / Highlighted Alias Box */}
+            {feedbackModal.subMessage && (
+              <div className="w-full py-2.5 px-4 rounded-xl bg-slate-950/60 border border-slate-800 text-xs font-semibold text-cyan-300 mb-5 flex items-center justify-center gap-2">
+                <User className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                <span className="font-semibold text-slate-200">{feedbackModal.subMessage}</span>
+              </div>
+            )}
+
+            {/* Confirm & Close Button */}
+            <button
+              onClick={() => setFeedbackModal(null)}
+              className="w-full py-3 px-6 rounded-xl font-bold uppercase tracking-widest text-xs bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-all duration-300 shadow-lg shadow-cyan-500/20 cursor-pointer"
+            >
+              Acknowledge
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 };
