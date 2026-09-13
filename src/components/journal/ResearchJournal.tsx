@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { DoseLogEntry, Protocol } from '../../types';
 import { db } from '../../db';
 import { exportLogsToCsv, exportDatabaseToJson, triggerDownload, importDatabaseFromJson } from '../../utils/exportImport';
@@ -25,10 +26,17 @@ import {
   Calendar, 
   TrendingUp, 
   Sparkles,
+  Utensils,
+  Scale,
   FileSpreadsheet,
   Database,
-  Utensils,
-  Scale
+  FileText,
+  Image as ImageIcon,
+  Search,
+  X,
+  Maximize2,
+  Camera,
+  ArrowUpDown
 } from 'lucide-react';
 
 interface ResearchJournalProps {
@@ -44,6 +52,10 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
 }) => {
   const [selectedPeptideFilter, setSelectedPeptideFilter] = useState<string>('all');
   const [activeTab, setActiveTab] = useState<'timeline' | 'trends' | 'backup'>('timeline');
+  const [filterMode, setFilterMode] = useState<'all' | 'notes' | 'photos'>('all');
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [previewPhoto, setPreviewPhoto] = useState<{ url: string; title: string; date: string; notes?: string } | null>(null);
 
   const peptideNames = useMemo(() => {
     const names = new Set<string>();
@@ -51,10 +63,46 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
     return Array.from(names);
   }, [logs]);
 
+  // Chronologically sorted and filtered logs
   const filteredLogs = useMemo(() => {
-    if (selectedPeptideFilter === 'all') return logs;
-    return logs.filter(l => l.peptideName === selectedPeptideFilter);
-  }, [logs, selectedPeptideFilter]);
+    let result = [...logs];
+
+    // Compound filter
+    if (selectedPeptideFilter !== 'all') {
+      result = result.filter(l => l.peptideName === selectedPeptideFilter);
+    }
+
+    // Media / notes specific filter
+    if (filterMode === 'notes') {
+      result = result.filter(l => Boolean(l.notes && l.notes.trim().length > 0));
+    } else if (filterMode === 'photos') {
+      result = result.filter(l => Boolean(l.photoDataUri));
+    }
+
+    // Text search query
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(l => 
+        l.peptideName.toLowerCase().includes(q) ||
+        (l.notes && l.notes.toLowerCase().includes(q)) ||
+        l.injectionSite.toLowerCase().includes(q) ||
+        (l.customReactionText && l.customReactionText.toLowerCase().includes(q)) ||
+        (l.subjectiveMetrics?.foodHabit && l.subjectiveMetrics.foodHabit.toLowerCase().includes(q))
+      );
+    }
+
+    // Chronological order (Newest first vs Oldest first)
+    return result.sort((a, b) => {
+      const timeA = new Date(a.timestamp).getTime();
+      const timeB = new Date(b.timestamp).getTime();
+      return sortOrder === 'newest' ? timeB - timeA : timeA - timeB;
+    });
+  }, [logs, selectedPeptideFilter, filterMode, searchQuery, sortOrder]);
+
+  // Summary counts for quick badges
+  const notesCount = useMemo(() => logs.filter(l => l.notes && l.notes.trim().length > 0).length, [logs]);
+  const photosCount = useMemo(() => logs.filter(l => Boolean(l.photoDataUri)).length, [logs]);
+
 
   const handleDeleteLog = async (logId: string) => {
     if (confirm('Delete this research administration record?')) {
@@ -193,29 +241,122 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
           </button>
         </div>
 
-        {/* Filter by Compound */}
-        {peptideNames.length > 0 && (
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-slate-500" />
-            <select
-              value={selectedPeptideFilter}
-              onChange={(e) => setSelectedPeptideFilter(e.target.value)}
-              className="bg-slate-900 border border-slate-700 text-white text-xs rounded-xl p-2.5 focus:border-cyan-400 outline-none"
+        {/* Filter & Sort Controls */}
+        <div className="flex flex-wrap items-center gap-2.5">
+          {/* Filter by Compound */}
+          {peptideNames.length > 0 && (
+            <div className="flex items-center gap-1.5 bg-slate-900 border border-slate-700/80 rounded-xl px-2.5 py-1.5">
+              <Filter className="w-3.5 h-3.5 text-slate-400" />
+              <select
+                value={selectedPeptideFilter}
+                onChange={(e) => setSelectedPeptideFilter(e.target.value)}
+                className="bg-transparent text-white text-xs focus:outline-none cursor-pointer"
+              >
+                <option value="all" className="bg-slate-900 text-white">All Compounds ({logs.length})</option>
+                {peptideNames.map(name => (
+                  <option key={name} value={name} className="bg-slate-900 text-white">{name}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Chronological Sort Toggle */}
+          <button
+            onClick={() => setSortOrder(prev => prev === 'newest' ? 'oldest' : 'newest')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700/80 text-xs font-semibold text-slate-300 hover:text-white hover:border-cyan-500/50 transition cursor-pointer"
+            title={`Sorted chronologically: ${sortOrder === 'newest' ? 'Newest to Oldest' : 'Oldest to Newest'}`}
+          >
+            <ArrowUpDown className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="text-[0.65rem] uppercase tracking-wider">
+              {sortOrder === 'newest' ? 'Newest First' : 'Oldest First'}
+            </span>
+          </button>
+
+          {/* Media / Content Type Filter Pills */}
+          <div className="flex items-center bg-slate-900/90 border border-slate-800 p-1 rounded-xl">
+            <button
+              onClick={() => setFilterMode('all')}
+              className={`px-2.5 py-1 rounded-lg text-[0.65rem] font-bold uppercase tracking-wider transition cursor-pointer ${
+                filterMode === 'all'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
             >
-              <option value="all">All Compounds ({logs.length})</option>
-              {peptideNames.map(name => (
-                <option key={name} value={name}>{name}</option>
-              ))}
-            </select>
+              All Logs
+            </button>
+            <button
+              onClick={() => setFilterMode('notes')}
+              className={`px-2.5 py-1 rounded-lg text-[0.65rem] font-bold uppercase tracking-wider transition cursor-pointer flex items-center gap-1.5 ${
+                filterMode === 'notes'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <FileText className="w-3 h-3 text-cyan-400" />
+              <span>Notes</span>
+              <span className="text-[9px] px-1 py-0.2 rounded-full bg-slate-800 text-slate-300 font-mono">
+                {notesCount}
+              </span>
+            </button>
+            <button
+              onClick={() => setFilterMode('photos')}
+              className={`px-2.5 py-1 rounded-lg text-[0.65rem] font-bold uppercase tracking-wider transition cursor-pointer flex items-center gap-1.5 ${
+                filterMode === 'photos'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Camera className="w-3 h-3 text-amber-400" />
+              <span>Photos</span>
+              <span className="text-[9px] px-1 py-0.2 rounded-full bg-slate-800 text-slate-300 font-mono">
+                {photosCount}
+              </span>
+            </button>
           </div>
-        )}
+
+          {/* Quick Search */}
+          <div className="relative flex-1 min-w-[160px] sm:max-w-xs">
+            <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Search notes, sites, reactions..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-slate-900 border border-slate-700/80 text-white text-xs rounded-xl pl-8 pr-7 py-1.5 focus:border-cyan-400 focus:outline-none placeholder:text-slate-500"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* TAB 1: TIMELINE VIEW */}
+      {/* TAB 1: TIMELINE VIEW (CHRONOLOGICAL HISTORY WITH NOTES & PHOTOS) */}
       {activeTab === 'timeline' && (
         <div className="flex flex-col gap-4">
+          {/* Active Filter Notice */}
+          {(filterMode !== 'all' || searchQuery.trim() !== '') && (
+            <div className="flex items-center justify-between px-4 py-2 rounded-xl bg-cyan-950/30 border border-cyan-800/40 text-xs text-cyan-300">
+              <span className="flex items-center gap-2">
+                <span>Showing {filteredLogs.length} matching {filterMode === 'notes' ? 'entries with notes' : filterMode === 'photos' ? 'entries with photos' : 'logs'}</span>
+                {searchQuery && <span className="text-slate-400">matching "{searchQuery}"</span>}
+              </span>
+              <button
+                onClick={() => { setFilterMode('all'); setSearchQuery(''); }}
+                className="text-[10px] font-bold uppercase tracking-wider text-cyan-400 hover:text-cyan-200 underline"
+              >
+                Clear Filters
+              </button>
+            </div>
+          )}
+
           {filteredLogs.length > 0 ? (
-            <div className="grid grid-cols-1 gap-3.5">
+            <div className="grid grid-cols-1 gap-4">
               {filteredLogs.map(log => {
                 const date = new Date(log.timestamp);
                 const hasMetrics = log.subjectiveMetrics && Object.values(log.subjectiveMetrics).some(v => v !== undefined);
@@ -223,22 +364,23 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                 return (
                   <div
                     key={log.id}
-                    className="glass-panel p-5 rounded-2xl border-slate-800 hover:border-slate-700 transition flex flex-col md:flex-row md:items-center justify-between gap-4"
+                    className="glass-panel p-5 sm:p-6 rounded-3xl border-slate-800 hover:border-slate-700 transition flex flex-col md:flex-row md:items-start justify-between gap-5 relative overflow-hidden"
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="h-11 w-11 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0 mt-0.5">
+                    <div className="flex items-start gap-4 flex-1">
+                      <div className="h-11 w-11 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0 mt-0.5 shadow-sm">
                         💉
                       </div>
 
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-2 flex-1 min-w-0">
+                        {/* Title & Badges Header */}
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-100">{log.peptideName}</h3>
+                          <h3 className="text-[0.7rem] font-bold uppercase tracking-widest text-slate-100">{log.peptideName}</h3>
                           {log.isBlend && (
                             <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 font-bold border border-purple-800">
                               🧪 Multi-Stack
                             </span>
                           )}
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 font-mono font-bold border border-cyan-800">
+                          <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-300 font-mono font-bold border border-cyan-800">
                             {log.doseAmount} {log.doseUnit} ({log.drawUnits} units)
                           </span>
                           <span className="text-xs text-slate-400">
@@ -259,6 +401,7 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                           )}
                         </div>
 
+                        {/* Multi-blend details */}
                         {log.isBlend && log.blendDelivered && log.blendDelivered.length > 0 && (
                           <div className="flex flex-wrap gap-1.5 mt-0.5">
                             {log.blendDelivered.map((d, idx) => (
@@ -269,19 +412,59 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                           </div>
                         )}
 
-                        <div className="text-xs text-slate-400 font-mono">
-                          {date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })} at {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        {/* Chronological Timestamp */}
+                        <div className="text-xs text-slate-400 font-mono flex items-center gap-2">
+                          <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                          <span>
+                            {date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })} at {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
                         </div>
 
+                        {/* Prominent Observation Notes Container */}
                         {log.notes && (
-                          <p className="text-xs text-slate-300 italic mt-1 bg-slate-950/60 p-2 rounded-xl border border-slate-800">
-                            "{log.notes}"
-                          </p>
+                          <div className="mt-1 p-3 rounded-2xl bg-slate-950/70 border border-slate-800/90 shadow-inner">
+                            <div className="flex items-center gap-1.5 text-[0.65rem] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                              <FileText className="w-3.5 h-3.5 text-cyan-400" />
+                              <span>Administration Notes</span>
+                            </div>
+                            <p className="text-xs text-slate-200 leading-relaxed font-sans whitespace-pre-wrap select-text">
+                              {log.notes}
+                            </p>
+                          </div>
                         )}
 
-                        {/* Subjective metrics badges */}
+                        {/* Attached Progress Picture */}
+                        {log.photoDataUri && (
+                          <div className="mt-2">
+                            <div className="flex items-center gap-1.5 text-[0.65rem] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                              <Camera className="w-3.5 h-3.5 text-amber-400" />
+                              <span>Attached Progress Picture</span>
+                            </div>
+                            <div 
+                              onClick={() => setPreviewPhoto({
+                                url: log.photoDataUri!,
+                                title: `${log.peptideName} Progress Photo`,
+                                date: `${date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })} at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+                                notes: log.notes
+                              })}
+                              className="w-32 h-32 sm:w-44 sm:h-44 rounded-2xl overflow-hidden border border-slate-700/80 hover:border-amber-400/80 transition-all duration-300 cursor-pointer group relative shadow-lg hover:shadow-amber-500/10"
+                            >
+                              <img 
+                                src={log.photoDataUri} 
+                                alt={`${log.peptideName} Progress`} 
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                              />
+                              <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 backdrop-blur-[2px]">
+                                <Maximize2 className="w-5 h-5 text-amber-400 animate-pulse" />
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-amber-300">View Full Photo</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Subjective Biometrics Badges */}
                         {hasMetrics && log.subjectiveMetrics && (
-                          <div className="flex flex-wrap gap-2 mt-2">
+                          <div className="flex flex-wrap gap-2 mt-2 pt-2 border-t border-slate-800/60">
                             {log.subjectiveMetrics.recoveryScore !== undefined && (
                               <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-950 text-emerald-300 border border-emerald-800/80">
                                 Recovery: {log.subjectiveMetrics.recoveryScore}/10
@@ -316,25 +499,14 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
                             )}
                           </div>
                         )}
-
-                        {/* Attached Photo */}
-                        {log.photoDataUri && (
-                          <div className="mt-3">
-                            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden border border-slate-700 hover:border-cyan-500 transition-colors cursor-pointer group relative">
-                              <img src={log.photoDataUri} alt="Progress Note" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                              <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-cyan-400">Attached</span>
-                              </div>
-                            </div>
-                          </div>
-                        )}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 self-end md:self-auto shrink-0">
+                    {/* Action buttons */}
+                    <div className="flex items-center gap-2 self-end md:self-start shrink-0">
                       <button
                         onClick={() => handleDeleteLog(log.id)}
-                        className="p-2 rounded-xl hover:bg-red-950/50 text-slate-500 hover:text-red-400 transition"
+                        className="p-2.5 rounded-xl hover:bg-red-950/50 text-slate-500 hover:text-red-400 transition"
                         title="Delete log entry"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -347,10 +519,22 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
           ) : (
             <div className="glass-panel p-12 rounded-3xl text-center flex flex-col items-center justify-center gap-2">
               <span className="text-3xl">📝</span>
-              <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em]">No Doses Logged Yet</h3>
+              <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em]">
+                {searchQuery || filterMode !== 'all' ? 'No Matching Records Found' : 'No Doses Logged Yet'}
+              </h3>
               <p className="text-xs text-slate-400 max-w-sm">
-                Log your first dose from Today's Schedule to start seeing your history and charts here.
+                {searchQuery || filterMode !== 'all' 
+                  ? 'Try adjusting your filters or search query to view other dose administration entries.'
+                  : "Log your first dose from Today's Schedule to start seeing your history and charts here."}
               </p>
+              {(searchQuery || filterMode !== 'all') && (
+                <button
+                  onClick={() => { setFilterMode('all'); setSearchQuery(''); setSelectedPeptideFilter('all'); }}
+                  className="mt-3 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 font-bold text-xs transition"
+                >
+                  Reset All Filters
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -611,6 +795,62 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
       <div className="mt-2">
         <PkDecayChart protocols={protocols} />
       </div>
+
+      {/* FULL RESOLUTION PHOTO LIGHTBOX MODAL */}
+      {previewPhoto && createPortal(
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={() => setPreviewPhoto(null)}
+        >
+          <div 
+            className="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl flex flex-col my-auto relative animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between">
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <Camera className="w-3.5 h-3.5" />
+                  <span>Dose Administration Record</span>
+                </span>
+                <h3 className="text-sm font-bold text-slate-100 mt-0.5">{previewPhoto.title}</h3>
+                <span className="text-xs text-slate-400 font-mono">{previewPhoto.date}</span>
+              </div>
+
+              <button
+                onClick={() => setPreviewPhoto(null)}
+                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer"
+                title="Close photo preview"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Photo Viewport */}
+            <div className="bg-black flex items-center justify-center max-h-[70vh] overflow-hidden p-2">
+              <img 
+                src={previewPhoto.url} 
+                alt={previewPhoto.title}
+                className="max-h-[66vh] max-w-full object-contain rounded-xl shadow-lg" 
+              />
+            </div>
+
+            {/* Modal Footer / Notes */}
+            {previewPhoto.notes && (
+              <div className="p-4 sm:p-5 border-t border-slate-800 bg-slate-950/60">
+                <div className="flex items-center gap-1.5 text-[0.65rem] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                  <FileText className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Observation Notes</span>
+                </div>
+                <p className="text-xs text-slate-200 leading-relaxed italic select-text">
+                  "{previewPhoto.notes}"
+                </p>
+              </div>
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 };
