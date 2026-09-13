@@ -25,6 +25,7 @@ interface VialStatusCardProps {
   onEdit: (protocol: Protocol) => void;
   onDelete: (protocolId: string) => void;
   onToggleActive: (protocol: Protocol) => void;
+  onToggleFinished?: (protocol: Protocol) => void;
   onLogDose: (protocol: Protocol) => void;
   logsCount?: number;
 }
@@ -36,6 +37,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
   onEdit,
   onDelete,
   onToggleActive,
+  onToggleFinished,
   onLogDose,
   logsCount = 0,
 }) => {
@@ -75,13 +77,23 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
 
   return (
     <div className={`glass-panel rounded-3xl p-6 flex flex-col justify-between gap-5 relative transition shadow-xl border ${
-      protocol.isActive ? 'border-slate-800 hover:border-cyan-500/30' : 'border-slate-900 opacity-60'
+      protocol.isFinished
+        ? 'border-emerald-900/40 bg-slate-900/40 opacity-80'
+        : protocol.isActive
+          ? 'border-slate-800 hover:border-cyan-500/30'
+          : 'border-slate-900 opacity-60'
     }`}>
       
       {/* Top Card Header */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-col">
           <div className="flex items-center gap-2 flex-wrap">
+            {protocol.isFinished ? (
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-700/60 flex items-center gap-1 shadow-sm shadow-emerald-950">
+                <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                <span>Finished</span>
+              </span>
+            ) : null}
             {protocol.isBlend ? (
               <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 flex items-center gap-1">
                 <span>🧪</span>
@@ -106,7 +118,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
 
           <h3 className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-100 mt-1.5 flex items-center gap-2">
             <span>{protocol.peptideName}</span>
-            {isScheduledToday && protocol.isActive && (
+            {isScheduledToday && protocol.isActive && !protocol.isFinished && (
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" title="Scheduled for today!" />
             )}
           </h3>
@@ -122,7 +134,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
           </button>
 
           {showMenu && (
-            <div className="absolute right-0 top-8 z-30 bg-slate-900 border border-slate-700 rounded-2xl p-1.5 shadow-2xl w-44 flex flex-col gap-1 text-xs">
+            <div className="absolute right-0 top-8 z-30 bg-slate-900 border border-slate-700 rounded-2xl p-1.5 shadow-2xl w-48 flex flex-col gap-1 text-xs">
               <button
                 onClick={() => {
                   setShowMenu(false);
@@ -145,16 +157,31 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
                 <span>Share Routine Card</span>
               </button>
 
-              <button
-                onClick={() => {
-                  setShowMenu(false);
-                  onToggleActive(protocol);
-                }}
-                className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-slate-800 text-slate-200 text-left transition"
-              >
-                <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
-                <span>{protocol.isActive ? 'Pause Routine' : 'Resume Routine'}</span>
-              </button>
+              {!protocol.isFinished && (
+                <button
+                  onClick={() => {
+                    setShowMenu(false);
+                    onToggleActive(protocol);
+                  }}
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-slate-800 text-slate-200 text-left transition"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
+                  <span>{protocol.isActive ? 'Pause Routine' : 'Resume Routine'}</span>
+                </button>
+              )}
+
+              {onToggleFinished && (
+                <button
+                  onClick={() => {
+                    setShowMenu(false);
+                    onToggleFinished(protocol);
+                  }}
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-slate-800 text-slate-200 text-left transition"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>{protocol.isFinished ? 'Reopen Routine' : 'Mark as Finished'}</span>
+                </button>
+              )}
 
               <div className="border-t border-slate-800 my-0.5" />
 
@@ -272,7 +299,12 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
       </div>
 
       {/* Bottom Action Button */}
-      {protocol.isActive && (
+      {protocol.isFinished ? (
+        <div className="w-full py-2.5 px-4 rounded-2xl bg-slate-900/60 border border-emerald-900/40 text-emerald-400/90 text-xs font-semibold flex items-center justify-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <span>Routine Cycle Completed</span>
+        </div>
+      ) : protocol.isActive ? (
         <button
           onClick={() => onLogDose(protocol)}
           className={`w-full py-3 px-4 rounded-2xl font-bold text-xs flex items-center justify-center gap-2 transition shadow-lg ${
@@ -284,7 +316,7 @@ export const VialStatusCard: React.FC<VialStatusCardProps> = ({
           <PlusCircle className="w-4 h-4" />
           <span>{isScheduledToday ? "Log Today's Dose" : 'Log a Dose'}</span>
         </button>
-      )}
+      ) : null}
 
       {/* Share / Export Protocol Modal */}
       {showShareModal && createPortal(

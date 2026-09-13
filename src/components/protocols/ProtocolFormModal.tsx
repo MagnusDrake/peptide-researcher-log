@@ -318,6 +318,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
       costPerVial: costPerVial === '' ? undefined : Number(costPerVial),
       notes: notes.trim() || undefined,
       isActive: editingProtocol ? editingProtocol.isActive : true,
+      isFinished: editingProtocol ? editingProtocol.isFinished : false,
       isPublic,
       shareAlias: isPublic ? (shareAlias.trim() || undefined) : undefined,
     };

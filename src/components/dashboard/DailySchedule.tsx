@@ -74,7 +74,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
   // Routine / Protocol Management State
   const [isProtocolModalOpen, setIsProtocolModalOpen] = useState<boolean>(initialModalOpen);
   const [editingProtocol, setEditingProtocol] = useState<Protocol | null>(null);
-  const [filterActive, setFilterActive] = useState<'all' | 'active' | 'paused'>('active');
+  const [filterActive, setFilterActive] = useState<'all' | 'active' | 'paused' | 'finished'>('active');
 
   useEffect(() => {
     if (initialModalOpen || initialProtocolData !== null) {
@@ -86,8 +86,9 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
   const todayDayOfWeek = today.getDay(); // 0 = Sun, 1 = Mon ... 6 = Sat
   const todayDateStr = today.toISOString().split('T')[0];
 
-  const activeProtocols = useMemo(() => protocols.filter(p => p.isActive), [protocols]);
-  const pausedProtocols = useMemo(() => protocols.filter(p => !p.isActive), [protocols]);
+  const activeProtocols = useMemo(() => protocols.filter(p => p.isActive && !p.isFinished), [protocols]);
+  const pausedProtocols = useMemo(() => protocols.filter(p => !p.isActive && !p.isFinished), [protocols]);
+  const finishedProtocols = useMemo(() => protocols.filter(p => Boolean(p.isFinished)), [protocols]);
 
   // Protocols scheduled for today
   const scheduledToday = useMemo(() => {
@@ -159,7 +160,19 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
   };
 
   const handleToggleActiveRoutine = async (protocol: Protocol) => {
-    await db.protocols.update(protocol.id, { isActive: !protocol.isActive });
+    await db.protocols.update(protocol.id, { 
+      isActive: !protocol.isActive,
+      isFinished: false,
+    });
+    onProtocolsChanged();
+  };
+
+  const handleToggleFinishedRoutine = async (protocol: Protocol) => {
+    const isNowFinished = !protocol.isFinished;
+    await db.protocols.update(protocol.id, {
+      isFinished: isNowFinished,
+      isActive: isNowFinished ? false : true,
+    });
     onProtocolsChanged();
   };
 
@@ -176,7 +189,9 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
     ? protocols 
     : filterActive === 'active' 
       ? activeProtocols 
-      : pausedProtocols;
+      : filterActive === 'paused'
+        ? pausedProtocols
+        : finishedProtocols;
 
   // Dynamic Style Classes based on Layout Configuration
   const { styles } = layoutConfig;
@@ -492,6 +507,14 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
             Paused ({pausedProtocols.length})
           </button>
           <button
+            onClick={() => setFilterActive('finished')}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+              filterActive === 'finished' ? 'bg-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            Finished ({finishedProtocols.length})
+          </button>
+          <button
             onClick={() => setFilterActive('all')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
               filterActive === 'all' ? 'bg-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
@@ -512,6 +535,7 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
               onEdit={handleEditRoutine}
               onDelete={handleDeleteRoutine}
               onToggleActive={handleToggleActiveRoutine}
+              onToggleFinished={handleToggleFinishedRoutine}
               onLogDose={(proto) => handleOpenLog(proto)}
               logsCount={logsCountMap[protocol.id] || 0}
             />
@@ -526,7 +550,9 @@ export const DailySchedule: React.FC<DailyScheduleProps> = ({
           <p className="text-xs text-slate-400 max-w-sm">
             {filterActive === 'active'
               ? "You don't have any active routines yet. Create your first routine to start scheduling and tracking your doses."
-              : 'No routines in this filter tab.'}
+              : filterActive === 'finished'
+                ? 'No finished routines yet. Completed protocol cycles can be archived here.'
+                : 'No routines in this filter tab.'}
           </p>
           <button
             onClick={handleCreateNewRoutine}

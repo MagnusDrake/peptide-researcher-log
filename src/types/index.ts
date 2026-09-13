@@ -112,6 +112,7 @@ export interface Protocol {
   notes?: string;
   colorTag?: string;
   isActive: boolean;
+  isFinished?: boolean;
   reconstitutedDate?: string; // YYYY-MM-DD
   initialVialVolumeMl?: number;
   remainingVialVolumeMl?: number;

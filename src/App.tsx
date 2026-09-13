@@ -444,7 +444,7 @@ export function App() {
       <Navbar
         activeTab={activeTab}
         onTabChange={handleTabChange}
-        activeProtocolsCount={protocols.filter(p => p.isActive).length}
+        activeProtocolsCount={protocols.filter(p => p.isActive && !p.isFinished).length}
         onInstallClick={handleInstallPwa}
         canInstall={canInstall}
         theme={theme}
@@ -659,7 +659,7 @@ export function App() {
       <MobileNav
         activeTab={activeTab}
         onTabChange={handleTabChange}
-        activeProtocolsCount={protocols.filter(p => p.isActive).length}
+        activeProtocolsCount={protocols.filter(p => p.isActive && !p.isFinished).length}
       />
     </div>
     </>

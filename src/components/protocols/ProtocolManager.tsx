@@ -24,16 +24,19 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(initialModalOpen);
   const [editingProtocol, setEditingProtocol] = useState<Protocol | null>(null);
-  const [filterActive, setFilterActive] = useState<'all' | 'active' | 'paused'>('active');
+  const [filterActive, setFilterActive] = useState<'all' | 'active' | 'paused' | 'finished'>('active');
 
-  const activeProtocols = protocols.filter(p => p.isActive);
-  const pausedProtocols = protocols.filter(p => !p.isActive);
+  const activeProtocols = protocols.filter(p => p.isActive && !p.isFinished);
+  const pausedProtocols = protocols.filter(p => !p.isActive && !p.isFinished);
+  const finishedProtocols = protocols.filter(p => Boolean(p.isFinished));
 
   const displayedProtocols = filterActive === 'all' 
     ? protocols 
     : filterActive === 'active' 
       ? activeProtocols 
-      : pausedProtocols;
+      : filterActive === 'paused'
+        ? pausedProtocols
+        : finishedProtocols;
 
   const handleEdit = (protocol: Protocol) => {
     setEditingProtocol(protocol);
@@ -48,7 +51,19 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
   };
 
   const handleToggleActive = async (protocol: Protocol) => {
-    await db.protocols.update(protocol.id, { isActive: !protocol.isActive });
+    await db.protocols.update(protocol.id, { 
+      isActive: !protocol.isActive,
+      isFinished: false,
+    });
+    onProtocolsChanged();
+  };
+
+  const handleToggleFinished = async (protocol: Protocol) => {
+    const nextFinished = !protocol.isFinished;
+    await db.protocols.update(protocol.id, {
+      isFinished: nextFinished,
+      isActive: nextFinished ? false : true,
+    });
     onProtocolsChanged();
   };
 
@@ -134,6 +149,14 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
             Paused ({pausedProtocols.length})
           </button>
           <button
+            onClick={() => setFilterActive('finished')}
+            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition ${
+              filterActive === 'finished' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            Finished ({finishedProtocols.length})
+          </button>
+          <button
             onClick={() => setFilterActive('all')}
             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition ${
               filterActive === 'all' ? 'bg-cyan-500 text-white shadow-md' : 'text-slate-400 hover:text-white'
@@ -154,6 +177,7 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
               onEdit={handleEdit}
               onDelete={handleDelete}
               onToggleActive={handleToggleActive}
+              onToggleFinished={handleToggleFinished}
               onLogDose={onLogDose}
               logsCount={logsCountMap[protocol.id] || 0}
             />
@@ -168,7 +192,9 @@ export const ProtocolManager: React.FC<ProtocolManagerProps> = ({
           <p className="text-xs text-slate-400 max-w-sm">
             {filterActive === 'active'
               ? "You don't have any active routines yet. Create your first routine to start scheduling and tracking your doses."
-              : 'No routines in this tab.'}
+              : filterActive === 'finished'
+                ? 'No finished routines yet. Completed protocol cycles can be archived here.'
+                : 'No routines in this tab.'}
           </p>
           <button
             onClick={handleCreateNew}

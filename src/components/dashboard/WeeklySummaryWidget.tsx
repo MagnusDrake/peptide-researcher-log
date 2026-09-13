@@ -19,7 +19,7 @@ export const WeeklySummaryWidget: React.FC<WeeklySummaryWidgetProps> = ({
   logs,
   onNavigateToProtocols,
 }) => {
-  const activeProtocols = protocols.filter(p => p.isActive);
+  const activeProtocols = protocols.filter(p => p.isActive && !p.isFinished);
 
   // Generate current week days (Monday - Sunday)
   const today = new Date();

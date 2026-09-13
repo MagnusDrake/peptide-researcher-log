@@ -23,7 +23,7 @@ export const PkDecayChart: React.FC<PkDecayChartProps> = ({
   protocols,
   selectedProtocolId: initialSelectedId,
 }) => {
-  const activeProtocols = protocols.filter(p => p.isActive);
+  const activeProtocols = protocols.filter(p => p.isActive && !p.isFinished);
   const [selectedId, setSelectedId] = useState<string>(
     initialSelectedId || (activeProtocols.length > 0 ? activeProtocols[0].id : '')
   );
