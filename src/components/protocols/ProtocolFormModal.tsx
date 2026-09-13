@@ -38,9 +38,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
   ]);
   const [primaryBlendId, setPrimaryBlendId] = useState<string>('bc-1');
 
-  const [peptideId, setPeptideId] = useState<string>('bpc-157');
-  const [peptideName, setPeptideName] = useState<string>('BPC-157');
-  const [peptideSearchQuery, setPeptideSearchQuery] = useState<string>('BPC-157');
+  const [peptideId, setPeptideId] = useState<string>('');
+  const [peptideName, setPeptideName] = useState<string>('');
+  const [peptideSearchQuery, setPeptideSearchQuery] = useState<string>('');
   const [isPeptideDropdownOpen, setIsPeptideDropdownOpen] = useState<boolean>(false);
   const peptideSelectorRef = useRef<HTMLDivElement>(null);
   const [storedCustomPeptides, setStoredCustomPeptides] = useState<any[]>([]);
@@ -140,9 +140,9 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
       if (initialData.syringeType) setSyringeType(initialData.syringeType);
       if (initialData.costPerVial) setCostPerVial(initialData.costPerVial);
     } else {
-      setPeptideId('bpc-157');
-      setPeptideName('BPC-157');
-      setPeptideSearchQuery('BPC-157');
+      setPeptideId('');
+      setPeptideName('');
+      setPeptideSearchQuery('');
     }
   }, [editingProtocol, initialData, isOpen]);
 
@@ -273,13 +273,22 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
 
     const finalProtocolName = isBlend 
       ? (peptideName || blendComponents.map(c => c.peptideName).join(' + '))
-      : peptideName;
+      : (peptideName.trim() || peptideSearchQuery.trim());
+
+    if (!finalProtocolName) {
+      setIsPeptideDropdownOpen(true);
+      return;
+    }
+
+    const resolvedPeptideId = isBlend 
+      ? 'custom-blend' 
+      : (peptideId || 'custom');
 
     const protocolToSave: Protocol = {
       id: editingProtocol ? editingProtocol.id : `proto-${Date.now()}`,
-      peptideId: isBlend ? 'custom-blend' : peptideId,
+      peptideId: resolvedPeptideId,
       peptideName: finalProtocolName,
-      customPeptide: isBlend ? true : peptideId === 'custom',
+      customPeptide: isBlend ? true : resolvedPeptideId === 'custom',
       isBlend,
       blendComponents: isBlend ? blendCalc.components.map(c => ({
         id: c.id,
