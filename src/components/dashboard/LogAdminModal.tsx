@@ -6,6 +6,7 @@ import { SiteRotationMap } from './SiteRotationMap';
 import { db } from '../../db';
 import confetti from 'canvas-confetti';
 import { X, Check, Activity, Sparkles, Shield, Heart, Moon, Zap, Scale, Plus } from 'lucide-react';
+import { sensory } from '../../utils/soundHaptics';
 
 interface LogAdminModalProps {
   isOpen: boolean;
@@ -127,7 +128,8 @@ export const LogAdminModal: React.FC<LogAdminModalProps> = ({
       await db.protocols.update(protocol.id, { remainingVialUnits: updatedRemaining });
     }
 
-    // Celebration burst
+    // Celebration burst & sensory feedback
+    sensory.triggerDoseLogged();
     confetti({
       particleCount: 80,
       spread: 70,

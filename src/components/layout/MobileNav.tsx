@@ -8,6 +8,7 @@ import {
   Sparkles,
   Users
 } from 'lucide-react';
+import { sensory } from '../../utils/soundHaptics';
 
 interface MobileNavProps {
   activeTab: NavTab;
@@ -39,7 +40,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           return (
             <button
               key={item.id}
-              onClick={() => onTabChange(item.id)}
+              onClick={() => {
+                sensory.triggerTabSwitch();
+                onTabChange(item.id);
+              }}
               aria-current={isActive ? 'page' : undefined}
               className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-2xl transition relative min-w-[58px] cursor-pointer ${
                 isActive 

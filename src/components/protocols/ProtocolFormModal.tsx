@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Protocol, SyringeType, FrequencyType, TimingOfDay, BlendComponent } from '../../types';
 import { PEPTIDES_DATABASE } from '../../data/peptides';
 import { calculateReconstitution, calculateMultiBlend } from '../../utils/calculations';
+import { sensory } from '../../utils/soundHaptics';
 import { db } from '../../db';
 import { X, Check, Sparkles, Calendar, Clock, DollarSign, Share2, Layers, Plus, Trash2, Search, ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -322,6 +323,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
     };
 
     await db.protocols.put(protocolToSave);
+    sensory.triggerSuccess();
 
     onSaved(protocolToSave);
     onClose();

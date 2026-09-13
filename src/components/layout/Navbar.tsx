@@ -18,6 +18,8 @@ import {
   Wand2
 } from 'lucide-react';
 
+import { sensory } from '../../utils/soundHaptics';
+
 export type NavTab = 'dashboard' | 'calculator' | 'library' | 'community' | 'sources' | 'profile' | 'studio';
 
 interface NavbarProps {
@@ -72,10 +74,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   // Secret 5-tap logo handler for developer/owner unlock
   const handleLogoClick = () => {
+    sensory.triggerTap();
     const now = Date.now();
     if (now - lastLogoTapRef.current < 1200) {
       const nextCount = logoTapCount + 1;
       if (nextCount >= 5) {
+        sensory.triggerUnlock();
         onToggleStudioUnlock?.();
         setLogoTapCount(0);
       } else {
@@ -115,6 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, [isDropdownOpen, isMobileDrawerOpen]);
 
   const handleSelectTab = (tab: NavTab) => {
+    sensory.triggerTabSwitch();
     onTabChange(tab);
     setIsDropdownOpen(false);
     setIsMobileDrawerOpen(false);
@@ -274,7 +279,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Light / Dark Mode Toggle */}
           <button
             type="button"
-            onClick={onToggleTheme}
+            onClick={() => {
+              sensory.triggerThemeSwitch();
+              onToggleTheme();
+            }}
             className="flex items-center justify-center w-9 h-9 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white transition active:scale-95 shadow-sm cursor-pointer"
             title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}

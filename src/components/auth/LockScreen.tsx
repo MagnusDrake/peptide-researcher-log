@@ -13,6 +13,8 @@ import {
   ChevronRight 
 } from 'lucide-react';
 
+import { sensory } from '../../utils/soundHaptics';
+
 interface LockScreenProps {
   onUnlock: () => void;
 }
@@ -30,11 +32,13 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
     if (pin.length === 4) {
       if (pin === CORRECT_PIN) {
         setUnlocked(true);
+        sensory.triggerUnlock();
         setTimeout(() => {
           onUnlock();
         }, 800);
       } else {
         setError(true);
+        sensory.triggerError();
         setTimeout(() => {
           setPin('');
           setError(false);
@@ -59,6 +63,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
 
   const handleKeyPress = (num: string) => {
     if (pin.length < 4 && !unlocked) {
+      sensory.triggerTap();
       setPin(prev => prev + num);
       setError(false);
     }
@@ -66,12 +71,14 @@ export const LockScreen: React.FC<LockScreenProps> = ({ onUnlock }) => {
 
   const handleDelete = () => {
     if (!unlocked) {
+      sensory.triggerTap(0.8);
       setPin(prev => prev.slice(0, -1));
     }
   };
 
   const handleQuickUnlock = () => {
     if (isDefaultPin) {
+      sensory.triggerTap();
       setPin('0000');
     }
   };
