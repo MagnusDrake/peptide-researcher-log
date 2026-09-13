@@ -7,6 +7,8 @@ import {
   ResponsiveContainer, 
   LineChart, 
   Line, 
+  AreaChart,
+  Area,
   XAxis, 
   YAxis, 
   Tooltip, 
@@ -25,7 +27,8 @@ import {
   Sparkles,
   FileSpreadsheet,
   Database,
-  Utensils
+  Utensils,
+  Scale
 } from 'lucide-react';
 
 interface ResearchJournalProps {
@@ -109,6 +112,38 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
       };
     });
   }, [filteredLogs]);
+
+  // Dedicated chronological Body Weight trend data & summary stats
+  const weightTrendData = useMemo(() => {
+    const withWeight = filteredLogs
+      .filter(l => l.subjectiveMetrics?.bodyWeightLbs !== undefined && Number(l.subjectiveMetrics.bodyWeightLbs) > 0)
+      .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
+    return withWeight.map(l => {
+      const date = new Date(l.timestamp);
+      return {
+        timestamp: l.timestamp,
+        dateLabel: `${date.getMonth() + 1}/${date.getDate()}`,
+        fullDate: date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+        time: date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        peptide: l.peptideName,
+        weight: Number(l.subjectiveMetrics!.bodyWeightLbs),
+        notes: l.notes || '',
+      };
+    });
+  }, [filteredLogs]);
+
+  const weightStats = useMemo(() => {
+    if (weightTrendData.length === 0) return null;
+    const weights = weightTrendData.map(d => d.weight);
+    const start = weights[0];
+    const current = weights[weights.length - 1];
+    const delta = Number((current - start).toFixed(1));
+    const min = Math.min(...weights);
+    const max = Math.max(...weights);
+    return { start, current, delta, min, max, count: weights.length };
+  }, [weightTrendData]);
+
 
   return (
     <div className="flex flex-col gap-6 max-w-7xl mx-auto pb-16">
@@ -321,96 +356,201 @@ export const ResearchJournal: React.FC<ResearchJournalProps> = ({
         </div>
       )}
 
-      {/* TAB 2: BIOMARKER TREND CHARTS */}
+      {/* TAB 2: BIOMARKER & BODY WEIGHT TREND CHARTS */}
       {activeTab === 'trends' && (
-        <div className="flex flex-col gap-6">
-          {trendData.length > 1 ? (
-            <>
-              <div className="glass-panel p-6 rounded-3xl flex flex-col gap-6 border-slate-800 shadow-xl">
-                <div>
-                  <h3 className="text-[0.65rem] font-bold text-cyan-500 uppercase tracking-[0.2em] flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-cyan-400" />
-                    <span>How You're Feeling Over Time (Energy & Recovery)</span>
-                  </h3>
-                  <p className="text-xs text-slate-400">Ratings you gave when logging your doses</p>
-                </div>
+        <div className="flex flex-col gap-8">
+          {/* 1. DEDICATED BODY WEIGHT PROGRESS CHART */}
+          <div className="glass-panel p-6 sm:p-8 rounded-3xl flex flex-col gap-6 border-slate-800 shadow-xl relative overflow-hidden">
+            {/* Ambient Background Glow */}
+            <div className="absolute -top-24 -right-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
-                <div className="w-full h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={trendData} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                      <XAxis dataKey="dateLabel" stroke="#64748b" fontSize={11} />
-                      <YAxis domain={[0, 10]} stroke="#64748b" fontSize={11} />
-                      <Tooltip
-                        content={({ active, payload }) => {
-                          if (active && payload && payload.length) {
-                            const data = payload[0].payload;
-                            return (
-                              <div className="bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-xl text-xs flex flex-col gap-1">
-                                <span className="font-bold text-white">{data.peptide} ({data.dateLabel} {data.time})</span>
-                                {data.recovery !== null && <span className="text-emerald-400">Recovery: {data.recovery}/10</span>}
-                                {data.energy !== null && <span className="text-cyan-400">Energy: {data.energy}/10</span>}
-                                {data.sleep !== null && <span className="text-purple-400">Sleep: {data.sleep}/10</span>}
-                                {data.hairSkinNails !== null && <span className="text-pink-400">Hair, Nails & Skin: {data.hairSkinNails}/10</span>}
-                                {data.foodHabit && <span className="text-amber-300">Food: {data.foodHabit}</span>}
-                              </div>
-                            );
-                          }
-                          return null;
-                        }}
-                      />
-                      <Legend />
-                      <Line type="monotone" dataKey="recovery" name="Recovery Score" stroke="#10b981" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
-                      <Line type="monotone" dataKey="energy" name="Energy Level" stroke="#06b6d4" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
-                      <Line type="monotone" dataKey="sleep" name="Sleep Quality" stroke="#a855f7" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
-                      <Line type="monotone" dataKey="hairSkinNails" name="Hair, Nails & Skin" stroke="#f472b6" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
-                    </LineChart>
-                  </ResponsiveContainer>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Scale className="w-4 h-4 text-amber-400" />
+                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-amber-400">
+                    Physical Progress Telemetry
+                  </span>
                 </div>
+                <h3 className="text-base font-semibold text-slate-100 flex items-center gap-2">
+                  <span>Body Weight Progress (lbs)</span>
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Track weight dynamics and trend patterns logged during your administrations
+                </p>
               </div>
 
-              {trendData.some(d => d.weight !== null) && (
-                <div className="glass-panel p-6 rounded-3xl flex flex-col gap-6 border-slate-800 shadow-xl mt-6">
-                  <div>
-                    <h3 className="text-[0.65rem] font-bold text-amber-500 uppercase tracking-[0.2em] flex items-center gap-2">
-                      <TrendingUp className="w-5 h-5 text-amber-400" />
-                      <span>Body Weight Trend (lbs)</span>
-                    </h3>
-                    <p className="text-xs text-slate-400">Your tracked weight over time</p>
+              {/* Summary Stats Badges */}
+              {weightStats && (
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className="bg-slate-900/80 border border-slate-800 px-3 py-1.5 rounded-xl flex flex-col">
+                    <span className="text-[0.6rem] uppercase tracking-wider text-slate-400">Current</span>
+                    <span className="text-sm font-bold text-amber-400 font-mono">{weightStats.current} <span className="text-[0.65rem] font-normal text-slate-400">lbs</span></span>
                   </div>
-
-                  <div className="w-full h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={trendData.filter(d => d.weight !== null)} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                        <XAxis dataKey="dateLabel" stroke="#64748b" fontSize={11} />
-                        <YAxis domain={['auto', 'auto']} stroke="#64748b" fontSize={11} />
-                        <Tooltip
-                          content={({ active, payload }) => {
-                            if (active && payload && payload.length) {
-                              const data = payload[0].payload;
-                              return (
-                                <div className="bg-slate-900 border border-slate-700 p-3 rounded-xl shadow-xl text-xs flex flex-col gap-1">
-                                  <span className="font-bold text-white">{data.dateLabel} {data.time}</span>
-                                  {data.weight !== null && <span className="text-amber-400 font-mono font-bold">Weight: {data.weight} lbs</span>}
-                                </div>
-                              );
-                            }
-                            return null;
-                          }}
-                        />
-                        <Line type="monotone" dataKey="weight" name="Body Weight (lbs)" stroke="#f59e0b" strokeWidth={3} dot={{ r: 5, fill: '#f59e0b' }} activeDot={{ r: 7 }} connectNulls />
-                      </LineChart>
-                    </ResponsiveContainer>
+                  <div className="bg-slate-900/80 border border-slate-800 px-3 py-1.5 rounded-xl flex flex-col">
+                    <span className="text-[0.6rem] uppercase tracking-wider text-slate-400">Net Change</span>
+                    <span className={`text-sm font-bold font-mono ${weightStats.delta > 0 ? 'text-cyan-400' : weightStats.delta < 0 ? 'text-emerald-400' : 'text-slate-300'}`}>
+                      {weightStats.delta > 0 ? `+${weightStats.delta}` : weightStats.delta} <span className="text-[0.65rem] font-normal text-slate-400">lbs</span>
+                    </span>
+                  </div>
+                  <div className="bg-slate-900/80 border border-slate-800 px-3 py-1.5 rounded-xl flex flex-col">
+                    <span className="text-[0.6rem] uppercase tracking-wider text-slate-400">Range</span>
+                    <span className="text-xs font-semibold text-slate-300 font-mono">{weightStats.min} - {weightStats.max}</span>
                   </div>
                 </div>
               )}
-            </>
-          ) : (
-            <div className="glass-panel p-12 rounded-3xl text-center text-xs text-slate-400">
-              Need at least 2 recorded logs with subjective ratings to render trend lines.
             </div>
-          )}
+
+            {weightTrendData.length > 1 ? (
+              <div className="w-full h-72">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={weightTrendData} margin={{ top: 15, right: 20, left: -10, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="weightGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.35} />
+                        <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" opacity={0.6} />
+                    <XAxis 
+                      dataKey="dateLabel" 
+                      stroke="#64748b" 
+                      fontSize={11} 
+                      tickLine={false}
+                    />
+                    <YAxis 
+                      domain={['dataMin - 2', 'dataMax + 2']} 
+                      stroke="#64748b" 
+                      fontSize={11} 
+                      tickLine={false}
+                      unit=" lbs"
+                    />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          const data = payload[0].payload;
+                          return (
+                            <div className="bg-slate-900/95 border border-amber-500/30 p-3 rounded-2xl shadow-2xl backdrop-blur-md text-xs flex flex-col gap-1.5">
+                              <div className="flex items-center justify-between gap-4 border-b border-slate-800 pb-1.5">
+                                <span className="text-slate-400 text-[0.65rem] uppercase tracking-wider">{data.fullDate}</span>
+                                <span className="text-slate-500 text-[0.65rem]">{data.time}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Scale className="w-3.5 h-3.5 text-amber-400" />
+                                <span className="text-amber-400 font-mono font-bold text-sm">{data.weight} lbs</span>
+                              </div>
+                              <span className="text-slate-300 text-[0.7rem]">
+                                Compound: <span className="text-cyan-400 font-medium">{data.peptide}</span>
+                              </span>
+                              {data.notes && (
+                                <span className="text-slate-400 text-[0.65rem] italic mt-0.5 max-w-[200px] truncate">
+                                  "{data.notes}"
+                                </span>
+                              )}
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="weight" 
+                      name="Body Weight" 
+                      stroke="#f59e0b" 
+                      strokeWidth={3} 
+                      fillOpacity={1} 
+                      fill="url(#weightGradient)" 
+                      dot={{ r: 4, fill: '#f59e0b', stroke: '#0f172a', strokeWidth: 2 }}
+                      activeDot={{ r: 6, fill: '#fbbf24', stroke: '#fff', strokeWidth: 2 }}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            ) : weightTrendData.length === 1 ? (
+              <div className="flex items-center gap-4 p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20 text-xs text-slate-300">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 flex-shrink-0">
+                  <Scale className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="font-semibold text-slate-100 flex items-center gap-2">
+                    <span>Baseline Recorded: <span className="text-amber-400 font-mono">{weightTrendData[0].weight} lbs</span></span>
+                    <span className="text-slate-400 font-normal">({weightTrendData[0].dateLabel})</span>
+                  </div>
+                  <p className="text-slate-400 text-[0.7rem] mt-0.5">
+                    Log your body weight on your next dose to start rendering the full progress trend line and rate of change.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center p-8 rounded-2xl bg-slate-900/40 border border-slate-800 text-center">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-3">
+                  <Scale className="w-6 h-6" />
+                </div>
+                <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-1">No Body Weight Entries Recorded</h4>
+                <p className="text-xs text-slate-400 max-w-md">
+                  When logging an administration, enter your body weight in the biometric field to track and visualize physical composition changes over time.
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* 2. SUBJECTIVE WELL-BEING & RECOVERY TREND CHART */}
+          <div className="glass-panel p-6 sm:p-8 rounded-3xl flex flex-col gap-6 border-slate-800 shadow-xl">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <TrendingUp className="w-4 h-4 text-cyan-400" />
+                <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-cyan-400">
+                  Subjective Biometric Telemetry
+                </span>
+              </div>
+              <h3 className="text-base font-semibold text-slate-100">
+                How You're Feeling Over Time (Scores 1 - 10)
+              </h3>
+              <p className="text-xs text-slate-400">
+                Energy, recovery, sleep quality, and hair/nails/skin ratings recorded with your doses
+              </p>
+            </div>
+
+            {trendData.filter(d => d.recovery !== null || d.energy !== null || d.sleep !== null || d.hairSkinNails !== null).length > 1 ? (
+              <div className="w-full h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={trendData} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" opacity={0.6} />
+                    <XAxis dataKey="dateLabel" stroke="#64748b" fontSize={11} tickLine={false} />
+                    <YAxis domain={[0, 10]} stroke="#64748b" fontSize={11} tickLine={false} />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          const data = payload[0].payload;
+                          return (
+                            <div className="bg-slate-900/95 border border-slate-700 p-3 rounded-2xl shadow-xl backdrop-blur-md text-xs flex flex-col gap-1">
+                              <span className="font-bold text-white">{data.peptide} ({data.dateLabel} {data.time})</span>
+                              {data.recovery !== null && <span className="text-emerald-400 font-medium">Recovery: {data.recovery}/10</span>}
+                              {data.energy !== null && <span className="text-cyan-400 font-medium">Energy: {data.energy}/10</span>}
+                              {data.sleep !== null && <span className="text-purple-400 font-medium">Sleep: {data.sleep}/10</span>}
+                              {data.hairSkinNails !== null && <span className="text-pink-400 font-medium">Hair, Nails & Skin: {data.hairSkinNails}/10</span>}
+                              {data.foodHabit && <span className="text-amber-300 font-medium">Food Habit: {data.foodHabit}</span>}
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="recovery" name="Recovery" stroke="#10b981" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
+                    <Line type="monotone" dataKey="energy" name="Energy" stroke="#06b6d4" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
+                    <Line type="monotone" dataKey="sleep" name="Sleep" stroke="#a855f7" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
+                    <Line type="monotone" dataKey="hairSkinNails" name="Hair, Nails & Skin" stroke="#f472b6" strokeWidth={2.5} dot={{ r: 4 }} connectNulls />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 text-center text-xs text-slate-400">
+                Need at least 2 recorded doses with subjective ratings (recovery, energy, or sleep) to render subjective trend lines.
+              </div>
+            )}
+          </div>
         </div>
       )}
 
