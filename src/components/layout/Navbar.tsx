@@ -12,8 +12,6 @@ import {
   Moon, 
   Lock, 
   ChevronDown, 
-  Menu, 
-  X, 
   ArrowRight,
   Wand2
 } from 'lucide-react';
@@ -48,7 +46,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleStudioUnlock,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [logoTapCount, setLogoTapCount] = useState(0);
   const lastLogoTapRef = useRef<number>(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -97,7 +94,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsDropdownOpen(false);
-        setIsMobileDrawerOpen(false);
         triggerButtonRef.current?.focus();
       }
     };
@@ -108,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       }
     };
 
-    if (isDropdownOpen || isMobileDrawerOpen) {
+    if (isDropdownOpen) {
       document.addEventListener('keydown', handleKeyDown);
       document.addEventListener('mousedown', handleClickOutside);
     }
@@ -116,13 +112,12 @@ export const Navbar: React.FC<NavbarProps> = ({
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isDropdownOpen, isMobileDrawerOpen]);
+  }, [isDropdownOpen]);
 
   const handleSelectTab = (tab: NavTab) => {
     sensory.triggerTabSwitch();
     onTabChange(tab);
     setIsDropdownOpen(false);
-    setIsMobileDrawerOpen(false);
   };
 
   const isSecondaryActive = secondaryNavItems.some(item => item.id === activeTab);
@@ -318,84 +313,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
 
-          {/* Mobile Drawer Menu Trigger (Hamburger) */}
-          <button
-            type="button"
-            onClick={() => setIsMobileDrawerOpen(!isMobileDrawerOpen)}
-            className="md:hidden flex items-center justify-center w-9 h-9 rounded-2xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white cursor-pointer"
-            aria-label="Open Secondary Menu"
-            aria-expanded={isMobileDrawerOpen}
-          >
-            {isMobileDrawerOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-          </button>
-
         </div>
 
       </div>
-
-      {/* Mobile Collapsible Sidebar / Drawer */}
-      {isMobileDrawerOpen && (
-        <div className="md:hidden fixed inset-0 top-[60px] z-50 bg-slate-950/95 backdrop-blur-2xl p-4 flex flex-col gap-4 animate-in slide-in-from-top duration-200 overflow-y-auto pb-24">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <span className="text-xs font-bold uppercase tracking-widest text-slate-400">Navigation & Tools</span>
-            <button
-              onClick={() => setIsMobileDrawerOpen(false)}
-              className="p-1 rounded-full text-slate-400 hover:text-white"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400 px-1">Primary Tools</span>
-            {primaryNavItems.map(item => (
-              <button
-                key={item.id}
-                onClick={() => handleSelectTab(item.id)}
-                className={`flex items-center justify-between p-3 rounded-2xl border text-sm font-semibold transition ${
-                  activeTab === item.id
-                    ? 'bg-cyan-500 text-white border-cyan-400 shadow-md shadow-cyan-500/20'
-                    : 'bg-slate-900/90 border-slate-800 text-slate-300'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  {item.icon}
-                  <span>{item.label}</span>
-                </div>
-                {item.badge !== undefined && item.badge > 0 && (
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-slate-950 text-cyan-300 font-mono">
-                    {item.badge}
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-2 pt-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400 px-1">Secondary Modules</span>
-            {secondaryNavItems.map(item => (
-              <button
-                key={item.id}
-                onClick={() => handleSelectTab(item.id)}
-                className={`flex items-center justify-between p-3 rounded-2xl border text-sm font-semibold transition ${
-                  activeTab === item.id
-                    ? 'bg-cyan-500 text-white border-cyan-400 shadow-md shadow-cyan-500/20'
-                    : 'bg-slate-900/90 border-slate-800 text-slate-300'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  {item.icon}
-                  <div className="text-left">
-                    <div>{item.label}</div>
-                    <div className="text-[10px] text-slate-400 font-normal">{item.subtitle}</div>
-                  </div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-slate-500" />
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
     </header>
   );
