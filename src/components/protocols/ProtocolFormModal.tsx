@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { Protocol, SyringeType, FrequencyType, TimingOfDay, BlendComponent } from '../../types';
 import { PEPTIDES_DATABASE } from '../../data/peptides';
 import { calculateReconstitution, calculateMultiBlend } from '../../utils/calculations';
 import { db } from '../../db';
-import { X, Check, Sparkles, Calendar, Clock, DollarSign, Share2, Layers, Plus, Trash2 } from 'lucide-react';
+import { X, Check, Sparkles, Calendar, Clock, DollarSign, Share2, Layers, Plus, Trash2, Search, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface ProtocolFormModalProps {
   isOpen: boolean;
@@ -40,6 +40,10 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
 
   const [peptideId, setPeptideId] = useState<string>('bpc-157');
   const [peptideName, setPeptideName] = useState<string>('BPC-157');
+  const [peptideSearchQuery, setPeptideSearchQuery] = useState<string>('BPC-157');
+  const [isPeptideDropdownOpen, setIsPeptideDropdownOpen] = useState<boolean>(false);
+  const peptideSelectorRef = useRef<HTMLDivElement>(null);
+  const [storedCustomPeptides, setStoredCustomPeptides] = useState<any[]>([]);
   const [brandName, setBrandName] = useState<string>('');
   const [batchNumber, setBatchNumber] = useState<string>('');
   
@@ -61,6 +65,30 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
   const [isPublic, setIsPublic] = useState<boolean>(false);
   const [shareAlias, setShareAlias] = useState<string>('');
 
+  // Load custom peptides from IndexedDB
+  useEffect(() => {
+    async function loadCustom() {
+      try {
+        const stored = await db.customPeptides.toArray();
+        setStoredCustomPeptides(stored || []);
+      } catch (e) {
+        console.error('Error loading custom peptides:', e);
+      }
+    }
+    loadCustom();
+  }, []);
+
+  // Handle closing peptide dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (peptideSelectorRef.current && !peptideSelectorRef.current.contains(e.target as Node)) {
+        setIsPeptideDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   useEffect(() => {
     if (editingProtocol) {
       setIsBlend(!!editingProtocol.isBlend);
@@ -70,6 +98,7 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
       }
       setPeptideId(editingProtocol.peptideId);
       setPeptideName(editingProtocol.peptideName);
+      setPeptideSearchQuery(editingProtocol.peptideName || '');
       setBrandName(editingProtocol.brandName || '');
       setBatchNumber(editingProtocol.batchNumber || '');
       setVialMassMg(editingProtocol.vialMassMg);
@@ -99,7 +128,10 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
         }
       }
       if (initialData.peptideId) setPeptideId(initialData.peptideId);
-      if (initialData.peptideName) setPeptideName(initialData.peptideName);
+      if (initialData.peptideName) {
+        setPeptideName(initialData.peptideName);
+        setPeptideSearchQuery(initialData.peptideName);
+      }
       if (initialData.brandName) setBrandName(initialData.brandName);
       if (initialData.vialMassMg) setVialMassMg(initialData.vialMassMg);
       if (initialData.bacWaterMl) setBacWaterMl(initialData.bacWaterMl);
@@ -107,24 +139,65 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
       if (initialData.doseUnit) setDoseUnit(initialData.doseUnit);
       if (initialData.syringeType) setSyringeType(initialData.syringeType);
       if (initialData.costPerVial) setCostPerVial(initialData.costPerVial);
+    } else {
+      setPeptideId('bpc-157');
+      setPeptideName('BPC-157');
+      setPeptideSearchQuery('BPC-157');
     }
   }, [editingProtocol, initialData, isOpen]);
 
-  // When peptide dropdown changes (Single Mode)
-  const handlePeptideSelect = (id: string) => {
+  // Dynamic filter for searchable combobox
+  const filteredPeptides = useMemo(() => {
+    const q = peptideSearchQuery.trim().toLowerCase();
+    const combined: (typeof PEPTIDES_DATABASE[0])[] = [
+      ...PEPTIDES_DATABASE,
+      ...storedCustomPeptides.filter(cp => !PEPTIDES_DATABASE.some(p => p.id === cp.id))
+    ];
+    if (!q) return combined;
+    return combined.filter(pep => {
+      const matchName = pep.name.toLowerCase().includes(q);
+      const matchCategory = pep.categoryLabel?.toLowerCase().includes(q) || pep.category?.toLowerCase().includes(q);
+      const matchAlias = pep.aliases?.some((a: string) => a.toLowerCase().includes(q));
+      return matchName || matchCategory || matchAlias;
+    });
+  }, [peptideSearchQuery, storedCustomPeptides]);
+
+  // When a standard or custom peptide is selected
+  const handlePeptideSelect = (id: string, customNameOverride?: string) => {
     setPeptideId(id);
     if (id === 'custom') {
-      setPeptideName('');
+      const cName = customNameOverride !== undefined ? customNameOverride : '';
+      setPeptideName(cName);
+      setPeptideSearchQuery(cName);
     } else {
-      const pep = PEPTIDES_DATABASE.find(p => p.id === id);
+      const allList = [...PEPTIDES_DATABASE, ...storedCustomPeptides];
+      const pep = allList.find(p => p.id === id);
       if (pep) {
         setPeptideName(pep.name);
-        if (pep.commonVialSizesMg.length > 0) setVialMassMg(pep.commonVialSizesMg[0]);
-        if (pep.typicalBacWaterMl.length > 0) setBacWaterMl(pep.typicalBacWaterMl[0]);
-        setDoseUnit(pep.standardDosing.unit);
-        setDoseAmount(pep.standardDosing.typicalDose);
+        setPeptideSearchQuery(pep.name);
+        if (pep.commonVialSizesMg && pep.commonVialSizesMg.length > 0) {
+          setVialMassMg(pep.commonVialSizesMg[0]);
+        }
+        if (pep.typicalBacWaterMl && pep.typicalBacWaterMl.length > 0) {
+          setBacWaterMl(pep.typicalBacWaterMl[0]);
+        }
+        if (pep.standardDosing) {
+          setDoseUnit(pep.standardDosing.unit);
+          setDoseAmount(pep.standardDosing.typicalDose);
+        }
       }
     }
+  };
+
+  const handleSelectPeptideItem = (pep: any) => {
+    handlePeptideSelect(pep.id);
+    setIsPeptideDropdownOpen(false);
+  };
+
+  const handleSelectCustomItem = (customQuery?: string) => {
+    const trimmed = customQuery ? customQuery.trim() : '';
+    handlePeptideSelect('custom', trimmed);
+    setIsPeptideDropdownOpen(false);
   };
 
   const toggleDay = (dayId: number) => {
@@ -308,24 +381,159 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                 1. Peptide & Mixing Details
               </h3>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                  Select Peptide
-                </label>
-                <select
-                  value={peptideId}
-                  onChange={(e) => handlePeptideSelect(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
-                >
-                  <optgroup label="Popular Research Peptides">
-                    {PEPTIDES_DATABASE.map(pep => (
-                      <option key={pep.id} value={pep.id}>
-                        {pep.name} ({pep.categoryLabel})
-                      </option>
-                    ))}
-                  </optgroup>
-                  <option value="custom">✨ Custom / Unlisted Peptide</option>
-                </select>
+              <div ref={peptideSelectorRef} className="relative">
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-300 uppercase">
+                    Select Peptide
+                  </label>
+                  {peptideId !== 'custom' && (
+                    <span className="text-[10px] text-cyan-400 font-mono">
+                      {filteredPeptides.length} match{filteredPeptides.length === 1 ? '' : 'es'}
+                    </span>
+                  )}
+                </div>
+
+                {/* Combobox Search Trigger Input */}
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <Search className="w-4 h-4 text-cyan-400/80" />
+                  </div>
+                  
+                  <input
+                    type="text"
+                    value={peptideSearchQuery}
+                    onChange={(e) => {
+                      setPeptideSearchQuery(e.target.value);
+                      if (!isPeptideDropdownOpen) setIsPeptideDropdownOpen(true);
+                    }}
+                    onFocus={() => setIsPeptideDropdownOpen(true)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Escape') {
+                        setIsPeptideDropdownOpen(false);
+                      } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (filteredPeptides.length > 0) {
+                          handleSelectPeptideItem(filteredPeptides[0]);
+                        } else {
+                          handleSelectCustomItem(peptideSearchQuery);
+                        }
+                      }
+                    }}
+                    placeholder="Search or enter peptide name..."
+                    className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl pl-10 pr-10 py-3 focus:outline-none focus:border-cyan-400 transition-all font-medium placeholder:text-slate-500 cursor-text"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setIsPeptideDropdownOpen(!isPeptideDropdownOpen)}
+                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white transition cursor-pointer"
+                  >
+                    {isPeptideDropdownOpen ? (
+                      <ChevronUp className="w-4 h-4 text-cyan-400" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+
+                {/* Dropdown Floating Results Menu */}
+                {isPeptideDropdownOpen && (
+                  <div className="absolute left-0 right-0 top-full mt-2 z-50 bg-slate-900/95 border border-slate-700 rounded-2xl shadow-2xl backdrop-blur-xl overflow-hidden animate-in fade-in duration-150 max-h-72 flex flex-col">
+                    <div className="p-2 border-b border-slate-800 bg-slate-950/70 flex items-center justify-between text-[11px] text-slate-400 px-3">
+                      <span>Matching Peptides ({filteredPeptides.length})</span>
+                      {peptideSearchQuery && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setPeptideSearchQuery('');
+                            setPeptideName('');
+                          }}
+                          className="text-cyan-400 hover:text-cyan-300 font-medium cursor-pointer"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Scrollable list of matched peptides */}
+                    <div className="overflow-y-auto p-1.5 space-y-1 flex-1">
+                      {filteredPeptides.length > 0 ? (
+                        filteredPeptides.map((pep) => {
+                          const isSelected = peptideId === pep.id;
+                          return (
+                            <button
+                              key={pep.id}
+                              type="button"
+                              onClick={() => handleSelectPeptideItem(pep)}
+                              className={`w-full text-left p-2.5 rounded-xl transition flex items-center justify-between group cursor-pointer ${
+                                isSelected
+                                  ? 'bg-cyan-500/20 text-white border border-cyan-500/40'
+                                  : 'hover:bg-slate-800/80 text-slate-200'
+                              }`}
+                            >
+                              <div className="flex flex-col">
+                                <span className={`text-xs font-bold ${isSelected ? 'text-cyan-300' : 'text-slate-100 group-hover:text-cyan-300 transition'}`}>
+                                  {pep.name}
+                                </span>
+                                {pep.categoryLabel && (
+                                  <span className="text-[10px] text-slate-400">
+                                    {pep.categoryLabel}
+                                  </span>
+                                )}
+                              </div>
+                              {isSelected && (
+                                <span className="p-1 rounded-full bg-cyan-500 text-slate-950">
+                                  <Check className="w-3 h-3" />
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })
+                      ) : (
+                        <div className="p-4 text-center">
+                          <p className="text-xs text-slate-400">
+                            No standard peptides match <span className="text-cyan-300 font-semibold">"{peptideSearchQuery}"</span>
+                          </p>
+                          <p className="text-[10px] text-slate-500 mt-1">
+                            You can still add this as a custom / unlisted peptide below.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* ALWAYS VISIBLE: Custom / Unlisted Option */}
+                    <div className="p-2 border-t border-slate-800 bg-slate-950/90">
+                      <button
+                        type="button"
+                        onClick={() => handleSelectCustomItem(peptideSearchQuery)}
+                        className={`w-full text-left p-2.5 rounded-xl border border-dashed transition flex items-center justify-between group cursor-pointer ${
+                          peptideId === 'custom'
+                            ? 'border-cyan-400 bg-cyan-500/15 text-white'
+                            : 'border-cyan-500/40 hover:border-cyan-400 bg-cyan-500/5 hover:bg-cyan-500/10 text-cyan-300'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <span className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-400">
+                            <Sparkles className="w-4 h-4" />
+                          </span>
+                          <div>
+                            <span className="text-xs font-bold text-cyan-300 group-hover:text-cyan-200">
+                              {peptideSearchQuery.trim() && filteredPeptides.length === 0
+                                ? `✨ Use "${peptideSearchQuery.trim()}" as Custom Peptide`
+                                : '✨ Custom / Unlisted Peptide'}
+                            </span>
+                            <p className="text-[10px] text-slate-400">
+                              For unlisted research compounds or proprietary blends
+                            </p>
+                          </div>
+                        </div>
+                        <span className="text-[10px] uppercase font-bold tracking-wider text-cyan-400 bg-cyan-500/20 px-2 py-0.5 rounded-md">
+                          Custom
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {peptideId === 'custom' && (
@@ -338,7 +546,10 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
                     required
                     placeholder="e.g. Tirzepatide / BPC-157"
                     value={peptideName}
-                    onChange={(e) => setPeptideName(e.target.value)}
+                    onChange={(e) => {
+                      setPeptideName(e.target.value);
+                      setPeptideSearchQuery(e.target.value);
+                    }}
                     className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl p-3 focus:outline-none focus:border-cyan-400"
                   />
                 </div>
