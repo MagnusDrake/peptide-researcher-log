@@ -15,7 +15,10 @@ export const PeptideCard: React.FC<PeptideCardProps> = ({
   onCompareToggle,
   isCompared = false,
 }) => {
-  const getCategoryColor = (category: string) => {
+  const getCategoryColor = (category: string, isBlend?: boolean) => {
+    if (isBlend) {
+      return 'bg-purple-500/15 text-purple-300 border-purple-500/40 shadow-sm shadow-purple-950';
+    }
     switch (category) {
       case 'healing':
         return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
@@ -42,8 +45,9 @@ export const PeptideCard: React.FC<PeptideCardProps> = ({
     >
       {/* Category Pill & Compare Checkbox */}
       <div className="flex items-center justify-between gap-2 mb-3">
-        <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border ${getCategoryColor(peptide.category)}`}>
-          {peptide.categoryLabel}
+        <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border ${getCategoryColor(peptide.category, peptide.isBlend)} flex items-center gap-1.5`}>
+          {peptide.isBlend && <span>🧪</span>}
+          <span>{peptide.isBlend ? `${peptide.blendComponents?.length || 'Multi'}-Peptide Blend` : peptide.categoryLabel}</span>
         </span>
 
         {onCompareToggle && (
@@ -76,6 +80,21 @@ export const PeptideCard: React.FC<PeptideCardProps> = ({
         {peptide.aliases.length > 0 && (
           <div className="text-xs text-slate-400 truncate mt-0.5" title={peptide.aliases.join(', ')}>
             {peptide.aliases[0]}
+          </div>
+        )}
+
+        {/* Constituent Stack Breakdown for Blends */}
+        {peptide.isBlend && peptide.blendComponents && peptide.blendComponents.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2.5">
+            {peptide.blendComponents.map((comp, idx) => (
+              <span
+                key={idx}
+                className="text-[10px] px-2 py-0.5 rounded-lg bg-slate-900/90 text-purple-200 border border-purple-800/40 font-medium flex items-center gap-1"
+              >
+                <span className="text-white font-bold">{comp.name}</span>
+                {comp.massRatioMg && <span className="text-cyan-400 font-mono">({comp.massRatioMg}mg)</span>}
+              </span>
+            ))}
           </div>
         )}
 

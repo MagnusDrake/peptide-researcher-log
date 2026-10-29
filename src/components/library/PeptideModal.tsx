@@ -39,8 +39,12 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
         <div className="p-6 border-b border-slate-800 flex items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                {peptide.categoryLabel}
+              <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
+                peptide.isBlend 
+                  ? 'bg-purple-500/15 text-purple-300 border-purple-500/40' 
+                  : 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30'
+              }`}>
+                {peptide.isBlend ? 'Multi-Peptide Blend' : peptide.categoryLabel}
               </span>
               {peptide.subCategory && (
                 <span className="text-xs text-slate-400 font-medium">
@@ -98,6 +102,36 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
               </div>
             )}
           </div>
+
+          {/* Multi-Peptide Constituent Stack Breakdown (if Blend) */}
+          {peptide.isBlend && peptide.blendComponents && peptide.blendComponents.length > 0 && (
+            <div className="bg-purple-950/25 border border-purple-800/50 p-5 rounded-2xl flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xs font-bold text-purple-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <Layers className="w-4 h-4 text-purple-400" />
+                  <span>Constituent Peptides in this Mix</span>
+                </h3>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-purple-900/60 text-purple-200 border border-purple-700/60 font-mono">
+                  {peptide.blendComponents.length}-Peptide Compound Stack
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {peptide.blendComponents.map((comp, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 rounded-xl bg-slate-900/90 border border-purple-900/40"
+                  >
+                    <span className="font-bold text-white text-xs">{comp.name}</span>
+                    {comp.massRatioMg && (
+                      <span className="font-mono text-cyan-300 text-xs font-bold bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
+                        {comp.massRatioMg} mg / vial
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Dosing, Kinetics & Administration */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -273,7 +307,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
                 onOpenInCalculator(peptide);
                 onClose();
               }}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-white text-xs font-bold border border-slate-700 transition"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 hover:text-white text-xs font-bold border border-slate-700 transition cursor-pointer"
             >
               <Calculator className="w-4 h-4" />
               <span>Open in Mix Calculator</span>
@@ -284,7 +318,7 @@ export const PeptideModal: React.FC<PeptideModalProps> = ({
                 onAddToProtocol(peptide);
                 onClose();
               }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/20 transition active:scale-95"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 btn-glow-cyan hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/20 transition active:scale-95 cursor-pointer"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Start New Routine</span>

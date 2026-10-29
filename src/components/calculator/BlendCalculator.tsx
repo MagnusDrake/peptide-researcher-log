@@ -119,14 +119,34 @@ const PRESET_BLENDS = [
     ]
   },
   {
-    name: 'Skin & Tissue Quad-Blend (65mg)',
-    bac: 3.0,
-    primaryDose: 1.5,
+    name: 'KLOW Quad-Blend (80mg)',
+    bac: 3.5,
+    primaryDose: 2.0,
     primaryUnit: 'mg' as const,
     components: [
       { name: 'GHK-Cu', mg: 50, unit: 'mg' as const },
+      { name: 'BPC-157', mg: 10, unit: 'mcg' as const },
+      { name: 'TB-500', mg: 10, unit: 'mcg' as const },
+      { name: 'KPV', mg: 10, unit: 'mcg' as const }
+    ]
+  },
+  {
+    name: 'CagriSema Duo (10mg)',
+    bac: 2.0,
+    primaryDose: 0.5,
+    primaryUnit: 'mg' as const,
+    components: [
+      { name: 'Semaglutide', mg: 5, unit: 'mg' as const },
+      { name: 'Cagrilintide', mg: 5, unit: 'mg' as const }
+    ]
+  },
+  {
+    name: 'Gut Barrier Duo (10mg)',
+    bac: 2.0,
+    primaryDose: 250,
+    primaryUnit: 'mcg' as const,
+    components: [
       { name: 'BPC-157', mg: 5, unit: 'mcg' as const },
-      { name: 'TB-500', mg: 5, unit: 'mcg' as const },
       { name: 'KPV', mg: 5, unit: 'mcg' as const }
     ]
   }

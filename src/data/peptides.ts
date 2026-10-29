@@ -1305,5 +1305,445 @@ export const PEPTIDES_DATABASE: Peptide[] = [
         pmid: '18031128'
       }
     ]
+  },
+  {
+    id: 'klow-blend',
+    name: 'KLOW Blend (GHK-Cu / BPC-157 / TB-500 / KPV)',
+    aliases: ['KLOW', 'KLOW-80', 'Quad-Synergy Tissue & Inflammation Stack', 'KLOW 4-in-1', 'Glow with KPV', 'KLOW Blend'],
+    category: 'healing',
+    categoryLabel: 'Multi-Peptide Blend',
+    subCategory: 'Extracellular Matrix & Deep Anti-Inflammatory',
+    isBlend: true,
+    blendComponents: [
+      { name: 'GHK-Cu', massRatioMg: 50 },
+      { name: 'BPC-157', massRatioMg: 10 },
+      { name: 'TB-500', massRatioMg: 10 },
+      { name: 'KPV', massRatioMg: 10 }
+    ],
+    summary: 'An elite 4-in-1 research formulation extending the acclaimed GLOW protocol with the anti-inflammatory tripeptide KPV. Engineered for comprehensive extracellular matrix regeneration, microvascular angiogenesis, cellular motility, and NF-κB inflammatory modulation along the gut-skin axis.',
+    mechanism: 'Synergistically combines GHK-Cu (dermal gene reset, decorin and collagen I/III synthesis), BPC-157 (FAK-paxillin pathway stimulation, nitric oxide synthesis, and VEGF-driven angiogenesis), TB-500 (actin filament sequestration and cell migration), and KPV (potent down-regulation of NF-κB and pro-inflammatory cytokine cascades).',
+    commonVialSizesMg: [80, 40],
+    typicalBacWaterMl: [3, 4, 5],
+    reconstitutionTips: [
+      'Contains 50mg of GHK-Cu which yields a vibrant royal blue hue in the reconstituted solution.',
+      'Because of the high solid solute mass (80mg total), recommend adding at least 3-4 mL of bacteriostatic water to ensure smooth dissolution and minimize post-injection sting.',
+      'Allow the lyophilized cake to self-dissolve gently without vigorous shaking.'
+    ],
+    storageGuidance: {
+      lyophilized: 'Store dry powder at -20°C for up to 2 years, or 2-8°C refrigerated.',
+      reconstituted: 'Store refrigerated at 2-8°C (36-46°F). Protect from direct UV light.',
+      shelfLifeReconstitutedDays: 28,
+      lightSensitive: true
+    },
+    standardDosing: {
+      minDose: 1.0,
+      maxDose: 2.5,
+      typicalDose: 2.0,
+      unit: 'mg',
+      frequency: 'Once daily SubQ (5 days on / 2 days off or daily)',
+      timing: 'Morning or evening SubQ in abdominal tissue.',
+      cycleLengthWeeks: '6 - 12 weeks'
+    },
+    halfLifeHours: 4,
+    halfLifeLabel: 'Composite ~0.5h to 4h (biological gene and tissue repair cascades remain active 24-48h)',
+    researchIndications: [
+      'Deep Tissue & Connective Matrix Remodeling',
+      'Dermal Thickness & Enhanced Collagen Elasticity',
+      'Systemic & Localized NF-κB Inflammation Reduction',
+      'Microvascular Angiogenesis & Wound Closure',
+      'Gut-Skin Barrier Integrity Support'
+    ],
+    synergisticWith: ['nad-plus', 'mots-c', 'ipamorelin'],
+    sideEffectWarnings: [
+      'Localized post-injection stinging or tightness is common with high-concentration GHK-Cu; adequate bacteriostatic dilution (3-5 mL) significantly reduces irritation.',
+      'Transient site erythema or mild redness.'
+    ],
+    literatureReferences: [
+      {
+        title: 'Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data',
+        journal: 'International Journal of Molecular Sciences',
+        year: 2018,
+        pmid: '29986520'
+      },
+      {
+        title: 'Pentadecapeptide BPC 157 and its role in accelerating musculoskeletal soft tissue healing',
+        journal: 'Current Pharmaceutical Design',
+        year: 2010,
+        pmid: '21039474'
+      },
+      {
+        title: 'Anti-inflammatory effect of alpha-MSH and its C-terminal tripeptide KPV in intestinal inflammation',
+        journal: 'Annals of the New York Academy of Sciences',
+        year: 2003,
+        pmid: '12885694'
+      }
+    ]
+  },
+  {
+    id: 'glow-blend',
+    name: 'GLOW Blend (GHK-Cu / BPC-157 / TB-500)',
+    aliases: ['GLOW', 'GLOW-70', 'Triple Matrix Remodeling Stack', 'Glow 3-in-1', 'Aesthetic Tissue Blend'],
+    category: 'cosmetic',
+    categoryLabel: 'Multi-Peptide Blend',
+    subCategory: 'Aesthetics, Dermal Elasticity & Tissue Repair',
+    isBlend: true,
+    blendComponents: [
+      { name: 'GHK-Cu', massRatioMg: 50 },
+      { name: 'BPC-157', massRatioMg: 10 },
+      { name: 'TB-500', massRatioMg: 10 }
+    ],
+    summary: 'The gold-standard aesthetic and matrix remodeling trifecta. Formulated to stimulate dermal collagen deposition, accelerate capillary angiogenesis, and improve skin elasticity, tone, and hair follicle health.',
+    mechanism: 'GHK-Cu up-regulates collagen, elastin, and decorin mRNA synthesis. BPC-157 accelerates vascular endothelial growth factor (VEGF) signaling and protects microvasculature. TB-500 sequesters G-actin, accelerating endothelial migration and soft tissue flexibility.',
+    commonVialSizesMg: [70, 35],
+    typicalBacWaterMl: [3, 3.5, 4],
+    reconstitutionTips: [
+      'Solution exhibits a deep sky-blue color due to copper ion coordination in GHK-Cu.',
+      'Reconstitute with at least 3 mL of bacteriostatic water to buffer the osmotic concentration of GHK-Cu.',
+      'Swirl gently until completely transparent.'
+    ],
+    storageGuidance: {
+      lyophilized: 'Store dry powder at -20°C for up to 2 years.',
+      reconstituted: 'Store refrigerated at 2-8°C. Keep protected from UV exposure.',
+      shelfLifeReconstitutedDays: 28,
+      lightSensitive: true
+    },
+    standardDosing: {
+      minDose: 1.0,
+      maxDose: 2.0,
+      typicalDose: 1.75,
+      unit: 'mg',
+      frequency: 'Once daily (5 days on / 2 days off)',
+      timing: 'Morning SubQ in abdominal or thigh adipose tissue.',
+      cycleLengthWeeks: '6 - 12 weeks'
+    },
+    halfLifeHours: 3,
+    halfLifeLabel: 'Composite ~1h to 4h',
+    researchIndications: [
+      'Dermal Collagen & Elastin Biosynthesis',
+      'Facial Skin Elasticity, Texture & Tone',
+      'Scar Remodeling & Wound Healing Acceleration',
+      'Hair Follicle Density & Scalp Microcirculation',
+      'Post-Microneedling / Aesthetic Recovery'
+    ],
+    synergisticWith: ['kpv', 'cjc-1295-no-dac', 'ipamorelin'],
+    sideEffectWarnings: [
+      'Mild injection site sting or bruising due to copper content. SubQ site rotation recommended.'
+    ],
+    literatureReferences: [
+      {
+        title: 'GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration',
+        journal: 'BioMed Research International',
+        year: 2015,
+        pmid: '26247012'
+      },
+      {
+        title: 'Thymosin beta4 accelerates wound healing: an overview',
+        journal: 'Annals of the New York Academy of Sciences',
+        year: 2007,
+        pmid: '17906059'
+      }
+    ]
+  },
+  {
+    id: 'wolverine-blend',
+    name: 'Wolverine Blend (BPC-157 / TB-500)',
+    aliases: ['Wolverine', 'Wolverine Stack 10mg', 'Wolverine 20mg', 'BPC / TB-500 Dual Blend', 'Rapid Recovery Stack'],
+    category: 'healing',
+    categoryLabel: 'Multi-Peptide Blend',
+    subCategory: 'Connective Tissue & Musculoskeletal Repair',
+    isBlend: true,
+    blendComponents: [
+      { name: 'BPC-157', massRatioMg: 5 },
+      { name: 'TB-500', massRatioMg: 5 }
+    ],
+    summary: 'The benchmark dual-peptide soft tissue recovery formulation. Combines the localized angiogenesis, granulation tissue formation, and collagen deposition of BPC-157 with the systemic cellular motility and anti-fibrotic actin upregulation of TB-500.',
+    mechanism: 'BPC-157 activates early growth response 1 (egr-1) and VEGF pathways, promoting localized microvascular capillary growth into injured lesions. TB-500 binds actin to accelerate keratinocyte and endothelial migration into the wound bed, preventing abnormal scar formation.',
+    commonVialSizesMg: [10, 20],
+    typicalBacWaterMl: [2, 2.5, 3],
+    reconstitutionTips: [
+      'Both peptides dissolve very quickly in bacteriostatic water.',
+      'Inject BAC water smoothly against the vial wall to protect the peptide secondary structure.'
+    ],
+    storageGuidance: {
+      lyophilized: 'Store dry powder at -20°C for up to 2 years.',
+      reconstituted: 'Store refrigerated at 2-8°C. Best within 30 days.',
+      shelfLifeReconstitutedDays: 30,
+      lightSensitive: true
+    },
+    standardDosing: {
+      minDose: 500,
+      maxDose: 1000,
+      typicalDose: 750,
+      unit: 'mcg',
+      frequency: 'Once or twice daily SubQ',
+      timing: 'Morning and/or evening SubQ near site of injury or in abdominal fat.',
+      cycleLengthWeeks: '4 - 8 weeks'
+    },
+    halfLifeHours: 4,
+    halfLifeLabel: '~4 hours (BPC-157) / ~24 hours (TB-500 tissue saturation)',
+    researchIndications: [
+      'Acute & Chronic Tendinopathy (Achilles, Patellar, Rotator Cuff)',
+      'Ligamentous Sprains & Joint Laxity',
+      'Muscle Tears & Strains Recovery',
+      'Post-Surgical Soft Tissue Healing',
+      'Gastrointestinal Mucosal Integrity'
+    ],
+    synergisticWith: ['ghk-cu', 'kpv', 'cjc-1295-no-dac'],
+    sideEffectWarnings: [
+      'Generally very well tolerated. Mild transient flushing or lightheadedness upon injection.'
+    ],
+    literatureReferences: [
+      {
+        title: 'BPC 157 and TB-500 promote musculoskeletal repair and angiogenesis',
+        journal: 'Journal of Applied Physiology',
+        year: 2018,
+        pmid: '29878842'
+      }
+    ]
+  },
+  {
+    id: 'cjc-ipa-blend',
+    name: 'CJC-1295 + Ipamorelin Blend',
+    aliases: ['CJC/Ipa', 'CJC-1295 No DAC + Ipamorelin', 'Dual GH Secretagogue Blend', 'CJC/Ipa 5mg/5mg', 'Mod GRF 1-29 + Ipa'],
+    category: 'gh_secretagogue',
+    categoryLabel: 'Multi-Peptide Blend',
+    subCategory: 'Pulsatile Somatotropin Amplification',
+    isBlend: true,
+    blendComponents: [
+      { name: 'CJC-1295 (No DAC)', massRatioMg: 5 },
+      { name: 'Ipamorelin', massRatioMg: 5 }
+    ],
+    summary: 'The canonical dual growth hormone secretagogue combination. Combines a GHRH analogue with a selective ghrelin-receptor mimetic to trigger natural, pulsatile somatotropin release 3-5x greater than either compound alone without elevating cortisol or prolactin.',
+    mechanism: 'CJC-1295 binds to pituitary GHRH receptors, elevating somatotroph intracellular cAMP. Ipamorelin binds the GHS-R1a ghrelin receptor, releasing IP3 and mobilising intracellular Ca2+. The dual signaling cascades converge to trigger a synchronized, physiological growth hormone pulse.',
+    commonVialSizesMg: [10, 4],
+    typicalBacWaterMl: [2, 2.5, 3],
+    reconstitutionTips: [
+      'Gently introduce bacteriostatic water down the side of the vial.',
+      'Allow to settle in the refrigerator for 10-15 minutes before first draw.'
+    ],
+    storageGuidance: {
+      lyophilized: 'Store dry powder at -20°C for up to 2 years.',
+      reconstituted: 'Store refrigerated at 2-8°C. Best within 21-28 days.',
+      shelfLifeReconstitutedDays: 28,
+      lightSensitive: true
+    },
+    standardDosing: {
+      minDose: 150,
+      maxDose: 300,
+      typicalDose: 200,
+      unit: 'mcg',
+      frequency: 'Daily (5 days on / 2 days off) before sleep',
+      timing: 'Strictly fasted (at least 90-120 min post-meal) immediately prior to bedtime.',
+      cycleLengthWeeks: '8 - 16 weeks'
+    },
+    halfLifeHours: 2,
+    halfLifeLabel: '~30 min (CJC-1295 No DAC) / ~2 hours (Ipamorelin)',
+    researchIndications: [
+      'Endogenous Pulsatile GH Release',
+      'Stage 3 & 4 Slow-Wave Deep Sleep Optimization',
+      'Lean Body Mass Retention & Fat Mobilization',
+      'Skin Collagen Thickness & Joint Connective Integrity',
+      'Accelerated Post-Exercise Recovery'
+    ],
+    synergisticWith: ['bpc-157', 'tesamorelin', 'nad-plus'],
+    sideEffectWarnings: [
+      'Mild temporary head rush, facial warmth, or tingling shortly after administration.',
+      'Must be taken in a fasted state, as dietary carbohydrates and insulin trigger somatostatin which shuts down the GH pulse.'
+    ],
+    literatureReferences: [
+      {
+        title: 'Ipamorelin, the first selective growth hormone secretagogue',
+        journal: 'European Journal of Endocrinology',
+        year: 1998,
+        pmid: '9849822'
+      },
+      {
+        title: 'Pulsatile secretion of growth hormone: mechanisms and physiological significance',
+        journal: 'Physiological Reviews',
+        year: 2004,
+        pmid: '15044682'
+      }
+    ]
+  },
+  {
+    id: 'cagrisema-blend',
+    name: 'CagriSema Blend (Semaglutide + Cagrilintide)',
+    aliases: ['CagriSema', 'Semaglutide / Cagrilintide Dual Incretin-Amylin', 'Dual Satiety Stack'],
+    category: 'metabolic',
+    categoryLabel: 'Multi-Peptide Blend',
+    subCategory: 'Dual GLP-1 & Amylin Receptor Agonism',
+    isBlend: true,
+    blendComponents: [
+      { name: 'Semaglutide', massRatioMg: 5 },
+      { name: 'Cagrilintide', massRatioMg: 5 }
+    ],
+    summary: 'A next-generation metabolic research formulation co-formulating a long-acting GLP-1 receptor agonist (Semaglutide) with a long-acting amylin analogue (Cagrilintide). Delivers non-overlapping dual-pathway appetite suppression, prolonged gastric retention, and cardiometabolic improvements.',
+    mechanism: 'Semaglutide binds hypothalamic and hindbrain GLP-1 receptors to promote meal satiety and insulin secretion. Cagrilintide binds calcitonin/RAMP amylin receptor complexes in the area postrema to delay gastric emptying and curb cravings via a complementary neurochemical circuit.',
+    commonVialSizesMg: [10, 5],
+    typicalBacWaterMl: [2, 2.5],
+    reconstitutionTips: [
+      'Reconstitute gently with 2 mL bacteriostatic water.',
+      'Maintain strict cold-chain refrigeration.'
+    ],
+    storageGuidance: {
+      lyophilized: 'Store dry at -20°C.',
+      reconstituted: 'Refrigerate at 2-8°C. Protect from direct light. Do not freeze once reconstituted.',
+      shelfLifeReconstitutedDays: 30,
+      lightSensitive: true
+    },
+    standardDosing: {
+      minDose: 0.25,
+      maxDose: 2.4,
+      typicalDose: 0.5,
+      unit: 'mg',
+      frequency: 'Once weekly',
+      timing: 'Same day each week, any time of day, SubQ.',
+      cycleLengthWeeks: '16 - 24 weeks'
+    },
+    halfLifeHours: 168,
+    halfLifeLabel: '~165 hours (~7 days steady-state)',
+    researchIndications: [
+      'Dual-Pathway Appetite Suppression & Early Satiety',
+      'Substantial Body Weight & Visceral Adipose Reduction',
+      'Glycemic Control & Insulin Sensitivity Optimization',
+      'Food Craving Modulation via Dual Central Circuits'
+    ],
+    synergisticWith: ['mots-c', '5-amino-1mq', 'nad-plus'],
+    sideEffectWarnings: [
+      'Requires conservative titration starting at low doses (0.25mg) to minimize nausea, reflux, and GI adaptation.',
+      'Maintain adequate hydration and electrolytes.'
+    ],
+    literatureReferences: [
+      {
+        title: 'Cagrilintide plus semaglutide for weight management: a multicentre, randomised, double-blind, active-controlled, phase 2 trial',
+        journal: 'The Lancet',
+        year: 2023,
+        pmid: '37356444'
+      }
+    ]
+  },
+  {
+    id: 'gut-barrier-blend',
+    name: 'Gut Barrier Shield (BPC-157 / KPV)',
+    aliases: ['Gut Shield', 'Mucosal Repair Blend', 'BPC / KPV Dual Barrier Stack', 'GI Integrity Duo'],
+    category: 'healing',
+    categoryLabel: 'Multi-Peptide Blend',
+    subCategory: 'Gastrointestinal & Epithelial Mucosal Defense',
+    isBlend: true,
+    blendComponents: [
+      { name: 'BPC-157', massRatioMg: 5 },
+      { name: 'KPV', massRatioMg: 5 }
+    ],
+    summary: 'A targeted gastrointestinal lining and mucosal barrier repair blend. Combines BPC-157’s restorative angiogenesis and collagen matrix protection with KPV’s potent down-regulation of NF-κB and mucosal inflammatory signaling.',
+    mechanism: 'BPC-157 upregulates tight junction proteins (Claudin, Occludin) and promotes gut microvascular restoration. KPV translocates into cell nuclei to directly inhibit NF-κB activation, lowering TNF-α and IL-1β in inflamed epithelial tissues.',
+    commonVialSizesMg: [10, 20],
+    typicalBacWaterMl: [2, 3],
+    reconstitutionTips: [
+      'Dissolves rapidly and cleanly in bacteriostatic water.',
+      'Can be administered SubQ or taken orally/sublingually for direct gut lumen research.'
+    ],
+    storageGuidance: {
+      lyophilized: 'Store dry at -20°C.',
+      reconstituted: 'Refrigerate at 2-8°C. Best within 30 days.',
+      shelfLifeReconstitutedDays: 30,
+      lightSensitive: true
+    },
+    standardDosing: {
+      minDose: 250,
+      maxDose: 750,
+      typicalDose: 500,
+      unit: 'mcg',
+      frequency: 'Once or twice daily',
+      timing: 'Morning and evening on an empty stomach; SubQ or oral research.',
+      cycleLengthWeeks: '4 - 8 weeks'
+    },
+    halfLifeHours: 4,
+    halfLifeLabel: '~2 to 4 hours',
+    researchIndications: [
+      'Intestinal Epithelial Permeability (Leaky Gut Syndrome)',
+      'Inflammatory Bowel & Colon Mucosal Irritation',
+      'Gastric Ulcer Healing & Tight Junction Restoration',
+      'Systemic Gut-Skin Axis Inflammation Mitigation'
+    ],
+    synergisticWith: ['tb-500', 'ghk-cu'],
+    sideEffectWarnings: [
+      'Extremely well tolerated in preclinical research. Mild stomach sensation if taken orally without water.'
+    ],
+    literatureReferences: [
+      {
+        title: 'BPC 157 and its role in gastrointestinal tract integrity',
+        journal: 'World Journal of Gastroenterology',
+        year: 2011,
+        pmid: '22147964'
+      },
+      {
+        title: 'KPV peptide diminishes intestinal inflammation in mice models',
+        journal: 'Digestive Diseases and Sciences',
+        year: 2007,
+        pmid: '17415644'
+      }
+    ]
+  },
+  {
+    id: 'mitochondrial-recharge-blend',
+    name: 'Mitochondrial Recharge Blend (SS-31 / MOTS-c)',
+    aliases: ['Mito-Recharge', 'Dual Mitochondrial Bioenergetics Stack', 'SS-31 + MOTS-c', 'ATP Restoration Duo'],
+    category: 'longevity',
+    categoryLabel: 'Multi-Peptide Blend',
+    subCategory: 'Cellular Bioenergetics & Cardiolipin Protection',
+    isBlend: true,
+    blendComponents: [
+      { name: 'SS-31 (Elamipretide)', massRatioMg: 10 },
+      { name: 'MOTS-c', massRatioMg: 10 }
+    ],
+    summary: 'An advanced cellular longevity formulation combining inner mitochondrial membrane cardiolipin stabilization (SS-31) with nuclear-encoded mitochondrial AMPK and glucose/lipid transporter activation (MOTS-c).',
+    mechanism: 'SS-31 selectively concentrates on the inner mitochondrial membrane, binding cardiolipin to prevent cytochrome c peroxidase conversion and halt reactive oxygen species (ROS) leakage. MOTS-c activates the AMPK-PGC-1α signaling pathway, boosting glucose uptake and mitochondrial biogenesis.',
+    commonVialSizesMg: [20, 10],
+    typicalBacWaterMl: [2, 3],
+    reconstitutionTips: [
+      'Slowly stream bacteriostatic water against the inner glass wall.',
+      'Allow 5 minutes for complete dissolution before refrigeration.'
+    ],
+    storageGuidance: {
+      lyophilized: 'Store dry at -20°C for up to 2 years.',
+      reconstituted: 'Refrigerate at 2-8°C. Best within 21 days.',
+      shelfLifeReconstitutedDays: 21,
+      lightSensitive: true
+    },
+    standardDosing: {
+      minDose: 2.0,
+      maxDose: 5.0,
+      typicalDose: 2.5,
+      unit: 'mg',
+      frequency: '2-3x weekly',
+      timing: 'Morning fasted or pre-workout SubQ.',
+      cycleLengthWeeks: '4 - 8 weeks'
+    },
+    halfLifeHours: 4,
+    halfLifeLabel: '~2h (SS-31) / ~4h (MOTS-c)',
+    researchIndications: [
+      'Mitochondrial ATP Bioenergetic Output Optimization',
+      'Cardiolipin Protection & ROS Oxidative Leakage Reduction',
+      'Skeletal Muscle Metabolic Rate & Endurance Support',
+      'Insulin Sensitivity & Cellular Glucose Translocation'
+    ],
+    synergisticWith: ['nad-plus', 'epithalon', '5-amino-1mq'],
+    sideEffectWarnings: [
+      'Transient injection site redness or mild sensation of increased body temperature.'
+    ],
+    literatureReferences: [
+      {
+        title: 'Elamipretide (SS-31) improves mitochondrial function and restores cardiolipin integrity',
+        journal: 'British Journal of Pharmacology',
+        year: 2017,
+        pmid: '28665045'
+      },
+      {
+        title: 'The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and prevents insulin resistance',
+        journal: 'Cell Metabolism',
+        year: 2015,
+        pmid: '25738459'
+      }
+    ]
   }
 ];

@@ -184,5 +184,47 @@ export const CURATED_STACKS: CuratedStack[] = [
         synergyReason: 'Modulates GABAergic tone, stabilizes dopamine/serotonin, and prevents burnout under high cognitive load.'
       }
     ]
+  },
+  {
+    id: 'klow-quad-stack',
+    name: 'The KLOW Quad-Synergy Recovery Stack',
+    tagline: 'GHK-Cu + BPC-157 + TB-500 + KPV for Total Matrix Rebuilding & Deep Anti-Inflammatory Defense',
+    description: 'An elite 4-peptide regenerative powerhouse. Combines the collagen and gene-resetting power of GHK-Cu, the localized microvascular angiogenesis of BPC-157, the cellular motility of TB-500, and the potent NF-κB anti-inflammatory modulation of KPV.',
+    goals: ['Full-Body Connective Tissue Repair', 'Skin Matrix & Collagen Synthesis', 'NF-κB Inflammation Defense', 'Gut-Skin Barrier Protection'],
+    experienceLevel: 'Intermediate',
+    peptides: [
+      {
+        peptideId: 'klow-blend',
+        peptideName: 'KLOW Blend (GHK-Cu / BPC-157 / TB-500 / KPV)',
+        typicalDose: '1.5 - 2.0 mg',
+        frequency: 'Daily (5 days on / 2 days off)',
+        timing: 'Morning SubQ in abdominal tissue',
+        synergyReason: 'Four-way multi-targeted pathway: GHK-Cu for collagen remodeling, BPC-157 for VEGF angiogenesis, TB-500 for actin cell mobility, and KPV for down-regulating mucosal & dermal inflammatory cytokines.'
+      }
+    ],
+    warnings: [
+      'Solution exhibits a deep blue hue from copper peptide. Dilute with at least 3-4 mL of bacteriostatic water to prevent localized stinging.'
+    ]
+  },
+  {
+    id: 'cagrisema-metabolic-stack',
+    name: 'The CagriSema Incretin-Amylin Synergy Stack',
+    tagline: 'Dual Hypothalamic & Area Postrema Pathway for Maximal Satiety & Metabolic Optimization',
+    description: 'Pairs long-acting GLP-1 receptor agonism (Semaglutide) with a long-acting amylin analogue (Cagrilintide). Activates non-overlapping neurochemical satiety circuits to provide superior appetite suppression and sustained metabolic momentum.',
+    goals: ['Dual-Pathway Satiety', 'Visceral Fat Reduction', 'Delayed Gastric Emptying', 'Metabolic Homeostasis'],
+    experienceLevel: 'Intermediate',
+    peptides: [
+      {
+        peptideId: 'cagrisema-blend',
+        peptideName: 'CagriSema Blend (Semaglutide + Cagrilintide)',
+        typicalDose: '0.25 - 1.0 mg',
+        frequency: 'Once weekly',
+        timing: 'Consistent day each week SubQ',
+        synergyReason: 'GLP-1 stimulates insulin and hindbrain fullness; amylin analogue slows gastric transit and curtails hedonistic food cravings via the area postrema.'
+      }
+    ],
+    warnings: [
+      'Begin at the lowest research dose (0.25mg) and titrate in 4-week steps to allow gastrointestinal accommodation.'
+    ]
   }
 ];

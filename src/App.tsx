@@ -282,21 +282,42 @@ export function App() {
   // Cross-component handlers
   const handleOpenInCalculator = (peptide: Peptide) => {
     setSelectedPeptideForCalc(peptide.id);
-    setCalcSubTab('recon');
+    if (peptide.isBlend) {
+      setCalcSubTab('blend');
+    } else {
+      setCalcSubTab('recon');
+    }
     handleTabChange('calculator');
   };
 
   const handleAddToProtocol = (peptide: Peptide) => {
+    const totalMass = peptide.commonVialSizesMg[0] || (peptide.standardDosing.unit === 'mg' ? 10 : 5);
+    const typicalDose = peptide.standardDosing.typicalDose;
+    const isBlend = Boolean(peptide.isBlend);
+
     setInitialProtocolData({
       peptideId: peptide.id,
       peptideName: peptide.name,
-      doseAmount: peptide.standardDosing.typicalDose,
+      doseAmount: typicalDose,
       doseUnit: peptide.standardDosing.unit,
-      vialMassMg: peptide.commonVialSizesMg[0] || 5,
+      vialMassMg: totalMass,
       bacWaterMl: peptide.typicalBacWaterMl[0] || 2.0,
-      syringeType: 'U-100'
+      syringeType: 'U-100',
+      isBlend,
+      blendComponents: isBlend && peptide.blendComponents ? peptide.blendComponents.map((c, i) => {
+        const ratio = c.massRatioMg || 5;
+        const calculatedTarget = Number(((ratio / totalMass) * typicalDose).toFixed(2));
+        return {
+          id: `bc-${Date.now()}-${i}`,
+          peptideName: c.name,
+          vialMassMg: ratio,
+          targetDose: calculatedTarget,
+          doseUnit: peptide.standardDosing.unit
+        };
+      }) : undefined
     });
-    setMyPeptidesSubTab('schedule'); handleTabChange('dashboard');
+    setMyPeptidesSubTab('schedule');
+    handleTabChange('dashboard');
   };
 
   const handleSaveCalcAsProtocol = (data: Partial<Protocol>) => {

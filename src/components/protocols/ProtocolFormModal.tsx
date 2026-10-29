@@ -186,6 +186,24 @@ export const ProtocolFormModal: React.FC<ProtocolFormModalProps> = ({
           setDoseUnit(pep.standardDosing.unit);
           setDoseAmount(pep.standardDosing.typicalDose);
         }
+        if (pep.isBlend && pep.blendComponents && pep.blendComponents.length > 0) {
+          setIsBlend(true);
+          const totalMass = pep.commonVialSizesMg?.[0] || 10;
+          const typicalDose = pep.standardDosing?.typicalDose || 500;
+          const mappedRows = pep.blendComponents.map((c: { name: string; massRatioMg?: number }, i: number) => {
+            const ratio = c.massRatioMg || 5;
+            const calculatedTarget = Number(((ratio / totalMass) * typicalDose).toFixed(2));
+            return {
+              id: `bc-${Date.now()}-${i}`,
+              peptideName: c.name,
+              vialMassMg: ratio,
+              targetDose: calculatedTarget,
+              doseUnit: pep.standardDosing?.unit || 'mcg'
+            };
+          });
+          setBlendComponents(mappedRows);
+          setPrimaryBlendId(mappedRows[0].id);
+        }
       }
     }
   };

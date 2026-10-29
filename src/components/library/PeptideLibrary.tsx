@@ -63,13 +63,18 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
 
   const filteredPeptides = useMemo(() => {
     return allPeptides.filter(pep => {
+      const q = searchTerm.toLowerCase();
       const matchesSearch = 
-        pep.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        pep.aliases.some(a => a.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        pep.researchIndications.some(i => i.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        pep.summary.toLowerCase().includes(searchTerm.toLowerCase());
+        !searchTerm.trim() ||
+        pep.name.toLowerCase().includes(q) ||
+        pep.aliases.some(a => a.toLowerCase().includes(q)) ||
+        pep.researchIndications.some(i => i.toLowerCase().includes(q)) ||
+        pep.summary.toLowerCase().includes(q) ||
+        (pep.blendComponents && pep.blendComponents.some(c => c.name.toLowerCase().includes(q)));
 
-      const matchesCategory = selectedCategory === 'all' || pep.category === selectedCategory;
+      const matchesCategory = 
+        selectedCategory === 'all' || 
+        (selectedCategory === 'blends' ? Boolean(pep.isBlend) : pep.category === selectedCategory);
 
       return matchesSearch && matchesCategory;
     });
@@ -92,14 +97,15 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
   };
 
   const categories = [
-    { id: 'all', label: 'All Peptides', icon: '🧪' },
+    { id: 'all', label: 'All Compounds', icon: '📋' },
+    { id: 'blends', label: 'Research Blends', icon: '🧪' },
     { id: 'healing', label: 'Injury & Healing', icon: '🩹' },
     { id: 'metabolic', label: 'Fat Loss & Appetite (GLP-1)', icon: '🔥' },
     { id: 'gh_secretagogue', label: 'Muscle & Growth Hormone', icon: '⚡' },
     { id: 'longevity', label: 'Energy & Anti-Aging', icon: '🧬' },
     { id: 'nootropic', label: 'Brain & Focus', icon: '🧠' },
     { id: 'cosmetic', label: 'Skin, Hair & Glow', icon: '✨' },
-    { id: 'immune', label: 'Immunity & Health', icon: '🛡️' },
+    { id: 'immune', label: 'Immunity & Defense', icon: '🛡️' },
   ];
 
   return (
@@ -109,7 +115,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
         <div className="bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 flex items-center gap-1 shadow-inner shrink-0">
           <button
             onClick={() => handleSubTabChange('directory')}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
               guideSubTab === 'directory'
                 ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/20'
                 : 'text-slate-400 hover:text-white'
@@ -121,7 +127,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
 
           <button
             onClick={() => handleSubTabChange('matcher')}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 ${
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${
               guideSubTab === 'matcher'
                 ? 'bg-purple-500 text-white shadow-md shadow-purple-500/20'
                 : 'text-slate-400 hover:text-white'
@@ -149,18 +155,18 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
                   <BookOpen className="w-4 h-4" />
                   <span>Peptide Guide & Directory</span>
                 </div>
-                <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest uppercase">
+                <h1 className="text-[0.85rem] font-bold text-slate-100 uppercase tracking-widest">
                   Peptide Guide & Library
                 </h1>
                 <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-                  Browse 35+ peptide profiles, see what they're used for, how long they stay in your body, and how to mix them.
+                  Browse 30+ single research compounds and multi-peptide blends (KLOW, GLOW, Wolverine, etc.), review mechanisms, pharmacokinetics, and reconstitution ratios.
                 </p>
               </div>
 
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setIsCustomModalOpen(true)}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition cursor-pointer"
                 >
                   <Plus className="w-4 h-4 text-cyan-400" />
                   <span>Add Your Own Peptide</span>
@@ -185,7 +191,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
                 <Search className="w-5 h-5 text-slate-400 absolute left-4 top-3.5" />
                 <input
                   type="text"
-                  placeholder="Search by compound name (e.g. BPC-157, Tirzepatide), indication, mechanism, or alias..."
+                  placeholder="Search by compound name (e.g. KLOW, BPC-157, CagriSema), constituent, indication, or alias..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full bg-slate-900/90 border border-slate-800 text-white text-sm rounded-2xl pl-12 pr-4 py-3.5 focus:outline-none focus:border-cyan-400 placeholder:text-slate-500 shadow-inner"
@@ -193,7 +199,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
                 {searchTerm && (
                   <button
                     onClick={() => setSearchTerm('')}
-                    className="absolute right-4 top-3.5 text-xs text-slate-400 hover:text-white"
+                    className="absolute right-4 top-3.5 text-xs text-slate-400 hover:text-white cursor-pointer"
                   >
                     Clear
                   </button>
@@ -206,7 +212,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition ${
+                    className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition cursor-pointer ${
                       selectedCategory === cat.id
                         ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20 font-bold'
                         : 'bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
@@ -221,7 +227,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
 
             {/* Results Header Count */}
             <div className="flex items-center justify-between text-xs text-slate-400 px-1">
-              <span>Showing <strong className="text-slate-200">{filteredPeptides.length}</strong> research peptides</span>
+              <span>Showing <strong className="text-slate-200">{filteredPeptides.length}</strong> research compounds</span>
               {comparedPeptideIds.length > 0 && (
                 <span className="text-cyan-400 font-semibold">
                   {comparedPeptideIds.length} of 3 selected for comparison
@@ -256,7 +262,7 @@ export const PeptideLibrary: React.FC<PeptideLibraryProps> = ({
                     setSearchTerm('');
                     setSelectedCategory('all');
                   }}
-                  className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-cyan-400 rounded-xl text-xs font-bold transition mt-2"
+                  className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-cyan-400 rounded-xl text-xs font-bold transition mt-2 cursor-pointer"
                 >
                   Reset Filters
                 </button>
